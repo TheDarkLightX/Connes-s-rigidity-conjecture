@@ -48,8 +48,7 @@ theorem ternaryWitt_nine_nsmul (x : TernaryWittExtension) :
       exact ((C.fiberHom).map_nsmul x.base 3).symm
     _ = C.fiberHom 0 := by
       congr 1
-      change (3 : ZMod 3) * x.base = 0
-      norm_num
+      fin_cases h : x.base <;> decide
     _ = 0 := (C.fiberHom).map_zero
 
 /-- The first-coordinate generator is not killed by `3`. -/

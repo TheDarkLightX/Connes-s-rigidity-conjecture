@@ -1,0 +1,46 @@
+{
+  "workflow_run": 30897699775,
+  "artifact_digest": "sha256:f384b78a09d9f8219e81ae6983787b43498d4e10e15b4fa9d4b71ee60ac43fbc",
+  "run_id": "run_2fb1df798e5f42fa",
+  "main_claim": {
+    "statement": "For scalar ternary length-two Witt coordinates, phi(a,b)=(a^3+3b) mod 9 transports the carry law to addition modulo 9.",
+    "status": "UNKNOWN"
+  },
+  "naive_claim": {
+    "statement": "psi(a,b)=(a+3b) mod 9 transports the carry law to addition modulo 9.",
+    "status": "REFUTED",
+    "counterexample": "(1,0)+(1,0)=(2,1), but psi(2,1)=5 while psi(1,0)+psi(1,0)=2 mod 9."
+  },
+  "premature_promotion": {
+    "accepted": false,
+    "missing": [
+      "has_support_evidence",
+      "has_dependencies",
+      "has_contradiction_search",
+      "has_replay_recipe"
+    ]
+  },
+  "morph_reformulations": [
+    {
+      "mode": "equivalent_statement",
+      "relation": "equivalent",
+      "instruction": "Restate the coordinate claim as an explicit if-and-only-if or commuting-square contract."
+    },
+    {
+      "mode": "counterexample_search",
+      "relation": "speculative",
+      "instruction": "Generate the smallest input pair falsifying the coordinate law."
+    },
+    {
+      "mode": "formal_spec",
+      "relation": "speculative",
+      "instruction": "Separate assumptions, guarantees, reject cases, and proof obligations."
+    },
+    {
+      "mode": "weaker_statement",
+      "relation": "weaker",
+      "instruction": "Find the minimal domain and assumptions under which the coordinate law remains true."
+    }
+  ],
+  "claim_boundary": "The Research Kernel correctly kept the cubic coordinate UNKNOWN and rejected promotion before independent LEAP, Julia and Lean evidence was attached."
+}

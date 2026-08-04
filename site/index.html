@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Public proof-status dashboard for AI-generated, Lean-audited research on Connes's rigidity conjecture, Hopf reconstruction, rank-three tensor orbits, and ternary Witt carries.">
+  <title>Connes Rigidity — Generated Formal Research</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background-grid" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#top">CR<span>/</span>Formal</a>
+    <nav aria-label="Primary navigation">
+      <a href="#result">Result</a>
+      <a href="#proof-state">Proof state</a>
+      <a href="#method">Method</a>
+      <a href="#credit">Credit</a>
+      <a href="#open">Open problems</a>
+    </nav>
+    <a class="repo-link" href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture">GitHub ↗</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="eyebrow">Generated formal mathematics · public audit trail</div>
+      <h1>Ternary Witt carries,<br><span>rank-three orbit growth,</span><br>and what a group factor forgets.</h1>
+      <p class="lede">
+        A machine-generated research program extending the OpenAI/Codex work around Connes's rigidity conjecture.
+        Every claim is separated into generated mathematics, finite evidence, Lean source, full-build status, and remaining obligations.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="#result">See the current result</a>
+        <a class="button secondary" href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/pull/1">Review the research PR</a>
+      </div>
+      <div class="boundary">
+        <strong>Claim boundary</strong>
+        <span id="claim-boundary">Loading current status…</span>
+      </div>
+    </section>
+
+    <section class="metrics" aria-label="Research metrics">
+      <article><span class="metric" id="module-count">49</span><span>rigidity modules</span></article>
+      <article><span class="metric">6</span><span>independent workflows</span></article>
+      <article><span class="metric warning" id="failure-count">11</span><span>initial CI failures</span></article>
+      <article><span class="metric">0</span><span>completed counterexample claims</span></article>
+    </section>
+
+    <section id="result" class="section result-section">
+      <div class="section-label">Current mathematical lead</div>
+      <div class="result-grid">
+        <div>
+          <h2>A better coordinate for the ternary carry</h2>
+          <p>
+            The naive radix coordinate <code>a + 3b</code> fails as soon as a nontrivial carry appears.
+            The stronger candidate replaces the residue with its cubic Teichmüller lift:
+          </p>
+          <div class="formula">φ(a,b) = a³ + 3b &nbsp; (mod 9)</div>
+          <p>
+            Over representatives <code>a ∈ {0,1,2}</code>, the cubic values are <code>0,1,8</code> modulo 9.
+            This is exactly the lift needed for the length-two ternary Witt addition law.
+          </p>
+          <p class="fineprint">
+            Status: LEAP and Julia test the complete declared finite model. A finite exhaustive result is evidence for the scalar system,
+            not a replacement for the Lean theorem or the final property-(T) construction.
+          </p>
+        </div>
+        <aside class="falsifier-card">
+          <div class="card-kicker">Smallest falsifier</div>
+          <h3>Why <code>a + 3b</code> is wrong</h3>
+          <ol>
+            <li><code>(1,0) + (1,0) = (2,1)</code> under the ternary Witt carry.</li>
+            <li>The naive coordinate sends the sum to <code>2 + 3 = 5</code>.</li>
+            <li>But the two input coordinates add to <code>1 + 1 = 2</code> modulo 9.</li>
+          </ol>
+          <p>The cubic coordinate sends <code>(2,1)</code> to <code>2³ + 3 = 11 ≡ 2</code>.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="proof-state" class="section">
+      <div class="section-label">Proof state</div>
+      <h2>Nothing is promoted by appearance alone.</h2>
+      <p class="section-intro">
+        The cards below are generated from <code>site/status.json</code>. “Source present” and “Lean checked” are different states.
+        A theorem is promoted only after its complete dependency graph passes the standalone build.
+      </p>
+      <div id="claim-cards" class="claim-cards" aria-live="polite"></div>
+    </section>
+
+    <section id="method" class="section method-section">
+      <div class="section-label">Research method</div>
+      <h2>Representation search, then independent gates.</h2>
+      <div class="pipeline">
+        <article>
+          <span class="step">01</span>
+          <h3>Morph</h3>
+          <p>Changes the representation of a stuck obligation before weakening the mathematics: explicit phantom parameters, canonical coordinates, extensionality, support invariants, and decomposition.</p>
+        </article>
+        <article>
+          <span class="step">02</span>
+          <h3>LEAP</h3>
+          <p>Accepts a bounded abstraction only when static safety, non-vacuity, exact transition semantics, portal certificates, and original-domain lifts pass.</p>
+        </article>
+        <article>
+          <span class="step">03</span>
+          <h3>Julia</h3>
+          <p>Exhausts small finite models independently: all scalar carry inputs, associativity triples, candidate coordinates, orders, and minimum-support base cases.</p>
+        </article>
+        <article>
+          <span class="step">04</span>
+          <h3>TheoremSearch</h3>
+          <p>Retrieves theorem-level prior art so classical ingredients are not advertised as new merely because their Lean formalization is new.</p>
+        </article>
+        <article>
+          <span class="step">05</span>
+          <h3>Research Kernel</h3>
+          <p>Stores claims, counterexamples, evidence, dependencies, uncertainty, and rejected promotion attempts. Missing evidence is non-supporting.</p>
+        </article>
+        <article>
+          <span class="step">06</span>
+          <h3>Lean</h3>
+          <p>The final gate. The public site reports the complete clean-checkout build, not isolated files or stale incremental success.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section theorem-map">
+      <div class="section-label">Research map</div>
+      <h2>Three layers of the program</h2>
+      <div class="layers">
+        <article>
+          <div class="layer-number">A</div>
+          <h3>Hopf reconstruction</h3>
+          <p>An ordinary algebra may forget which group generated it. The canonical coproduct restores the group-like unitaries and therefore the multiplication law.</p>
+        </article>
+        <article>
+          <div class="layer-number">B</div>
+          <h3>Rank-three algebra</h3>
+          <p>The fresh fourth coordinate used in the binary rank-four argument is replaced by a two-branch proof: ordinary fresh-coordinate separation and all-three-coordinate exponent separation.</p>
+        </article>
+        <article>
+          <div class="layer-number">C</div>
+          <h3>Ternary construction</h3>
+          <p>Shifted divided-cube carries, Frobenius diagonal, detector bounds, primitive density, intrinsic 3-torsion, property (T), ICC, and common crossed products.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="credit" class="section credit-section">
+      <div class="section-label">Authorship, generation, and responsibility</div>
+      <h2>Credit the humans and the system for different things.</h2>
+      <div class="credit-grid">
+        <article>
+          <h3>Project direction and publication</h3>
+          <p><strong>Dana Edwards</strong> selected the problem, supplied the custom research tools, directed the research program, owns and maintains the repository, chose to publish the work, and is the responsible human publisher of this site.</p>
+        </article>
+        <article>
+          <h3>Mathematical generation</h3>
+          <p>Proof candidates, formalization drafts, falsifiers, experiments, and this explanatory site were generated with <strong>OpenAI GPT-5.6 Thinking</strong> using user-supplied Morph, LEAP, Research Kernel, TheoremSearch, and Julia workflows.</p>
+        </article>
+        <article>
+          <h3>Not an AI author byline</h3>
+          <p>The AI system is disclosed as a generator/tool, not listed as a legal or scholarly author. Authorship standards attach accountability, approval, and responsibility to humans.</p>
+        </article>
+        <article>
+          <h3>No inflated human claim</h3>
+          <p>The site does not imply that the repository owner personally derived or independently understands every mathematical step. Human expert review remains a separate evidence class.</p>
+        </article>
+      </div>
+      <div class="legal-note">
+        <p>
+          In the United States, purely AI-generated expression is not copyrightable merely because a human supplied prompts; sufficiently creative human selection,
+          arrangement, modification, or independently authored material may be protected. Scholarly publishers likewise do not treat an LLM as an author because it cannot
+          take accountability. This site therefore uses <em>generated by</em>, <em>directed by</em>, <em>maintained by</em>, and <em>Lean checked</em> as separate labels.
+        </p>
+        <div class="source-links">
+          <a href="https://www.copyright.gov/newsnet/2025/1060.html">U.S. Copyright Office — AI copyrightability</a>
+          <a href="https://www.nature.com/nature-portfolio/editorial-policies/authorship">Nature Portfolio — authorship and accountability</a>
+          <a href="https://www.elsevier.com/about/policies-and-standards/publishing-ethics-books/generative-ai-policies">Elsevier — generative AI and authorship</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="open" class="section open-section">
+      <div class="section-label">Open obligations</div>
+      <h2>What still separates this program from a new counterexample</h2>
+      <div class="open-list">
+        <div><span>01</span><p>Restore the complete Lean dependency build without <code>sorry</code>, hidden axioms, or weakened theorem statements.</p></div>
+        <div><span>02</span><p>Finish the ternary spectral detector and transfer it into a complete property-(T) proof.</p></div>
+        <div><span>03</span><p>Prove finite generation and ICC for the final semidirect products.</p></div>
+        <div><span>04</span><p>Identify the intrinsic finite-orbit 3-torsion subquotient and prove its exact size is <code>3^(3n)</code>.</p></div>
+        <div><span>05</span><p>Build the Pontryagin-dual topology, Haar transport, crossed products, and spatial trace-preserving factor equivalences.</p></div>
+        <div><span>06</span><p>Obtain independent expert review before any “counterexample” headline is used.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <strong>Connes Rigidity — Generated Formal Research</strong>
+      <p>Directed and published by Dana Edwards. Generated with OpenAI GPT-5.6 Thinking and user-supplied custom tools.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture">Repository</a>
+      <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/issues/2">Lean repair issue</a>
+      <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/actions">Actions</a>
+    </div>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>

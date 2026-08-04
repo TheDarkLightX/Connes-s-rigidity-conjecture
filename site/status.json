@@ -1,8 +1,8 @@
 {
   "updated": "2026-08-04",
   "repository": "TheDarkLightX/Connes-s-rigidity-conjecture",
-  "headline": "A formal companion to the 2026 counterexamples to Connes rigidity",
-  "claimBoundary": "The public counterexamples are external results. This repository separately labels Lean-checked theorems, exact finite computations, unreviewed proof candidates, refuted formulations, and open construction steps.",
+  "headline": "Prime-uniform divided powers and tensor orbits",
+  "claimBoundary": "The reported counterexamples are external prior work. This page separately labels Lean-checked theorems, exact finite computations, mathematical candidates, refuted formulations, and unresolved steps.",
   "lean": {
     "moduleCount": 51,
     "fullBuild": "green on the exact release candidate head",
@@ -38,13 +38,13 @@
     },
     {
       "name": "Stable and odd-critical divided-power cyclicity",
-      "status": "paper-proof-candidate",
+      "status": "mathematical-candidate",
       "evidence": "A written induction and selected exact certificates support the claim. The general theorem is not yet formalized or independently reviewed."
     },
     {
       "name": "General stable and critical polynomial-tensor orbit theorem",
-      "status": "paper-proof-candidate",
-      "evidence": "A coordinate-block argument extends the checked rank-three pattern on paper. Only the rank-three critical case is presently Lean checked."
+      "status": "mathematical-candidate",
+      "evidence": "A written coordinate-block argument extends the checked rank-three pattern. Only the rank-three critical case is presently Lean checked."
     },
     {
       "name": "An untwisted linear cubic retraction works over every characteristic-three field",
@@ -54,7 +54,7 @@
     {
       "name": "A completed prime-uniform property-(T) counterexample family",
       "status": "open",
-      "evidence": "The synthesis still depends on unformalized group-theoretic and operator-algebraic interfaces, specialist review, and a stronger novelty audit."
+      "evidence": "The synthesis still depends on unformalized group-theoretic and operator-algebraic interfaces, specialist comparison with prior work, and independent review."
     }
   ]
 }

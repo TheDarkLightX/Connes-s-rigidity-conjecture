@@ -3,319 +3,422 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A formal and computational companion to the 2026 counterexamples to Connes's rigidity conjecture, with claim-level evidence and explicit open problems.">
-  <title>Connes Rigidity | Formal Companion</title>
+  <meta name="description" content="A readable mathematical account of checked and candidate results on divided-power cyclicity, polynomial tensor orbits, and prime-uniform carry constructions.">
+  <title>Prime-uniform divided powers and tensor orbits</title>
   <link rel="stylesheet" href="styles.css">
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["\\(", "\\)"]],
+        displayMath: [["\\[", "\\]"]]
+      },
+      chtml: { scale: 1 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
 </head>
 <body>
-  <div class="background-grid" aria-hidden="true"></div>
-  <header class="topbar">
-    <a class="brand" href="#top">CR<span>/</span>Formal</a>
-    <nav aria-label="Primary navigation">
-      <a href="#checked">Checked</a>
-      <a href="#finite">Finite evidence</a>
-      <a href="#candidates">Candidates</a>
-      <a href="#paper">Paper status</a>
-      <a href="#open">Open work</a>
-    </nav>
-    <a class="repo-link" href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture">Repository ↗</a>
+  <a class="skip-link" href="#content">Skip to the mathematics</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="#top">Connes rigidity notes</a>
+      <nav aria-label="Page contents">
+        <a href="#result">Main result</a>
+        <a href="#checked">Checked results</a>
+        <a href="#evidence">Finite evidence</a>
+        <a href="#attribution">Attribution</a>
+        <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture">Repository</a>
+      </nav>
+    </div>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <div class="eyebrow">Formal and computational companion</div>
-      <h1>What the group factor<br>forgets,<br><span>and formal methods</span><br>can still recover.</h1>
-      <p class="lede">
-        Two counterexamples to Connes's rigidity conjecture were reported in 2026.
-        This project checks reusable algebra in Lean, reproduces finite cases with
-        independent programs, and investigates prime-uniform extensions without
-        presenting unfinished mathematics as a theorem.
-      </p>
-      <div class="hero-actions">
-        <a class="button primary" href="#checked">Read the checked results</a>
-        <a class="button secondary" href="https://cdn.openai.com/pdf/ten-proofs-oai.pdf#page=95">OpenAI construction ↗</a>
-        <a class="button secondary" href="https://arxiv.org/abs/2608.02327">Zhou construction ↗</a>
-      </div>
-      <div class="boundary">
-        <strong>Claim boundary</strong>
-        <span id="claim-boundary">Loading current status...</span>
-      </div>
-    </section>
+  <main id="content">
+    <article id="top" class="document">
+      <header class="document-header">
+        <p class="overline">Formal and computational mathematics</p>
+        <h1>Prime-uniform divided powers and tensor orbits</h1>
+        <p class="subtitle">
+          Checked theorems, exact finite evidence, and candidate generalizations
+          arising from the study of counterexamples to Connes rigidity.
+        </p>
+        <dl class="document-meta" aria-label="Verification summary">
+          <div><dt>Updated</dt><dd>4 August 2026</dd></div>
+          <div><dt>Lean modules</dt><dd id="module-count">51</dd></div>
+          <div><dt>Failing modules</dt><dd id="failure-count">0</dd></div>
+          <div><dt>Flagged shortcuts</dt><dd id="trust-count">0</dd></div>
+          <div><dt>Finite suites</dt><dd id="suite-count">11</dd></div>
+        </dl>
+      </header>
 
-    <section class="metrics" aria-label="Verification summary">
-      <article><span class="metric" id="module-count">51</span><span>Lean rigidity modules</span></article>
-      <article><span class="metric" id="failure-count">0</span><span>failing imported modules</span></article>
-      <article><span class="metric" id="trust-count">0</span><span>flagged project shortcuts</span></article>
-      <article><span class="metric" id="suite-count">11</span><span>finite certificate suites</span></article>
-    </section>
+      <aside class="status-note" aria-labelledby="boundary-label">
+        <strong id="boundary-label">Status convention.</strong>
+        <span id="claim-boundary">Loading the current claim boundary...</span>
+      </aside>
 
-    <section class="section prior-art-section">
-      <div class="section-label">Problem status and priority</div>
-      <h2>The reported constructions are prior art. This repository studies their algebraic frontier.</h2>
-      <p class="section-intro">
-        OpenAI's binary-carry construction and Shuoxing Zhou's independent
-        action-shear construction report counterexamples to the broad ICC
-        property-(T) formulation. Their measured-action mechanisms, common-factor
-        conclusions, and binary finite-orbit strategies are not claimed as new here.
-      </p>
-      <p class="section-intro">
-        Possible new contributions are narrower: a rank-three tensor-orbit theorem,
-        stable and critical divided-power cyclicity, multivariate extensions, and a
-        prime-rank detector synthesis. Only the first item is currently represented
-        by a general Lean theorem. The others remain proof candidates.
-      </p>
-    </section>
+      <section aria-labelledby="context-heading">
+        <h2 id="context-heading">Context</h2>
+        <p>
+          Two constructions reported counterexamples to the broad ICC
+          property-(T) form of Connes rigidity in 2026: an OpenAI binary-carry
+          construction and an independent construction by Shuoxing Zhou. Their
+          counterexamples and common-factor mechanisms are prior work. The
+          mathematics reported here concerns reusable algebraic components and
+          possible prime-uniform extensions.
+        </p>
+        <p>
+          Evidence labels are deliberately local. <em>Lean checked</em> means that
+          the stated formal theorem and its pinned dependency graph build.
+          <em>Finite verified</em> means that a deterministic program exhausts the
+          declared finite domain. <em>Candidate</em> means that a written argument
+          exists but is not yet machine checked or independently reviewed in its
+          full generality.
+        </p>
+      </section>
 
-    <section id="checked" class="section result-section">
-      <div class="section-label">Lean checked</div>
-      <h2>Four reusable theorem families survive the full dependency build.</h2>
-      <p class="section-intro">
-        Every statement below is checked by Lean at the pinned repository head.
-        The label applies to the formal statement and definitions, not to novelty
-        or to an unformalized interpretation.
-      </p>
-      <div class="layers checked-grid">
-        <article>
-          <div class="layer-number">H</div>
-          <h3>Hopf reconstruction</h3>
-          <p>A bialgebra equivalence between canonical group algebras restricts to their group-like elements and induces a group isomorphism. An arbitrary algebra equivalence need not preserve this extra structure.</p>
-          <code>groupMulEquivOfGroupAlgebraBialgEquiv</code>
-        </article>
-        <article>
-          <div class="layer-number">O</div>
-          <h3>Infinite tensor orbit</h3>
-          <p>Every nonzero rank-three polynomial tensor fixed by swapping its first two factors has an infinite orbit under an explicit tail of elementary transvections.</p>
-          <code>fixed_swapFirstTwo_SL3_orbit_infinite</code>
-        </article>
-        <article>
-          <div class="layer-number">F</div>
-          <h3>Frobenius obstruction</h3>
-          <p>An untwisted linear cube retraction forces the cubic Frobenius map to fix every scalar. General characteristic-three fields therefore require a twisted formulation.</p>
-          <code>linear_cube_retraction_forces_frobenius_fixed</code>
-        </article>
-        <article>
-          <div class="layer-number">W</div>
-          <h3>Ternary carry arithmetic</h3>
-          <p>The shifted carry extension has exponent dividing nine. Its three-torsion is controlled by a shifted Frobenius-dual kernel of cardinality <code>3^(3n)</code>.</p>
-          <code>ternaryShiftedCarry_nine_nsmul</code>
-        </article>
-      </div>
-    </section>
+      <section id="result" aria-labelledby="result-heading">
+        <p class="section-marker">Main mathematical discovery</p>
+        <h2 id="result-heading">A stable and critical cyclicity pattern</h2>
+        <p>
+          Let \(p\) be prime, let
+        </p>
+        <div class="display-math">
+          \[
+          \begin{aligned}
+          R&=\mathbf F_p[t_1,\ldots,t_d],\\
+          V&=R^r,\\
+          B_p(V)&=\operatorname{span}_{\mathbf F_p}
+             \left\{v^{\otimes p}:v\in V\right\},\\
+          B_p(V)&\subseteq \Gamma^p(V).
+          \end{aligned}
+          \]
+        </div>
+        <p>
+          Write \(E_r(R)\) for the elementary subgroup. Let
+          \(d_p:\Gamma^p(V)\to V\) be the Frobenius diagonal map, put
+          \(q=e_1^{\otimes p}\), and, when \(r\ge p\), let
+          \(w=[e_1,\ldots,e_p]\) denote the all-distinct orbit sum.
+        </p>
 
-    <section class="section theorem-focus">
-      <div class="section-label">The strongest formal theorem</div>
-      <div class="result-grid">
-        <div>
-          <h2>A symmetry assumption forces an infinite elementary orbit.</h2>
-          <div class="theorem-statement">
-            <p><strong>Assume:</strong> <code>F</code> is a field, <code>w ≠ 0</code>, and swapping the first two factors of <code>w ∈ (F[t]^3)⊗³</code> leaves <code>w</code> fixed.</p>
-            <p><strong>Then:</strong> there are distinct coordinates <code>i,j</code> and a starting degree <code>N</code> such that</p>
+        <div class="theorem candidate">
+          <p class="theorem-label">Candidate 1. Divided-power cyclicity</p>
+          <p>If \(r\ge p\), and either \(r&gt;p\) or \(p\) is odd, then</p>
+          <div class="display-math">
+            \[
+            B_p(V)=\Gamma^p(V),
+            \]
           </div>
-          <div class="formula compact">{ u<sub>ij</sub>(t<sup>N+n</sup>) · w : n ≥ 0 } is infinite.</div>
-          <p class="section-intro">
-            The proof converts the tensor into polynomial coordinate blocks, finds a
-            nonzero extremal block, and chooses a transvection whose observed degree
-            grows without bound. A divided cube is fixed by the same swap, so the
-            divided-cube orbit theorem follows as a corollary.
+          <div class="display-math">
+            \[
+            \ker(d_p)
+              =\left\langle E_r(R)\mathbin{\cdot}w\right\rangle_{\mathbf F_p},
+            \]
+          </div>
+          <div class="display-math">
+            \[
+            B_p(V)
+              =\left\langle E_r(R)\mathbin{\cdot}q\right\rangle_{\mathbf F_p}.
+            \]
+          </div>
+          <p class="scope">
+            Status: written candidate with exact finite certificates. The general
+            statement is not yet Lean checked. The argument does not settle the
+            corner \((p,r)=(2,2)\).
           </p>
         </div>
-        <aside class="falsifier-card">
-          <div class="card-kicker">Scope check</div>
-          <h3>What this theorem does not prove</h3>
-          <ol>
-            <li>It does not prove cyclicity of the divided cube.</li>
-            <li>It does not cover arbitrary rank and tensor degree.</li>
-            <li>It does not construct property-(T) groups or identify group factors.</li>
-            <li>It does not establish that the statement is new in the literature.</li>
-          </ol>
-        </aside>
-      </div>
-    </section>
 
-    <section class="section result-section">
-      <div class="section-label">A checked correction</div>
-      <h2>The cubic diagonal cannot be untwisted over every characteristic-three field.</h2>
-      <p class="section-intro">
-        Suppose an <code>F</code>-linear map satisfies <code>d(x³)=x</code>. Linearity
-        gives <code>d(x³)=x³d(1)=x³</code>, while the retraction assumption gives
-        <code>d(x³)=x</code>. Therefore <code>x³=x</code> for every scalar.
-      </p>
-      <div class="formula compact">F-linear retraction ⇒ x³ = x for every x ∈ F</div>
-      <p class="fineprint">
-        This theorem records negative knowledge. It rejects the earlier
-        general-field formulation and isolates the need for a Frobenius-twisted
-        codomain. It does not by itself construct that corrected map.
-      </p>
-    </section>
+        <h3>Why there are two cases</h3>
+        <ol class="reasoning-steps">
+          <li>
+            <strong>Stable range, \(r&gt;p\).</strong> Among the \(r\) coordinates,
+            an unused coordinate is available. An elementary transvection can
+            lower the total polynomial degree of a positive-degree orbit sum.
+          </li>
+          <li>
+            <strong>Critical range, \(r=p\) with \(p\) odd.</strong> An all-distinct
+            tensor uses every coordinate, so no unused coordinate remains.
+            Antisymmetrizing two transvections isolates the required linear term.
+          </li>
+        </ol>
 
-    <section id="finite" class="section">
-      <div class="section-label">Finite verified</div>
-      <h2>Exact programs probe the boundary cases that the written proofs must explain.</h2>
-      <p class="section-intro">
-        Each row is an exhaustive result on the named finite domain. None is used
-        as a substitute for induction or a general theorem.
-      </p>
-      <div class="evidence-table" role="region" aria-label="Finite certificate results" tabindex="0">
-        <table>
-          <thead><tr><th>Certificate family</th><th>Bound</th><th>Result</th></tr></thead>
-          <tbody>
-            <tr><td>Ternary total-degree kernel</td><td>degree ≤ 12</td><td>2,258 / 2,258</td></tr>
-            <tr><td>Bivariate ternary kernel</td><td>degree ≤ 3</td><td>444 / 444</td></tr>
-            <tr><td>Trivariate ternary kernel</td><td>degree ≤ 2</td><td>304 / 304</td></tr>
-            <tr><td>Divided fifth power</td><td>p=5, rank=5, degree ≤ 2</td><td>1,346 / 1,346</td></tr>
-            <tr><td>Binary stable range</td><td>p=2, rank=3, degree ≤ 6</td><td>120 / 120</td></tr>
-            <tr><td>Witt scalar identities</td><td>p=2,3,5,7</td><td>exhaustive pass</td></tr>
-            <tr><td>Affine-chart restrictions</td><td>six boundary cases</td><td>all pass</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+        <h3>The critical identity</h3>
+        <p>
+          For the all-distinct target
+          \(A(x,y,z_3,\ldots,z_p)\), choose a source \(S_y\) with exactly two
+          mutable \(j\)-labelled factors. The difference at parameters \(x\) and
+          \(-x\) cancels the terms with zero or two substitutions:
+        </p>
+        <div class="display-math">
+          \[
+          L(x):=\frac{u_{ij}(x)S_y-u_{ij}(-x)S_y}{2}.
+          \]
+        </div>
+        <p>The isolated linear contribution is</p>
+        <div class="display-math">
+          \[
+          \begin{aligned}
+          L(x)={}&A(x,y,z_3,\ldots,z_p)\\
+                 &+A(xy,1,z_3,\ldots,z_p).
+          \end{aligned}
+          \]
+        </div>
+        <p>
+          Division by \(2\) is the reason this branch requires odd \(p\). The
+          second term is reduced by the repeated-label induction, while the source
+          has lower total degree. This yields a simultaneous degree induction.
+        </p>
+      </section>
 
-    <section id="candidates" class="section result-section">
-      <div class="section-label">Written proof candidates</div>
-      <h2>The promising mathematics begins where the formal graph stops.</h2>
-      <div class="layers">
-        <article>
-          <div class="layer-number">01</div>
-          <h3>Stable and critical cyclicity</h3>
-          <p>For <code>R=F_p[t₁,...,t_d]</code> and <code>V=R^r</code>, the proposed theorem makes the Frobenius kernel and full divided <code>p</code>th power cyclic when <code>r&gt;p</code>, and also when <code>r=p</code> for odd <code>p</code>.</p>
-        </article>
-        <article>
-          <div class="layer-number">02</div>
-          <h3>General tensor orbits</h3>
-          <p>The rank-three Lean proof suggests an arbitrary-rank theorem: nonzero tensors have infinite elementary orbit for tensor degree <code>m&lt;r</code>, with a first-two-symmetric critical case at <code>m=r</code>.</p>
-        </article>
-        <article>
-          <div class="layer-number">03</div>
-          <h3>Prime-uniform carry families</h3>
-          <p>The algebra and detector calculations suggest minimal rank <code>r_p=max(p,3)</code> and a finite-orbit cardinal <code>p^(r_p n)</code>. The construction still lacks checked group-theoretic and operator-algebraic interfaces.</p>
-        </article>
-      </div>
-      <div class="hero-actions">
-        <a class="button secondary" href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/research/notes/STABLE_RANGE_DIVIDED_POWER_CYCLICITY.md">Cyclicity argument ↗</a>
-        <a class="button secondary" href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/research/notes/GENERAL_SYMMETRIC_TENSOR_ORBIT_THEOREM.md">Orbit argument ↗</a>
-        <a class="button secondary" href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/research/notes/LITERATURE_AND_NOVELTY_AUDIT_20260804.md">Novelty audit ↗</a>
-      </div>
-    </section>
-
-    <section id="proof-state" class="section">
-      <div class="section-label">Claim-level evidence</div>
-      <h2>Every headline carries its own evidence class.</h2>
-      <p class="section-intro">
-        The cards are loaded from a machine-readable status file. A successful
-        neighboring theorem, a large source file, or a search miss cannot promote a
-        candidate.
-      </p>
-      <div id="claim-cards" class="claim-cards" aria-live="polite"></div>
-    </section>
-
-    <section class="section method-section">
-      <div class="section-label">Evidence ladder</div>
-      <h2>Different tools answer different questions.</h2>
-      <div class="pipeline evidence-ladder">
-        <article>
-          <span class="step">01</span>
-          <h3>Literature</h3>
-          <p>Primary sources determine problem status and prior art. Semantic retrieval helps locate candidates, but a failed search does not prove novelty.</p>
-        </article>
-        <article>
-          <span class="step">02</span>
-          <h3>Finite computation</h3>
-          <p>Julia and Python exhaust declared domains, expose edge cases, and generate counterexamples. Their conclusions remain bounded by those domains.</p>
-        </article>
-        <article>
-          <span class="step">03</span>
-          <h3>Lean kernel</h3>
-          <p>Lean checks formal statements against explicit definitions and imported lemmas. A trust audit excludes project-level proof placeholders and compiler-trusting shortcuts.</p>
-        </article>
-        <article>
-          <span class="step">04</span>
-          <h3>Expert review</h3>
-          <p>Specialists must still check mathematical relevance, hidden modeling assumptions, literature priority, and the unformalized interfaces between fields.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="paper" class="section paper-section">
-      <div class="section-label">Publication assessment</div>
-      <h2>The repository supports a formalization note now, not yet a full research paper.</h2>
-      <div class="result-grid">
-        <div>
-          <p class="section-intro">
-            The checked rank-three orbit theorem, Frobenius correction, carry
-            identities, and exact kernel cardinality are substantial enough for a
-            technical exposition or formalization note. They are not yet enough for
-            a strong paper claiming a new counterexample family.
-          </p>
-          <p class="section-intro">
-            A focused research paper becomes plausible if the stable and critical
-            cyclicity theorem or the general tensor-orbit theorem survives specialist
-            review, receives a complete proof, and is shown to be genuinely absent
-            from the modular divided-power literature. Formalizing one of those
-            general theorems would make the case much stronger.
+      <section aria-labelledby="orbit-heading">
+        <h2 id="orbit-heading">A companion tensor-orbit statement</h2>
+        <p>Let \(F\) be a field, \(R=F[t]\), \(V=R^r\), and \(2\le m\le r\).</p>
+        <div class="theorem candidate">
+          <p class="theorem-label">Candidate 2. Polynomial tensor orbits</p>
+          <p>For every nonzero \(x\in V^{\otimes_F m}\):</p>
+          <ul>
+            <li>if \(m&lt;r\), the \(E_r(R)\)-orbit of \(x\) is infinite;</li>
+            <li>
+              if \(m=r\) and \(x\) is fixed by swapping the first two tensor
+              factors, the \(E_r(R)\)-orbit of \(x\) is infinite.
+            </li>
+          </ul>
+          <p class="scope">
+            Status: the critical case \(m=r=3\) is Lean checked. The arbitrary-rank
+            statement is a written candidate.
           </p>
         </div>
-        <aside class="falsifier-card">
-          <div class="card-kicker">Paper gate</div>
-          <h3>Minimum evidence still needed</h3>
-          <ol>
-            <li>A complete general proof, preferably machine checked.</li>
-            <li>A specialist prior-art review in modular representation theory.</li>
-            <li>Independent proof review.</li>
-            <li>A sharply stated theorem that does not depend on unfinished operator-algebra bridges.</li>
-          </ol>
-        </aside>
-      </div>
-    </section>
+        <p>
+          In the stable case, a coordinate absent from a nonzero tensor block
+          exposes a term whose degree grows with the transvection parameter. In
+          the critical symmetric case, the two surviving terms occupy disjoint
+          exponent regions once the parameter degree is large enough.
+        </p>
+      </section>
 
-    <section id="credit" class="section credit-section">
-      <div class="section-label">Authorship and assistance</div>
-      <h2>Direction, generation, verification, and responsibility are separate roles.</h2>
-      <div class="credit-grid">
-        <article>
-          <h3>Research direction and publication</h3>
-          <p>Dana Edwards selected the problem, supplied the research tools, directed the exploration, maintains the repository, and is responsible for publication.</p>
-        </article>
-        <article>
-          <h3>AI assistance</h3>
-          <p>OpenAI language models assisted with exploration, proof drafting, Lean repairs, experiments, literature retrieval, and exposition. Model output is not treated as verification.</p>
-        </article>
-        <article>
-          <h3>Deterministic checks</h3>
-          <p>Lean checks formal statements. Julia and Python check named finite domains. Neither establishes novelty or accepts responsibility for a paper.</p>
-        </article>
-        <article>
-          <h3>Human review</h3>
-          <p>No claim is labeled expert reviewed unless a qualified person has reviewed the exact statement, proof, scope, and literature position.</p>
-        </article>
-      </div>
-    </section>
+      <section aria-labelledby="prime-heading">
+        <h2 id="prime-heading">Prime-uniform consequence under the remaining hypotheses</h2>
+        <p>Define the proposed minimal rank by</p>
+        <div class="display-math short">
+          \[
+          r_p=\max(p,3).
+          \]
+        </div>
+        <p>
+          If the candidate cyclicity theorem, tensor-orbit theorem, and remaining
+          carry and characteristic-subgroup identifications all hold, then the
+          proposed family has the intrinsic finite-orbit count
+        </p>
+        <div class="display-math">
+          \[
+          \left|\operatorname{FinOrb}\!\left(A_n[p]/pA_n\right)\right|
+          =p^{r_p n}.
+          \]
+        </div>
+        <p>This conditional formula predicts:</p>
+        <ul>
+          <li>a binary rank-three family distinguished by \(2^{3n}\);</li>
+          <li>an odd-prime rank-\(p\) family distinguished by \(p^{pn}\);</li>
+          <li>
+            within each fixed prime, common von Neumann, full group
+            \(C^*\), and reduced group \(C^*\)-algebras.
+          </li>
+        </ul>
+        <p class="scope-block">
+          These are conditional consequences, not established conclusions of the
+          current formal development. The group-theoretic and operator-algebraic
+          interfaces listed below remain open.
+        </p>
+      </section>
 
-    <section id="open" class="section open-section">
-      <div class="section-label">Open obligations</div>
-      <h2>What remains before a prime-uniform theorem can be claimed</h2>
-      <div class="open-list">
-        <div><span>01</span><p>Formalize or independently verify stable and critical divided-power cyclicity.</p></div>
-        <div><span>02</span><p>Generalize the checked rank-three orbit theorem to arbitrary rank and tensor degree.</p></div>
-        <div><span>03</span><p>Construct the prime-uniform functional carry and Bockstein sequence.</p></div>
-        <div><span>04</span><p>Prove the characteristic subgroup and finite-orbit identifications for the final groups.</p></div>
-        <div><span>05</span><p>Check relative property (T), ICC, Haar measure, Pontryagin duality, and crossed-product interfaces.</p></div>
-        <div><span>06</span><p>Obtain specialist novelty review and independent mathematical replication.</p></div>
-      </div>
-    </section>
+      <section id="checked" aria-labelledby="checked-heading">
+        <p class="section-marker">Machine checked</p>
+        <h2 id="checked-heading">Results that pass the pinned Lean build</h2>
+        <dl class="result-list">
+          <div>
+            <dt><code>groupMulEquivOfGroupAlgebraBialgEquiv</code></dt>
+            <dd>
+              A bialgebra equivalence between canonical group algebras induces an
+              isomorphism of the underlying groups. The theorem requires the
+              canonical coproduct; an arbitrary algebra equivalence is insufficient.
+            </dd>
+          </div>
+          <div>
+            <dt><code>fixed_swapFirstTwo_SL3_orbit_infinite</code></dt>
+            <dd>
+              Every nonzero element of \((F[t]^3)^{\otimes_F 3}\) fixed by swapping
+              its first two factors has an infinite orbit under an explicit tail of
+              elementary transvections. More precisely, for suitable \(i\ne j\)
+              and \(N\),
+              <div class="display-math">
+                \[
+                \left\{u_{ij}\!\left(t^{N+n}\right)\mathbin{\cdot}w:n\ge0\right\}
+                \quad\text{is infinite}.
+                \]
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt><code>linear_cube_retraction_forces_frobenius_fixed</code></dt>
+            <dd>
+              An \(F\)-linear map satisfying \(d(x^3)=x\) for every scalar forces
+              \(x^3=x\) for every \(x\in F\). Thus a general characteristic-three
+              construction requires a Frobenius-aware target.
+            </dd>
+          </div>
+          <div>
+            <dt><code>ternaryShiftedCarry_nine_nsmul</code></dt>
+            <dd>
+              The shifted ternary carry extension has exponent dividing nine. The
+              checked chain also characterizes its three-torsion and gives the
+              shifted-kernel cardinality \(3^{3n}\) in the formal coordinate model.
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section aria-labelledby="correction-heading">
+        <h2 id="correction-heading">A checked negative result</h2>
+        <div class="theorem refuted">
+          <p class="theorem-label">Refuted formulation</p>
+          <p>
+            An untwisted \(F\)-linear cubic retraction cannot be assumed over every
+            field of characteristic three.
+          </p>
+          <div class="display-math">
+            \[
+            d(x^3)=x
+            \quad\text{and }F\text{-linearity}\quad
+            \Longrightarrow
+            \quad x^3=x.
+            \]
+          </div>
+          <p class="scope">
+            This rules out the earlier general-field formulation. It does not by
+            itself construct the corrected Frobenius-twisted map.
+          </p>
+        </div>
+      </section>
+
+      <section id="evidence" aria-labelledby="evidence-heading">
+        <p class="section-marker">Exact finite evidence</p>
+        <h2 id="evidence-heading">Boundary cases reproduced by deterministic programs</h2>
+        <p>
+          Each result is exhaustive only on the stated finite domain. A complete
+          pass supports the corresponding general argument but does not replace it.
+        </p>
+        <div class="table-wrap" role="region" aria-label="Finite certificate results" tabindex="0">
+          <table>
+            <thead>
+              <tr><th>Certificate family</th><th>Bound</th><th>Result</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Ternary total-degree kernel</td><td>degree at most 12</td><td>2,258 / 2,258</td></tr>
+              <tr><td>Bivariate ternary kernel</td><td>degree at most 3</td><td>444 / 444</td></tr>
+              <tr><td>Trivariate ternary kernel</td><td>degree at most 2</td><td>304 / 304</td></tr>
+              <tr><td>Divided fifth power</td><td>\(p=5\), \(r=5\), degree at most 2</td><td>1,346 / 1,346</td></tr>
+              <tr><td>Binary stable range</td><td>\(p=2\), \(r=3\), degree at most 6</td><td>120 / 120</td></tr>
+              <tr><td>Witt scalar identities</td><td>\(p=2,3,5,7\)</td><td>exhaustive pass</td></tr>
+              <tr><td>Affine-chart restrictions</td><td>six boundary cases</td><td>all pass</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="claims" aria-labelledby="claims-heading">
+        <h2 id="claims-heading">Claim-level status</h2>
+        <p>
+          The following registry is loaded from the repository's machine-readable
+          status file. Each entry states the strongest evidence currently attached
+          to that exact claim.
+        </p>
+        <div id="claim-cards" class="claim-register" aria-live="polite"></div>
+      </section>
+
+      <section id="open" aria-labelledby="open-heading">
+        <h2 id="open-heading">Unresolved mathematical steps</h2>
+        <ol class="open-list">
+          <li>Formalize or independently verify stable and critical divided-power cyclicity.</li>
+          <li>Generalize the checked rank-three tensor-orbit theorem to arbitrary rank and tensor degree.</li>
+          <li>Construct and check the prime-uniform functional carry and Bockstein sequence.</li>
+          <li>Prove the characteristic-subgroup and finite-orbit identifications for the final semidirect products.</li>
+          <li>Check relative property (T), ICC, Haar measure, Pontryagin duality, and crossed-product interfaces.</li>
+          <li>Compare the candidate algebraic statements with the specialist literature and obtain independent mathematical review.</li>
+        </ol>
+      </section>
+
+      <section id="attribution" aria-labelledby="attribution-heading">
+        <p class="section-marker">Sources and attribution</p>
+        <h2 id="attribution-heading">What comes from where</h2>
+        <dl class="attribution-list">
+          <div>
+            <dt>Reported counterexamples</dt>
+            <dd>
+              The binary-carry architecture is attributed to
+              <a href="https://cdn.openai.com/pdf/ten-proofs-oai.pdf#page=95">OpenAI's construction</a>.
+              The independent binary rank-three action-shear construction is
+              attributed to <a href="https://arxiv.org/abs/2608.02327">Shuoxing Zhou</a>.
+              Neither construction is claimed as new here.
+            </dd>
+          </div>
+          <div>
+            <dt>Classical inputs</dt>
+            <dd>
+              The relative property-(T) route uses the
+              <a href="https://arxiv.org/abs/0911.3371">Cornulier-Tessera criterion</a>.
+              Standard ingredients such as elementary groups, divided powers,
+              Witt carries, amenable radicals, and Pontryagin duality retain their
+              usual mathematical attribution.
+            </dd>
+          </div>
+          <div>
+            <dt>Project-generated candidates</dt>
+            <dd>
+              The stable and odd-critical cyclicity argument, the general
+              polynomial-tensor orbit argument, and the prime-uniform synthesis
+              were generated during this project. Their correctness and priority
+              are not inferred from generation alone.
+            </dd>
+          </div>
+          <div>
+            <dt>Direction and assistance</dt>
+            <dd>
+              Dana Edwards selected and directed the research program, supplied
+              the research tools, and maintains the repository. OpenAI language
+              models assisted with mathematical exploration, proof drafting, Lean
+              repairs, finite experiments, literature retrieval, and exposition.
+              Model output is not verification.
+            </dd>
+          </div>
+          <div>
+            <dt>Verification</dt>
+            <dd>
+              Lean checks the named formal statements. Julia and Python check the
+              declared finite domains. No item is described as independently
+              reviewed unless that review has occurred for the exact statement.
+            </dd>
+          </div>
+        </dl>
+
+        <h3>Repository sources</h3>
+        <ul class="source-list">
+          <li><a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/docs/THEOREM_STATUS.md">Theorem status and scope</a></li>
+          <li><a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/research/notes/STABLE_RANGE_DIVIDED_POWER_CYCLICITY.md">Stable and critical cyclicity argument</a></li>
+          <li><a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/research/notes/GENERAL_SYMMETRIC_TENSOR_ORBIT_THEOREM.md">Polynomial-tensor orbit argument</a></li>
+          <li><a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/research/notes/LITERATURE_AND_NOVELTY_AUDIT_20260804.md">Literature and attribution audit</a></li>
+          <li><a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/actions">Reproducible build history</a></li>
+        </ul>
+      </section>
+    </article>
   </main>
 
-  <footer>
+  <footer class="site-footer">
     <div>
-      <strong>Connes Rigidity | Formal Companion</strong>
-      <p>Directed and published by Dana Edwards. Developed with AI assistance and claim-specific deterministic verification.</p>
+      <strong>Prime-uniform divided powers and tensor orbits</strong>
+      <p>A mathematical account with claim-specific evidence and explicit attribution.</p>
     </div>
-    <div class="footer-links">
-      <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture">Repository</a>
-      <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/docs/THEOREM_STATUS.md">Theorem status</a>
-      <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/actions">Builds</a>
-    </div>
+    <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture">View the repository</a>
   </footer>
+
   <script src="app.js"></script>
 </body>
 </html>

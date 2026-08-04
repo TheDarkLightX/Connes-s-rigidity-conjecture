@@ -14,6 +14,7 @@ def TernaryReducedPolynomial : ℕ → Type
 
 abbrev TernaryPoly := TernaryReducedPolynomial
 
+@[reducible]
 private def ternaryPolyAddCommGroup :
     (n : ℕ) → AddCommGroup (TernaryPoly n)
   | 0 => inferInstance
@@ -23,6 +24,7 @@ private def ternaryPolyAddCommGroup :
 
 attribute [instance] ternaryPolyAddCommGroup
 
+@[reducible]
 private def ternaryPolyModule :
     (n : ℕ) → Module (ZMod 3) (TernaryPoly n)
   | 0 => inferInstance
@@ -32,6 +34,7 @@ private def ternaryPolyModule :
 
 attribute [instance] ternaryPolyModule
 
+@[reducible]
 private def ternaryPolyDecidableEq :
     (n : ℕ) → DecidableEq (TernaryPoly n)
   | 0 => inferInstance
@@ -41,6 +44,7 @@ private def ternaryPolyDecidableEq :
 
 attribute [instance] ternaryPolyDecidableEq
 
+@[reducible]
 private def ternaryPolyFintype :
     (n : ℕ) → Fintype (TernaryPoly n)
   | 0 => inferInstance
@@ -93,6 +97,17 @@ theorem ternaryPolyEval_add {n : ℕ}
       ring
 
 @[simp]
+theorem ternaryPolyEval_sub {n : ℕ}
+    (p q : TernaryPoly n) (x : Fin n → ZMod 3) :
+    ternaryPolyEval (p - q) x =
+      ternaryPolyEval p x - ternaryPolyEval q x := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+      simp [TernaryReducedPolynomial, ternaryPolyEval, ih]
+      ring
+
+@[simp]
 theorem ternaryPolyEval_smul {n : ℕ}
     (c : ZMod 3) (p : TernaryPoly n) (x : Fin n → ZMod 3) :
     ternaryPolyEval (c • p) x = c * ternaryPolyEval p x := by
@@ -108,13 +123,23 @@ def ternaryPolySlice {n : ℕ}
   p.1 + a • p.2.1 + a ^ 2 • p.2.2
 
 @[simp]
+theorem ternaryPolySlice_sub {n : ℕ}
+    (a : ZMod 3) (p q : TernaryPoly (n + 1)) :
+    ternaryPolySlice a (p - q) =
+      ternaryPolySlice a p - ternaryPolySlice a q := by
+  change (p.1 - q.1) + a • (p.2.1 - q.2.1) +
+      a ^ 2 • (p.2.2 - q.2.2) =
+    (p.1 + a • p.2.1 + a ^ 2 • p.2.2) -
+      (q.1 + a • q.2.1 + a ^ 2 • q.2.2)
+  module
+
+@[simp]
 theorem ternaryPolyEval_prepend {n : ℕ}
     (a : ZMod 3) (p : TernaryPoly (n + 1))
     (x : Fin n → ZMod 3) :
     ternaryPolyEval p (prependTernary a x) =
       ternaryPolyEval (ternaryPolySlice a p) x := by
-  simp [ternaryPolyEval, ternaryPolySlice]
-  ring
+  simp [ternaryPolyEval, ternaryPolySlice] <;> ring
 
 /-- Quotient coefficients after a zero slice at `a`. -/
 def ternaryPolyFactorQuotient {n : ℕ}
@@ -134,16 +159,15 @@ theorem ternaryPoly_factorization_of_slice_zero {n : ℕ}
       (p.2.1 + a • p.2.2) p.2.2 := by
   rcases p with ⟨p₀, p₁, p₂⟩
   change (p₀, p₁, p₂) = _
+  have hsum : p₀ + (a • p₁ + a ^ 2 • p₂) = 0 := by
+    simpa [ternaryPolySlice, add_assoc] using hzero
   have hp₀ : p₀ = (-a) • (p₁ + a • p₂) := by
-    change p₀ + a • p₁ + a ^ 2 • p₂ = 0 at hzero
-    apply eq_neg_of_add_eq_zero_left
+    have hp₀neg : p₀ = -(a • p₁ + a ^ 2 • p₂) :=
+      eq_neg_of_add_eq_zero_left hsum
     calc
-      a • p₁ + a ^ 2 • p₂ = a • (p₁ + a • p₂) := by
-        simp [smul_add, mul_smul, pow_two]
-      _ = -((-a) • (p₁ + a • p₂)) := by
-        simp
-  ext <;> simp [ternaryPolyLinearFactorProduct, hp₀,
-    smul_add, mul_smul, pow_two]
+      p₀ = -(a • p₁ + a ^ 2 • p₂) := hp₀neg
+      _ = (-a) • (p₁ + a • p₂) := by module
+  simp [ternaryPolyLinearFactorProduct, hp₀]
 
 /-- Evaluation form of exact division by a vanishing linear slice. -/
 theorem ternaryPoly_eval_factorization {n : ℕ}
@@ -170,14 +194,20 @@ theorem ternaryPoly_eq_zero_of_all_slices_zero {n : ℕ}
     simpa [ternaryPolySlice] using h0
   have hsum : p₁ + p₂ = 0 := by
     simpa [ternaryPolySlice, hp₀, add_assoc] using h1
+  have hsquare : (2 : ZMod 3) ^ 2 = 1 := by norm_num
   have hweighted : (2 : ZMod 3) • p₁ + p₂ = 0 := by
-    simpa [ternaryPolySlice, hp₀, pow_two, add_assoc] using h2
-  have hp₂ : p₂ = -p₁ := eq_neg_of_add_eq_zero_left hsum
+    rw [hsquare] at h2
+    simpa [ternaryPolySlice, hp₀, add_assoc] using h2
+  have hp₁neg : p₁ = -p₂ := eq_neg_of_add_eq_zero_left hsum
+  have hp₂ : p₂ = -p₁ := by
+    calc
+      p₂ = -(-p₂) := by simp
+      _ = -p₁ := by rw [hp₁neg]
   have hp₁ : p₁ = 0 := by
     rw [hp₂] at hweighted
     simpa [two_smul] using hweighted
   have hp₂zero : p₂ = 0 := by simpa [hp₁] using hp₂
-  ext <;> simp [hp₀, hp₁, hp₂zero]
+  simp [hp₀, hp₁, hp₂zero]
 
 /-- Evaluation on all assignments is injective for reduced ternary polynomials. -/
 theorem ternaryPoly_ext_of_eval_eq {n : ℕ}
@@ -186,58 +216,21 @@ theorem ternaryPoly_ext_of_eval_eq {n : ℕ}
     p = q := by
   induction n with
   | zero =>
-      simpa [TernaryReducedPolynomial, ternaryPolyEval] using h (fun i => Fin.elim0 i)
+      simpa [TernaryReducedPolynomial, ternaryPolyEval] using
+        h (fun i => Fin.elim0 i)
   | succ n ih =>
-      apply Prod.ext
-      · apply ih
-        intro x
-        have hx := h (prependTernary 0 x)
-        simpa [ternaryPolyEval_prepend, ternaryPolySlice] using hx
-      · apply Prod.ext
-        · apply ih
-          intro x
-          have h0 := h (prependTernary 0 x)
-          have h1 := h (prependTernary 1 x)
-          have h2 := h (prependTernary 2 x)
-          have hslices :
-              ternaryPolySlice 0 (p - q) = 0 ∧
-              ternaryPolySlice 1 (p - q) = 0 ∧
-              ternaryPolySlice 2 (p - q) = 0 := by
-            constructor
-            · apply ih
-              intro y
-              simpa [ternaryPolyEval_prepend] using sub_eq_zero.mpr (h (prependTernary 0 y))
-            constructor
-            · apply ih
-              intro y
-              simpa [ternaryPolyEval_prepend] using sub_eq_zero.mpr (h (prependTernary 1 y))
-            · apply ih
-              intro y
-              simpa [ternaryPolyEval_prepend] using sub_eq_zero.mpr (h (prependTernary 2 y))
-          have hpq : p - q = 0 :=
-            ternaryPoly_eq_zero_of_all_slices_zero (p - q)
-              hslices.1 hslices.2.1 hslices.2.2
-          exact congrArg (fun r : TernaryPoly (n + 1) => r.2.1)
-            (sub_eq_zero.mp hpq)
-        · have hslices :
-              ternaryPolySlice 0 (p - q) = 0 ∧
-              ternaryPolySlice 1 (p - q) = 0 ∧
-              ternaryPolySlice 2 (p - q) = 0 := by
-            constructor
-            · apply ih
-              intro y
-              simpa [ternaryPolyEval_prepend] using sub_eq_zero.mpr (h (prependTernary 0 y))
-            constructor
-            · apply ih
-              intro y
-              simpa [ternaryPolyEval_prepend] using sub_eq_zero.mpr (h (prependTernary 1 y))
-            · apply ih
-              intro y
-              simpa [ternaryPolyEval_prepend] using sub_eq_zero.mpr (h (prependTernary 2 y))
-          have hpq : p - q = 0 :=
-            ternaryPoly_eq_zero_of_all_slices_zero (p - q)
-              hslices.1 hslices.2.1 hslices.2.2
-          exact congrArg (fun r : TernaryPoly (n + 1) => r.2.2)
-            (sub_eq_zero.mp hpq)
+      have hslice (a : ZMod 3) :
+          ternaryPolySlice a p = ternaryPolySlice a q := by
+        apply ih
+        intro y
+        simpa only [ternaryPolyEval_prepend] using h (prependTernary a y)
+      have hz0 : ternaryPolySlice 0 (p - q) = 0 := by
+        rw [ternaryPolySlice_sub, hslice 0, sub_self]
+      have hz1 : ternaryPolySlice 1 (p - q) = 0 := by
+        rw [ternaryPolySlice_sub, hslice 1, sub_self]
+      have hz2 : ternaryPolySlice 2 (p - q) = 0 := by
+        rw [ternaryPolySlice_sub, hslice 2, sub_self]
+      exact sub_eq_zero.mp
+        (ternaryPoly_eq_zero_of_all_slices_zero (p - q) hz0 hz1 hz2)
 
 end LeanMathlib.Rigidity

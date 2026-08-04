@@ -30,10 +30,10 @@
     {
       "name": "Ternary degree-three support lower bound 2/9",
       "status": "under-repair",
-      "evidence": "Classical Reed–Muller mathematics with an internal recursive Lean proof. The repaired reduced-polynomial foundation is being rebuilt."
+      "evidence": "Classical Reed-Muller mathematics with an internal recursive Lean proof. The repaired reduced-polynomial foundation is being rebuilt."
     },
     {
-      "name": "Teichmüller coordinate phi(a,b)=(a^3+3b) mod 9",
+      "name": "Teichmuller coordinate phi(a,b)=(a^3+3b) mod 9",
       "status": "finite-verified",
       "evidence": "Julia found zero failures over all 81 input pairs, zero cocycle/associativity failures, and an order-nine generator. The naive coordinate failed 36 pairs. Lean source is present; the full build remains the promotion gate."
     },

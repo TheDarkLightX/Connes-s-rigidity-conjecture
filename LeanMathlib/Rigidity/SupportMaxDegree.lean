@@ -14,7 +14,7 @@ theorem mem_support_add_of_disjoint
     intro hxg
     exact Finset.disjoint_left.mp hdisjoint hx hxg
   have hfx : f x ≠ 0 := Finsupp.mem_support_iff.mp hx
-  have hgx : g x = 0 := Finsupp.not_mem_support_iff.mp hx_not_g
+  have hgx : g x = 0 := Finsupp.notMem_support_iff.mp hx_not_g
   apply Finsupp.mem_support_iff.mpr
   simp [hgx, hfx]
 
@@ -25,9 +25,9 @@ theorem mem_support_left_or_right_of_mem_add
     (hx : x ∈ (f + g).support) :
     x ∈ f.support ∨ x ∈ g.support := by
   by_contra h
-  push_neg at h
-  have hfx : f x = 0 := Finsupp.not_mem_support_iff.mp (h.1)
-  have hgx : g x = 0 := Finsupp.not_mem_support_iff.mp (h.2)
+  push Not at h
+  have hfx : f x = 0 := Finsupp.notMem_support_iff.mp h.1
+  have hgx : g x = 0 := Finsupp.notMem_support_iff.mp h.2
   exact Finsupp.mem_support_iff.mp hx (by simp [hfx, hgx])
 
 /--

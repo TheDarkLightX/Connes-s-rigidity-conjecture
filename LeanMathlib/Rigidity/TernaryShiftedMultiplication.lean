@@ -63,7 +63,7 @@ theorem ternaryShiftedCarry_three_nsmul
       (ternaryShiftedFunctionalCarryCocycle n).fiberHom
         (ternaryShiftedFrobeniusDual n x.base) := by
   rcases x with ⟨ell, q⟩
-  rw [show 3 = 2 + 1 by norm_num, add_nsmul, two_nsmul, one_nsmul]
+  simp only [three_nsmul]
   apply NormalizedSymmetricAddCocycle.Extension.ext
   · simp
   · change
@@ -107,7 +107,7 @@ theorem ternaryShiftedCarry_nine_nsmul
     (n : ℕ) (x : TernaryShiftedCarryExtension n) :
     9 • x = 0 := by
   rw [show 9 = 3 * 3 by norm_num, mul_nsmul,
-    ternaryShiftedCarry_three_nsmul]
+    ternaryShiftedCarry_three_nsmul n x]
   change 3 • (ternaryShiftedFunctionalCarryCocycle n).fiberHom
       (ternaryShiftedFrobeniusDual n x.base) = 0
   rw [← map_nsmul]

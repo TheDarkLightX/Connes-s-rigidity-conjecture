@@ -8,7 +8,7 @@ abbrev PolynomialVectorBasisIndex := Σ _ : Fin 3, ℕ
 
 /-- Standard coordinatewise monomial basis of `𝔽₃[t]^3`. -/
 noncomputable def polynomialVectorBasis :
-    Basis PolynomialVectorBasisIndex (ZMod 3)
+    Module.Basis PolynomialVectorBasisIndex (ZMod 3)
       (PolynomialVector3 (ZMod 3)) :=
   Pi.basis fun _ : Fin 3 => Polynomial.basisMonomials (ZMod 3)
 

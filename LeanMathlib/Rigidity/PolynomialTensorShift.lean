@@ -57,7 +57,7 @@ theorem multiplyFirstPolynomialTensor_basis
     multiplyFirstPolynomialTensor F n (polynomialTensorCubeBasis F e) =
       polynomialTensorCubeBasis F (TripleExponent.shiftFirst n e) := by
   simp [multiplyFirstPolynomialTensor, polynomialTensorCubeBasis_apply,
-    TripleExponent.shiftFirst, ← pow_add]
+    TripleExponent.shiftFirst, ← pow_add, Nat.add_comm]
 
 /-- Multiplication in the second tensor factor shifts the monomial basis index. -/
 theorem multiplySecondPolynomialTensor_basis
@@ -65,7 +65,7 @@ theorem multiplySecondPolynomialTensor_basis
     multiplySecondPolynomialTensor F n (polynomialTensorCubeBasis F e) =
       polynomialTensorCubeBasis F (TripleExponent.shiftSecond n e) := by
   simp [multiplySecondPolynomialTensor, polynomialTensorCubeBasis_apply,
-    TripleExponent.shiftSecond, ← pow_add]
+    TripleExponent.shiftSecond, ← pow_add, Nat.add_comm]
 
 /-- First-factor tensor multiplication is exactly first-exponent coefficient shift. -/
 theorem polynomialTensorCubeCoefficients_multiplyFirst

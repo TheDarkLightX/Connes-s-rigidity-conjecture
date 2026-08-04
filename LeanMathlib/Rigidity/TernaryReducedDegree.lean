@@ -47,14 +47,19 @@ theorem ternaryPolyDegreeLE_add {d n : ℕ}
       | zero =>
           rcases hp with ⟨hp₀, hp₁, hp₂⟩
           rcases hq with ⟨hq₀, hq₁, hq₂⟩
-          exact ⟨ih hp₀ hq₀, by simp [hp₁, hq₁], by simp [hp₂, hq₂]⟩
+          refine ⟨ih hp₀ hq₀, ?_, ?_⟩
+          · change p.2.1 + q.2.1 = 0
+            rw [hp₁, hq₁, zero_add]
+          · change p.2.2 + q.2.2 = 0
+            rw [hp₂, hq₂, zero_add]
       | succ d =>
           cases d with
           | zero =>
               rcases hp with ⟨hp₀, hp₁, hp₂⟩
               rcases hq with ⟨hq₀, hq₁, hq₂⟩
-              exact ⟨ih hp₀ hq₀, ih hp₁ hq₁,
-                by simp [hp₂, hq₂]⟩
+              refine ⟨ih hp₀ hq₀, ih hp₁ hq₁, ?_⟩
+              change p.2.2 + q.2.2 = 0
+              rw [hp₂, hq₂, zero_add]
           | succ d =>
               rcases hp with ⟨hp₀, hp₁, hp₂⟩
               rcases hq with ⟨hq₀, hq₁, hq₂⟩
@@ -71,15 +76,21 @@ theorem ternaryPolyDegreeLE_smul {d n : ℕ}
       cases d with
       | zero =>
           rcases hp with ⟨hp₀, hp₁, hp₂⟩
-          exact ⟨ih c hp₀, by simp [hp₁], by simp [hp₂]⟩
+          refine ⟨ih hp₀, ?_, ?_⟩
+          · change c • p.2.1 = 0
+            rw [hp₁, smul_zero]
+          · change c • p.2.2 = 0
+            rw [hp₂, smul_zero]
       | succ d =>
           cases d with
           | zero =>
               rcases hp with ⟨hp₀, hp₁, hp₂⟩
-              exact ⟨ih c hp₀, ih c hp₁, by simp [hp₂]⟩
+              refine ⟨ih hp₀, ih hp₁, ?_⟩
+              change c • p.2.2 = 0
+              rw [hp₂, smul_zero]
           | succ d =>
               rcases hp with ⟨hp₀, hp₁, hp₂⟩
-              exact ⟨ih c hp₀, ih c hp₁, ih c hp₂⟩
+              exact ⟨ih hp₀, ih hp₁, ih hp₂⟩
 
 /-- Raising the allowed degree preserves the predicate. -/
 theorem ternaryPolyDegreeLE_succ {d n : ℕ}
@@ -110,6 +121,7 @@ theorem ternaryPolyDegreeLE_mono {d e n : ℕ}
     (hp : ternaryPolyDegreeLE d n p) :
     ternaryPolyDegreeLE e n p := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hde
+  clear hde
   induction k with
   | zero => simpa
   | succ k ih =>
@@ -148,7 +160,10 @@ theorem ternaryPolyFactorQuotient_degreeZero {n : ℕ}
     (hp : TernaryDegreeOne p) :
     TernaryDegreeZero (ternaryPolyFactorQuotient a p) := by
   rcases hp with ⟨hp₀, hp₁, hp₂⟩
-  simpa [ternaryPolyFactorQuotient, hp₂] using hp₁
+  change ternaryPolyDegreeLE 0 n (p.2.1 + a • p.2.2) ∧
+    p.2.2 = 0 ∧ (0 : TernaryPoly n) = 0
+  refine ⟨?_, hp₂, rfl⟩
+  simpa [hp₂] using hp₁
 
 /-- One zero slice lowers a degree-two polynomial to degree one. -/
 theorem ternaryPolyFactorQuotient_degreeOne {n : ℕ}
@@ -207,6 +222,7 @@ theorem ternaryPolyFactorQuotient_slice_zero {n : ℕ}
   have hfactor := ternaryPoly_slice_factor_eval a b p ha x
   rw [hb, ternaryPolyEval_zero] at hfactor
   have hba : b - a ≠ 0 := sub_ne_zero.mpr hab
-  exact (mul_eq_zero.mp hfactor.symm).resolve_left hba
+  have hz := (mul_eq_zero.mp hfactor.symm).resolve_left hba
+  simpa using hz
 
 end LeanMathlib.Rigidity

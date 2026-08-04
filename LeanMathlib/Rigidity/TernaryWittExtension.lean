@@ -46,7 +46,11 @@ theorem ternaryWitt_nine_nsmul (x : TernaryWittExtension) :
       rw [ternaryWitt_three_nsmul x]
     _ = C.fiberHom (3 • x.base) := by
       exact ((C.fiberHom).map_nsmul x.base 3).symm
-    _ = 0 := by simp [C]
+    _ = C.fiberHom 0 := by
+      congr 1
+      change (3 : ZMod 3) * x.base = 0
+      norm_num
+    _ = 0 := (C.fiberHom).map_zero
 
 /-- The first-coordinate generator is not killed by `3`. -/
 theorem ternaryWitt_three_nsmul_one_ne_zero :

@@ -89,13 +89,13 @@ noncomputable def dividedCubeDualPullbackEquiv
     intro q
     ext w
     simp only [dividedCubeDualPrecompose_apply]
-    have h := (dividedCubeMapEquiv L).apply_symm_apply w
+    have h := (dividedCubeMapEquiv L).symm_apply_apply w
     exact congrArg q h
   right_inv := by
     intro q
     ext w
     simp only [dividedCubeDualPrecompose_apply]
-    have h := (dividedCubeMapEquiv L).symm_apply_apply w
+    have h := (dividedCubeMapEquiv L).apply_symm_apply w
     exact congrArg q h
 
 /-- Shifted carry compatibility for a shift-commuting linear equivalence. -/

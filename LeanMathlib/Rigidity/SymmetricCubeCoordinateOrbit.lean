@@ -19,7 +19,13 @@ theorem exists_fresh_coordinate_of_repeated
     (a b c : Fin 3)
     (hrepeated : a = b ∨ a = c ∨ b = c) :
     ∃ i : Fin 3, i ≠ a ∧ i ≠ b ∧ i ≠ c := by
-  fin_cases a <;> fin_cases b <;> fin_cases c <;> simp_all
+  rcases hrepeated with hab | hac | hbc
+  · subst b
+    fin_cases a <;> fin_cases c <;> native_decide
+  · subst c
+    fin_cases a <;> fin_cases b <;> native_decide
+  · subst c
+    fin_cases a <;> fin_cases b <;> native_decide
 
 /-- If no repeated-label block is nonzero, all repeated-label blocks vanish. -/
 theorem repeatedBlocksZero_of_no_nonzero_repeated

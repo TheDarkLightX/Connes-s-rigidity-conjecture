@@ -54,14 +54,25 @@ theorem elementaryTwo_diagonal_cancellation
   have hlast :
       a.coeff n (n - 1) (n - 1) =
         a.coeff (n - 1) (n - 1) n := by
-    exact (a.swap_first_second (n - 1) n (n - 1)).symm
+    calc
+      a.coeff n (n - 1) (n - 1) =
+          a.coeff (n - 1) n (n - 1) :=
+        (a.swap_first_second (n - 1) n (n - 1)).symm
+      _ = a.coeff (n - 1) (n - 1) n := hmiddle
   rw [hmiddle, hlast]
   exact three_equal_sum_zero _
 
+/-- The diagonal coefficient sequence after multiplication by `e_3`. -/
+def elementaryThreeDiagonalCoefficient
+    (a : TernarySymmetricCoefficients) : ℕ → ZMod 3
+  | 0 => 0
+  | n + 1 => a.coeff n n n
+
 /-- Multiplication by `e_3` shifts all three spectral exponents together. -/
-theorem elementaryThree_diagonal_shift
+@[simp]
+theorem elementaryThreeDiagonalCoefficient_succ
     (a : TernarySymmetricCoefficients) (n : ℕ) :
-    a.coeff n n n = a.coeff n n n := rfl
+    a.elementaryThreeDiagonalCoefficient (n + 1) = a.coeff n n n := rfl
 
 end TernarySymmetricCoefficients
 

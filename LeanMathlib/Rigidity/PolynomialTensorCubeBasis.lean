@@ -18,7 +18,7 @@ def nestedExponentEquiv : (ℕ × (ℕ × ℕ)) ≃ TripleExponent where
 /-- Monomial tensor basis indexed by three exponents. -/
 noncomputable def polynomialTensorCubeBasis
     (F : Type*) [Field F] :
-    Basis TripleExponent F (PolynomialTensorCube F) :=
+    Module.Basis TripleExponent F (PolynomialTensorCube F) :=
   ((Polynomial.basisMonomials F).tensorProduct
       ((Polynomial.basisMonomials F).tensorProduct
         (Polynomial.basisMonomials F))).reindex nestedExponentEquiv
@@ -46,14 +46,8 @@ theorem polynomialTensorCubeCoefficients_tmul
     (u v z : Polynomial F) (e : TripleExponent) :
     polynomialTensorCubeCoefficients F (u ⊗ₜ[F] (v ⊗ₜ[F] z)) e =
       u.coeff e.first * v.coeff e.second * z.coeff e.third := by
-  change
-    (((Polynomial.basisMonomials F).tensorProduct
-      ((Polynomial.basisMonomials F).tensorProduct
-        (Polynomial.basisMonomials F))).repr
-      (u ⊗ₜ[F] (v ⊗ₜ[F] z))
-      (e.first, (e.second, e.third))) = _
-  rw [Module.Basis.tensorProduct_repr_tmul_apply]
-  rw [Module.Basis.tensorProduct_repr_tmul_apply]
-  simp [mul_assoc, mul_left_comm, mul_comm]
+  simp [polynomialTensorCubeCoefficients, polynomialTensorCubeBasis,
+    nestedExponentEquiv, Module.Basis.tensorProduct_repr_tmul_apply,
+    mul_assoc, mul_left_comm, mul_comm]
 
 end LeanMathlib.Rigidity

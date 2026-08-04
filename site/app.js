@@ -1,7 +1,7 @@
 const fallback = {
   claimBoundary: "The reported counterexamples are external prior work. This page separately labels Lean-checked theorems, exact finite computations, mathematical candidates, refuted formulations, and unresolved steps.",
   lean: {
-    moduleCount: 51,
+    moduleCount: 53,
     lastFailingModules: 0,
     trustBypasses: 0,
     finiteSuites: 12

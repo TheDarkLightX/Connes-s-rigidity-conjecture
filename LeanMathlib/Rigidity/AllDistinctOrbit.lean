@@ -5,7 +5,7 @@ import LeanMathlib.Rigidity.SupportMaxDegree
 namespace LeanMathlib.Rigidity
 
 /-- The repeated-coordinate output block created from an all-distinct source block. -/
-def allDistinctShiftOutput
+noncomputable def allDistinctShiftOutput
     {F : Type*} [AddGroup F] (n : ℕ) (A : TripleBlock F) : TripleBlock F :=
   positiveShiftTerm n A + negativeShiftTerm n A
 

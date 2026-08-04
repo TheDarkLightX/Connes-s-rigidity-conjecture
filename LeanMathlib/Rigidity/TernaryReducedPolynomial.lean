@@ -94,7 +94,17 @@ theorem ternaryPolyEval_add {n : ℕ}
   induction n with
   | zero => rfl
   | succ n ih =>
-      simp [ternaryPolyEval, ih]
+      change
+        ternaryPolyEval (p.1 + q.1) (fun i => x i.succ) +
+              x 0 * ternaryPolyEval (p.2.1 + q.2.1) (fun i => x i.succ) +
+              x 0 ^ 2 * ternaryPolyEval (p.2.2 + q.2.2) (fun i => x i.succ) =
+          (ternaryPolyEval p.1 (fun i => x i.succ) +
+              x 0 * ternaryPolyEval p.2.1 (fun i => x i.succ) +
+              x 0 ^ 2 * ternaryPolyEval p.2.2 (fun i => x i.succ)) +
+            (ternaryPolyEval q.1 (fun i => x i.succ) +
+              x 0 * ternaryPolyEval q.2.1 (fun i => x i.succ) +
+              x 0 ^ 2 * ternaryPolyEval q.2.2 (fun i => x i.succ))
+      rw [ih, ih, ih]
       ring
 
 @[simp]
@@ -104,7 +114,14 @@ theorem ternaryPolyEval_smul {n : ℕ}
   induction n with
   | zero => simp [ternaryPolyEval]
   | succ n ih =>
-      simp [ternaryPolyEval, ih]
+      change
+        ternaryPolyEval (c • p.1) (fun i => x i.succ) +
+              x 0 * ternaryPolyEval (c • p.2.1) (fun i => x i.succ) +
+              x 0 ^ 2 * ternaryPolyEval (c • p.2.2) (fun i => x i.succ) =
+          c * (ternaryPolyEval p.1 (fun i => x i.succ) +
+            x 0 * ternaryPolyEval p.2.1 (fun i => x i.succ) +
+            x 0 ^ 2 * ternaryPolyEval p.2.2 (fun i => x i.succ))
+      rw [ih, ih, ih]
       ring
 
 @[simp]
@@ -144,7 +161,6 @@ theorem ternaryPolyEval_prepend {n : ℕ}
     ternaryPolyEval p (prependTernary a x) =
       ternaryPolyEval (ternaryPolySlice a p) x := by
   simp [ternaryPolyEval, ternaryPolySlice]
-  ring
 
 /-- Quotient coefficients after a zero slice at `a`. -/
 def ternaryPolyFactorQuotient {n : ℕ}

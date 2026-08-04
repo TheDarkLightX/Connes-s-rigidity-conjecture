@@ -4,7 +4,7 @@ const fallback = {
     moduleCount: 51,
     lastFailingModules: 0,
     trustBypasses: 0,
-    finiteSuites: 11
+    finiteSuites: 12
   },
   claims: []
 };
@@ -38,12 +38,16 @@ function render(data) {
   container.innerHTML = data.claims.map(claim => {
     const statusClass = statusStyles[claim.status] || "status-open";
     const statusLabel = claim.status.replaceAll("-", " ");
+    const detailLink = claim.url
+      ? `<p><a href="${escapeHtml(claim.url)}">Read the detailed derivation</a></p>`
+      : "";
     return `
       <article class="claim-entry">
         <div class="claim-status ${escapeHtml(statusClass)}">${escapeHtml(statusLabel)}</div>
         <div class="claim-copy">
           <h3>${escapeHtml(claim.name)}</h3>
           <p>${escapeHtml(claim.evidence)}</p>
+          ${detailLink}
         </div>
       </article>`;
   }).join("");

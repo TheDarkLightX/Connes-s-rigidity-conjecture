@@ -42,6 +42,7 @@ import LeanMathlib.Rigidity.TernaryReducedPolynomial
 import LeanMathlib.Rigidity.TernaryShiftedCarry
 import LeanMathlib.Rigidity.TernaryShiftedFrobeniusKernel
 import LeanMathlib.Rigidity.TernaryShiftedMultiplication
+import LeanMathlib.Rigidity.TernarySpectralDiagonal
 import LeanMathlib.Rigidity.TernarySupportCore
 import LeanMathlib.Rigidity.TernarySupportRecurrence
 import LeanMathlib.Rigidity.TernaryTruncatedInvariant

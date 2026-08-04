@@ -14,6 +14,7 @@ on:
       - 'experiments/odd_prime_divided_power_certificates.py'
       - 'experiments/prime_witt_exhaustive.py'
       - 'experiments/constant_kernel_psl3.jl'
+      - 'experiments/spectral_frobenius_resolution.py'
       - '.github/workflows/julia-experiments.yml'
   pull_request:
     branches:
@@ -28,6 +29,7 @@ on:
       - 'experiments/odd_prime_divided_power_certificates.py'
       - 'experiments/prime_witt_exhaustive.py'
       - 'experiments/constant_kernel_psl3.jl'
+      - 'experiments/spectral_frobenius_resolution.py'
       - '.github/workflows/julia-experiments.yml'
   workflow_dispatch:
 
@@ -80,6 +82,8 @@ jobs:
         run: python experiments/prime_witt_exhaustive.py --primes 2 3 5 7
       - name: Verify the constant-kernel PSL3 certificate
         run: julia --project=@. experiments/constant_kernel_psl3.jl
+      - name: Verify the spectral Frobenius resolution identities
+        run: python experiments/spectral_frobenius_resolution.py
       - name: Upload finite evidence
         uses: actions/upload-artifact@v4
         with:
@@ -96,5 +100,6 @@ jobs:
             experiments/binary_rank3_divided_square_result.json
             experiments/prime_witt_exhaustive_result.json
             experiments/constant_kernel_psl3_result.json
+            experiments/spectral_frobenius_resolution_result.json
           if-no-files-found: error
           retention-days: 14

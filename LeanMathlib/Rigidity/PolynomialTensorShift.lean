@@ -86,10 +86,13 @@ theorem polynomialTensorCubeCoefficients_multiplyFirst
       singleShiftTerm n
         (polynomialTensorCubeCoefficients F (polynomialTensorCubeBasis F e))
     rw [multiplyFirstPolynomialTensor_basis]
-    ext x
-    classical
-    simp [polynomialTensorCubeCoefficients, singleShiftTerm,
-      Finsupp.embDomain_apply]
+    change (polynomialTensorCubeBasis F).repr
+        (polynomialTensorCubeBasis F (TripleExponent.shiftFirst n e)) =
+      singleShiftTerm n
+        ((polynomialTensorCubeBasis F).repr (polynomialTensorCubeBasis F e))
+    rw [(polynomialTensorCubeBasis F).repr_self,
+      (polynomialTensorCubeBasis F).repr_self]
+    exact (Finsupp.embDomain_single (TripleExponent.shiftFirst n) e 1).symm
   exact DFunLike.congr_fun hLR w
 
 /-- Second-factor tensor multiplication is exactly second-exponent coefficient shift. -/
@@ -111,10 +114,13 @@ theorem polynomialTensorCubeCoefficients_multiplySecond
       negativeShiftTerm n
         (polynomialTensorCubeCoefficients F (polynomialTensorCubeBasis F e))
     rw [multiplySecondPolynomialTensor_basis]
-    ext x
-    classical
-    simp [polynomialTensorCubeCoefficients, negativeShiftTerm,
-      Finsupp.embDomain_apply]
+    change (polynomialTensorCubeBasis F).repr
+        (polynomialTensorCubeBasis F (TripleExponent.shiftSecond n e)) =
+      negativeShiftTerm n
+        ((polynomialTensorCubeBasis F).repr (polynomialTensorCubeBasis F e))
+    rw [(polynomialTensorCubeBasis F).repr_self,
+      (polynomialTensorCubeBasis F).repr_self]
+    exact (Finsupp.embDomain_single (TripleExponent.shiftSecond n) e 1).symm
   exact DFunLike.congr_fun hLR w
 
 /-- Multiplication in both first and second tensor factors gives the double shift. -/

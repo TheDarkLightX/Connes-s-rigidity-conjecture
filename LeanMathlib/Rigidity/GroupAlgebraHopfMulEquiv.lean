@@ -12,7 +12,7 @@ noncomputable def groupToGroupLikeHom
       (isGroupLikeElem_groupAlgebra_iff_single _).2 ⟨g, rfl⟩⟩
   map_one' := by
     apply GroupLike.val_injective
-    simp
+    exact MonoidAlgebra.one_def.symm
   map_mul' := by
     intro g h
     apply GroupLike.val_injective

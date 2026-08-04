@@ -1,5 +1,6 @@
 import Mathlib
 import LeanMathlib.Rigidity.DividedCubeSymmetry
+import LeanMathlib.Rigidity.TernaryWittCarry
 
 namespace LeanMathlib.Rigidity
 
@@ -62,7 +63,7 @@ noncomputable def diagonalBlockPolynomialLinear
 /-- Frobenius-diagonal extraction on cube-coordinate arrays. -/
 noncomputable def cubeCoordinateFrobeniusDiagonal
     (R : Type*) [Semiring R] :
-    CubeCoordinateBlock R →ₗ[R] PolynomialVector3 R where
+    CubeCoordinateBlock R →ₗ[R] (Fin 3 → Polynomial R) where
   toFun w i := diagonalBlockPolynomial (w i i i)
   map_add' := by
     intro w₁ w₂

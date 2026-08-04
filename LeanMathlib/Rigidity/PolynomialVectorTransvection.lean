@@ -58,8 +58,12 @@ theorem transvection_mulVec_apply
     (Matrix.transvection target source ((Polynomial.X : Polynomial F) ^ n) *ᵥ v) i =
       polynomialVectorTransvection F target source n v i := by
   classical
-  simp [Matrix.transvection, Matrix.single_mulVec,
-    polynomialVectorTransvection]
+  rw [Matrix.transvection, Matrix.add_mulVec, Matrix.one_mulVec,
+    Matrix.single_mulVec]
+  by_cases hi : i = target
+  · subst i
+    simp [polynomialVectorTransvection]
+  · simp [polynomialVectorTransvection, hi]
 
 /-- Mathlib's actual `SL₃` representation agrees with the explicit transvection map. -/
 theorem polynomialSLTransvection_toLin_apply
@@ -80,7 +84,9 @@ theorem polynomialSLTransvection_toLinearMap
     (Matrix.SpecialLinearGroup.toLin'
       (polynomialSLTransvection F target source hts n)).toLinearMap.restrictScalars F =
       polynomialVectorTransvection F target source n := by
-  ext v i
+  apply LinearMap.ext
+  intro v
+  funext i
   exact polynomialSLTransvection_toLin_apply F target source hts n v i
 
 end LeanMathlib.Rigidity

@@ -58,12 +58,8 @@ noncomputable def ternaryPolySupportSliceEquiv {n : ℕ}
     · rfl
     · rfl
   right_inv := by
-    intro x
-    apply Sigma.ext
-    · rfl
-    · apply Subtype.ext
-      funext i
-      rfl
+    rintro ⟨a, ⟨y, hy⟩⟩
+    rfl
 
 /-- Exact support-card recursion through the three slices. -/
 theorem ternaryPolySupportCard_slices {n : ℕ}
@@ -72,7 +68,7 @@ theorem ternaryPolySupportCard_slices {n : ℕ}
       ∑ a : ZMod 3, ternaryPolySupportCard (ternaryPolySlice a p) := by
   rw [ternaryPolySupportCard,
     Fintype.card_congr (ternaryPolySupportSliceEquiv p)]
-  exact Fintype.card_sigma _
+  exact Fintype.card_sigma
 
 /-- Explicit three-slice cardinal formula. -/
 theorem ternaryPolySupportCard_three_slices {n : ℕ}
@@ -81,8 +77,14 @@ theorem ternaryPolySupportCard_three_slices {n : ℕ}
       ternaryPolySupportCard (ternaryPolySlice 0 p) +
       ternaryPolySupportCard (ternaryPolySlice 1 p) +
       ternaryPolySupportCard (ternaryPolySlice 2 p) := by
+  classical
   rw [ternaryPolySupportCard_slices]
-  native_decide
+  change (Finset.univ : Finset (ZMod 3)).sum
+      (fun a => ternaryPolySupportCard (ternaryPolySlice a p)) = _
+  have huniv : (Finset.univ : Finset (ZMod 3)) = {0, 1, 2} := by
+    native_decide
+  rw [huniv]
+  norm_num [Finset.sum_insert]
 
 @[simp]
 theorem ternaryPolySupportCard_zero (n : ℕ) :
@@ -127,7 +129,7 @@ theorem ternaryPolySupportCard_pos {n : ℕ}
     0 < ternaryPolySupportCard p := by
   have hex : ∃ x : Fin n → ZMod 3, ternaryPolyEval p x ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     apply hp
     apply ternaryPoly_ext_of_eval_eq p 0
     intro x

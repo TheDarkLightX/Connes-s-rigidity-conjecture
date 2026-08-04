@@ -1,0 +1,36 @@
+{
+  "campaign_id": "sha256:1f49e5f54de49f8d498a91ddc240a0b6292b077b4f398e7a4477d24fe53c24f5",
+  "state_count": 18,
+  "workflow_run": 30897603854,
+  "artifact_digest": "sha256:9f3ea336193351fce1269c79494570651ac857c72a532f43c6548e74e9adf53b",
+  "naive": {
+    "accepted": true,
+    "all_receipts_pass": true,
+    "lifecycle": "ACTIVE",
+    "scientific_support": false,
+    "candidate_id": "sha256:a76703aced8352bd6ffc544946f8c50406fd0e8c4f4eb8b7a1cc78272f06c2cd"
+  },
+  "teichmueller_cubic": {
+    "accepted": true,
+    "all_receipts_pass": true,
+    "lifecycle": "ACTIVE",
+    "scientific_support": false,
+    "candidate_id": "sha256:723bcfee90b3415c9c6ac23e948b9ed54f821e8c308cd46562c027dc4371b316",
+    "stable_replay": true,
+    "replay_bundle_hash": "sha256:20d760c09d658fbdf995f6f3bd9544bf818987459fefbbef2d5525aad279f7e7"
+  },
+  "receipts_passed_for_both": [
+    "static_safety",
+    "non_vacuity",
+    "portal_recognition",
+    "semantic_relation",
+    "portal_certificate",
+    "original_domain_lift"
+  ],
+  "interpretation": {
+    "result": "The campaign does not distinguish the naive and cubic coordinates.",
+    "reason": "Both coordinates are injective on the nine scalar Witt states. LEAP's current exact-transition-quotient portal certifies state separation and reachability lift, but it canonicalizes abstract state labels and does not require the coordinate to conjugate the group law to addition modulo 9.",
+    "missing_obligation": "For all x,y, phi(witt_add(x,y)) = phi(x) + phi(y) mod 9, or equivalently the action-translation commuting squares for all nine translations.",
+    "claim_boundary": "Green operational receipts are not scientific support for the homomorphism claim. The campaign is retained as evidence that the original portal was underspecified."
+  }
+}

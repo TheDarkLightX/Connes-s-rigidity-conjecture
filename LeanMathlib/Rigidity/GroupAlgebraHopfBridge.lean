@@ -38,8 +38,16 @@ theorem groupAlgebra_counit_eq_sum
     (a : MonoidAlgebra K G) :
     Coalgebra.counit (R := K) a = a.sum (fun _ c => c) := by
   induction a using Finsupp.induction_linear with
-  | zero => simp
-  | add a b ha hb => simp [ha, hb]
+  | zero =>
+      simpa using
+        (Coalgebra.counit (R := K) : MonoidAlgebra K G →ₗ[K] K).map_zero
+  | add a b ha hb =>
+      calc
+        Coalgebra.counit (R := K) (a + b) =
+            Coalgebra.counit (R := K) a + Coalgebra.counit (R := K) b :=
+          (Coalgebra.counit (R := K) : MonoidAlgebra K G →ₗ[K] K).map_add a b
+        _ = a.sum (fun _ c => c) + b.sum (fun _ c => c) := by rw [ha, hb]
+        _ = (a + b).sum (fun _ c => c) := by simp
   | single g c => simp
 
 /-- The canonical coproduct has only diagonal coefficient support. -/
@@ -49,9 +57,27 @@ theorem tensorCoefficient_groupAlgebra_comul
     tensorCoefficient g h (Coalgebra.comul (R := K) a) =
       if g = h then a g else 0 := by
   induction a using Finsupp.induction_linear with
-  | zero => simp [tensorCoefficient]
+  | zero =>
+      have hzero := congrArg (tensorCoefficient g h)
+        ((Coalgebra.comul (R := K) :
+          MonoidAlgebra K G →ₗ[K]
+            MonoidAlgebra K G ⊗[K] MonoidAlgebra K G).map_zero)
+      simpa using hzero
   | add a b ha hb =>
-      by_cases hgh : g = h <;> simp [map_add, ha, hb, hgh]
+      calc
+        tensorCoefficient g h (Coalgebra.comul (R := K) (a + b)) =
+            tensorCoefficient g h
+              (Coalgebra.comul (R := K) a + Coalgebra.comul (R := K) b) := by
+          rw [(Coalgebra.comul (R := K) :
+            MonoidAlgebra K G →ₗ[K]
+              MonoidAlgebra K G ⊗[K] MonoidAlgebra K G).map_add]
+        _ = tensorCoefficient g h (Coalgebra.comul (R := K) a) +
+              tensorCoefficient g h (Coalgebra.comul (R := K) b) :=
+          (tensorCoefficient g h).map_add _ _
+        _ = (if g = h then a g else 0) +
+              (if g = h then b g else 0) := by rw [ha, hb]
+        _ = if g = h then (a + b) g else 0 := by
+          by_cases hgh : g = h <;> simp [hgh]
   | single i c =>
       by_cases hgh : g = h <;>
         by_cases hig : i = g <;>
@@ -90,9 +116,11 @@ noncomputable def groupLikeGroupAlgebraEquiv
     have hval : Finsupp.single g (1 : K) = Finsupp.single h 1 :=
       congrArg GroupLike.val hEq
     by_contra hne
-    have hzero : (0 : K) = 1 := by
-      simpa [Finsupp.single_apply, hne] using congrFun (DFunLike.congr_fun hval h) h
-    exact zero_ne_one hzero
+    have hne' : h ≠ g := Ne.symm hne
+    have hpoint := DFunLike.congr_fun hval g
+    have honezero : (1 : K) = 0 := by
+      simpa [Finsupp.single_apply, hne, hne'] using hpoint
+    exact one_ne_zero honezero
   have hf_surjective : Function.Surjective f := by
     intro x
     obtain ⟨g, hg⟩ := (isGroupLikeElem_groupAlgebra_iff_single x.val).1 x.isGroupLikeElem_val

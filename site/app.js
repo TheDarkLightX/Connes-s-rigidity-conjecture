@@ -1,7 +1,16 @@
 const fallback = {
   claimBoundary: "This site does not claim a completed counterexample to Connes's rigidity conjecture.",
-  lean: { moduleCount: 49, initialFailingModules: 11 },
+  lean: { moduleCount: 50, initialFailingModules: 11 },
   claims: []
+};
+
+const statusStyles = {
+  "finite-verified": "status-checked",
+  "conjecture": "status-open",
+  "under-repair": "status-under-repair",
+  "open": "status-open",
+  "refuted": "status-refuted",
+  "checked": "status-checked"
 };
 
 function escapeHtml(value) {
@@ -20,7 +29,7 @@ function render(data) {
 
   const container = document.getElementById("claim-cards");
   container.innerHTML = data.claims.map(claim => {
-    const statusClass = `status-${claim.status}`;
+    const statusClass = statusStyles[claim.status] || "status-open";
     return `
       <article class="claim-card">
         <span class="status-pill ${escapeHtml(statusClass)}">${escapeHtml(claim.status.replaceAll("-", " "))}</span>

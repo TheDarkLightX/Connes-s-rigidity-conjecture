@@ -53,7 +53,9 @@ theorem coordinateShiftKernel_eq_zero_of_ge
   have hcoord := congrFun hkernel ⟨i, r⟩
   have hsum : n + r = k := by
     simp [r, Nat.add_sub_of_le hk]
-  simpa [polynomialDualCoordinateShift, hsum] using hcoord
+  change f.1 ⟨i, n + r⟩ = 0 at hcoord
+  rw [hsum] at hcoord
+  exact hcoord
 
 /--
 The kernel of tail shift consists exactly of arbitrary coefficients in degrees

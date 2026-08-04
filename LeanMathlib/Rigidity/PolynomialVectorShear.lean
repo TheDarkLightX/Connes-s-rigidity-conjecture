@@ -4,7 +4,7 @@ import LeanMathlib.Rigidity.TernaryCarryNaturality
 namespace LeanMathlib.Rigidity
 
 /-- Polynomial elementary shear with arbitrary polynomial coefficient. -/
-def polynomialVectorShear
+noncomputable def polynomialVectorShear
     (target source : Fin 3) (q : Polynomial (ZMod 3)) :
     PolynomialVector3 (ZMod 3) →ₗ[ZMod 3]
       PolynomialVector3 (ZMod 3) where
@@ -49,7 +49,7 @@ noncomputable def polynomialVectorShearEquiv
     funext i
     by_cases hi : i = target
     · subst i
-      simp [polynomialVectorShear, hts]
+      simp [polynomialVectorShear, hts, Ne.symm hts]
       ring
     · simp [polynomialVectorShear, hi]
   right_inv := by
@@ -57,7 +57,7 @@ noncomputable def polynomialVectorShearEquiv
     funext i
     by_cases hi : i = target
     · subst i
-      simp [polynomialVectorShear, hts]
+      simp [polynomialVectorShear, hts, Ne.symm hts]
       ring
     · simp [polynomialVectorShear, hi]
 
@@ -85,10 +85,13 @@ theorem polynomialVectorShear_commutes_shift
   apply LinearMap.ext
   intro v
   funext i
-  by_cases hi : i = target <;>
+  by_cases hi : i = target
+  · subst i
     simp [CommutesWithPolynomialShift, polynomialVectorShear,
-      polynomialVectorShift, hi, mul_assoc, mul_left_comm, mul_comm,
-      mul_add, add_assoc]
+      polynomialVectorShift]
+    ring
+  · simp [CommutesWithPolynomialShift, polynomialVectorShear,
+      polynomialVectorShift, hi]
 
 /-- The monomial transvection is the corresponding arbitrary-coefficient shear. -/
 theorem polynomialVectorTransvection_eq_shear

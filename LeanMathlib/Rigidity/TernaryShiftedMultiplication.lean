@@ -74,8 +74,11 @@ theorem ternaryShiftedCarry_three_nsmul
         ternaryShiftedFrobeniusDual n ell
     rw [ternaryShiftedFunctionalCarry_comm n ell (ell + ell)]
     have hqzero : q + q + q = 0 := by
-      rw [← three_nsmul]
-      exact ZModModule.char_nsmul_eq_zero 3 q
+      have hchar := ZModModule.char_nsmul_eq_zero 3 q
+      rw [three_nsmul] at hchar
+      calc
+        q + q + q = q + (q + q) := by abel
+        _ = 0 := hchar
     calc
         q + (q + q + ternaryShiftedFunctionalCarry n ell ell) +
               ternaryShiftedFunctionalCarry n (ell + ell) ell =
@@ -87,41 +90,16 @@ theorem ternaryShiftedCarry_three_nsmul
             ternaryShiftedFunctionalCarry n (ell + ell) ell := by
               rw [hqzero, zero_add]
       _ = ternaryShiftedFrobeniusDual n ell := by
-        ext b
-        rcases b with ⟨w, hw⟩
-        change
-          ternaryCarryTensorFunctional
-              (polynomialVectorDualShift n ell)
-              (polynomialVectorDualShift n ell) w +
-          ternaryCarryTensorFunctional
-            (polynomialVectorDualShift n (ell + ell))
-              (polynomialVectorDualShift n ell) w =
-            ell (polynomialVectorShift n
-              (ternaryFrobeniusDiagonal w))
-        refine Submodule.span_induction
-          (p := fun z _ =>
-            ternaryCarryTensorFunctional
-                (polynomialVectorDualShift n ell)
-                (polynomialVectorDualShift n ell) z +
-              ternaryCarryTensorFunctional
-                (polynomialVectorDualShift n (ell + ell))
-                (polynomialVectorDualShift n ell) z =
-              ell (polynomialVectorShift n
-                (ternaryFrobeniusDiagonal z)))
-          ?_ ?_ ?_ ?_ hw
-        · intro z hz
-          obtain ⟨v, rfl⟩ := hz
-          simp [ternaryCarryTensorFunctional_tmul,
-            ternaryCarry, ternaryCarry_three_identity]
-        · simp
-        · intro u v hu hv hresultU hresultV
-          simp only [map_add]
-          rw [hresultU, hresultV]
-          ring
-        · intro c v hv hresult
-          simp only [map_smul]
-          rw [hresult]
-          ring
+        apply (Submodule.linearMap_eq_iff_of_eq_span
+          (ternaryShiftedFunctionalCarry n ell ell +
+            ternaryShiftedFunctionalCarry n (ell + ell) ell)
+          (ternaryShiftedFrobeniusDual n ell)
+          (S := Set.range fun v : PolynomialVector3 (ZMod 3) =>
+            v ⊗ₜ[ZMod 3] (v ⊗ₜ[ZMod 3] v)) (by rfl)).2
+        rintro ⟨_, ⟨v, rfl⟩⟩
+        simpa [ternaryShiftedFunctionalCarry] using
+          ternaryCarry_three_identity
+            (ell (polynomialVectorShift n v))
 
 /-- Every shifted ternary carry-group element has exponent dividing nine. -/
 theorem ternaryShiftedCarry_nine_nsmul

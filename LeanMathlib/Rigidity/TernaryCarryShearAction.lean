@@ -94,7 +94,6 @@ noncomputable def dividedCubeDualPullbackEquiv
   right_inv := by
     intro q
     ext w
-    simp only [dividedCubeDualPrecompose_apply]
     have h := (dividedCubeMapEquiv L).apply_symm_apply w
     exact congrArg q h
 

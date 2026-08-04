@@ -21,8 +21,8 @@ theorem prime_choose_mul_eq_zero
 
 /-- The ternary `e_1` and `e_2` multiplicities are both zero in `F_3`. -/
 example (x : ZMod 3) :
-    ((3.choose 1 : ℕ) : ZMod 3) * x = 0 ∧
-      ((3.choose 2 : ℕ) : ZMod 3) * x = 0 := by
+    ((Nat.choose 3 1 : ℕ) : ZMod 3) * x = 0 ∧
+      ((Nat.choose 3 2 : ℕ) : ZMod 3) * x = 0 := by
   constructor
   · exact prime_choose_mul_eq_zero (by norm_num) (by norm_num) (by norm_num) x
   · exact prime_choose_mul_eq_zero (by norm_num) (by norm_num) (by norm_num) x

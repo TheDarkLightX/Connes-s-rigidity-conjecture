@@ -27,6 +27,49 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function installSpectralResultLinks() {
+  const nav = document.querySelector('nav[aria-label="Page contents"]');
+  if (nav && !nav.querySelector('[data-spectral-link]')) {
+    const link = document.createElement("a");
+    link.href = "spectral-kernel.html";
+    link.textContent = "Spectral kernel";
+    link.dataset.spectralLink = "true";
+
+    const checkedLink = nav.querySelector('a[href="#checked"]');
+    nav.insertBefore(link, checkedLink);
+  }
+
+  const statusNote = document.querySelector(".status-note");
+  if (statusNote && !document.getElementById("spectral-result-callout")) {
+    const callout = document.createElement("section");
+    callout.id = "spectral-result-callout";
+    callout.className = "theorem candidate";
+
+    const label = document.createElement("p");
+    label.className = "theorem-label";
+    label.textContent = "New structural result";
+
+    const heading = document.createElement("h2");
+    heading.textContent = "Spectral Frobenius-kernel resolution";
+
+    const summary = document.createElement("p");
+    summary.textContent = "A prime-uniform decomposition concentrates the kernel's nonfreeness in copies of the Frobenius ideal, predicts projective dimension p - 2 for p at least 3, and explains the ternary Hilbert numerator through three degree-three syzygies.";
+
+    const action = document.createElement("p");
+    const actionLink = document.createElement("a");
+    actionLink.href = "spectral-kernel.html";
+    actionLink.textContent = "Read the full spectral-kernel derivation";
+    action.appendChild(actionLink);
+
+    const scope = document.createElement("p");
+    scope.className = "scope";
+    scope.textContent = "Status: arithmetic core Lean checked; symbolic Betti identities verified; global module theorem awaiting full Lean formalization and independent review.";
+
+    callout.append(label, heading, summary, action, scope);
+    statusNote.insertAdjacentElement("afterend", callout);
+  }
+}
+
 function render(data) {
   document.getElementById("claim-boundary").textContent = data.claimBoundary;
   document.getElementById("module-count").textContent = data.lean.moduleCount;
@@ -52,6 +95,8 @@ function render(data) {
       </article>`;
   }).join("");
 }
+
+installSpectralResultLinks();
 
 fetch("status.json", { cache: "no-store" })
   .then(response => {

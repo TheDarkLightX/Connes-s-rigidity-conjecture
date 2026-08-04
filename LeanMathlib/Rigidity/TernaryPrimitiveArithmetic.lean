@@ -19,8 +19,6 @@ theorem ternaryPrimitiveCount_succ (n : ℕ) :
 theorem ternaryVectorCount_succ (n : ℕ) :
     ternaryVectorCount (n + 1) = 3 ^ (3 * n + 3) := by
   simp [ternaryVectorCount]
-  congr 1
-  omega
 
 /-- The predicted nonprimitive count is `3^(3n+1)-2`. -/
 theorem ternary_nonprimitive_count (n : ℕ) :
@@ -28,7 +26,7 @@ theorem ternary_nonprimitive_count (n : ℕ) :
       3 ^ (3 * n + 1) - 2 := by
   rw [ternaryVectorCount_succ, ternaryPrimitiveCount_succ]
   have hpow : 3 ^ (3 * n + 1) ≤ 3 ^ (3 * n + 3) := by
-    exact Nat.pow_le_pow_right' (by omega) (by omega)
+    exact Nat.pow_le_pow_right (by norm_num) (by omega)
   omega
 
 /-- Exact finite-size correction to the limiting primitive density `8/9`. -/
@@ -64,8 +62,12 @@ theorem ternary_nonprimitive_density_identity (n : ℕ) :
       _ = 3 ^ (3 * n + 1) * 3 ^ 2 := by rw [pow_add]
       _ = 9 * 3 ^ (3 * n + 1) := by ring
   rw [hpow]
-  have htwo : 2 ≤ 3 ^ (3 * n + 1) := by
-    exact le_trans (by norm_num : 2 ≤ 3) (Nat.pow_le_pow_right' (by omega) (by omega))
+  have hthree : 3 ≤ 3 ^ (3 * n + 1) := by
+    calc
+      3 = 3 ^ 1 := by norm_num
+      _ ≤ 3 ^ (3 * n + 1) := Nat.pow_le_pow_right (by norm_num) (by omega)
+  have htwo : 2 ≤ 3 ^ (3 * n + 1) :=
+    le_trans (by norm_num) hthree
   omega
 
 /-- Nonprimitive density is strictly below `1/9` at every finite level. -/

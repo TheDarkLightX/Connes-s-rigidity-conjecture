@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this formalization, cite the tagged repository release and associated preprint."
+message: "If you use this formalization, cite the exact tagged repository release."
 title: "Connes's Rigidity Conjecture Formal Research Program"
 type: software
 authors:

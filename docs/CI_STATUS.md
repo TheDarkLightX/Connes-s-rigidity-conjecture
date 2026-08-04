@@ -1,59 +1,60 @@
-# Standalone Lean CI status
+# CI and trust status
 
-## Toolchain
+## Pinned formal environment
 
-- Repository: `TheDarkLightX/Connes-s-rigidity-conjecture`
-- Branch: `agent/import-lean-rigidity-research-20260804`
-- Command: `lake build`
 - Lean: `4.30.0-rc2`
-- Mathlib revision: `9977002c3c9492b622fb469b0d18acc7e73aed3e`
+- Mathlib: `9977002c3c9492b622fb469b0d18acc7e73aed3e`
+- Formal entry point: `LeanMathlib.lean`
+- Imported rigidity modules: 51
 
-## Initial standalone audit
+## Release gate
 
-The first dedicated-repository build, workflow run `30894406560`, failed in eleven modules. That result corrected the earlier assumption that incremental source-workspace runs established the final imported dependency graph.
+The release candidate passes a clean GitHub-hosted `lake build` of the full
+import graph. The pull-request gate runs on every proposed change, including
+documentation-only changes, so the status belongs to the exact head being
+reviewed.
 
-Initial failures:
+Before Lean runs, `scripts/audit_lean_trust.py` rejects project-source uses of:
 
-1. `TernaryPrimitiveArithmetic`
-2. `TernaryTruncatedInvariant`
-3. `TernaryWittCarry`
-4. `TernaryReducedPolynomial`
-5. `ExponentSeparation`
-6. `ExactGroupLike`
-7. `FinsuppGroupLike`
-8. `SupportOrbitCore`
-9. `ApproximateGroupLike`
-10. `HopfRoundingEquiv`
-11. `AbelianCocycleExtension`
+- `sorry` and `admit`;
+- declared `axiom` statements;
+- `unsafe` declarations;
+- `native_decide`;
+- direct `sorryAx` references.
 
-## Latest complete remote audit
+The same audit runs again on pushes to `main`.
 
-Workflow run `30903123149`, testing commit `a8b232bc582c88a5e5ab6ac16e75f78dbe52184a`, reduced the standalone failure frontier to four modules:
+## Why the full graph matters
 
-1. `LeanMathlib.Rigidity.GroupAlgebraHopfBridge`
-2. `LeanMathlib.Rigidity.PolynomialTensorCubeBasis`
-3. `LeanMathlib.Rigidity.TernarySupportRecurrence`
-4. `LeanMathlib.Rigidity.TernaryWittCoordinate`
+The first standalone import exposed eleven failures that were hidden by
+incremental source-workspace checks. Successive repairs reduced that frontier
+to zero. The failed runs remain in GitHub Actions as an audit trail, but they no
+longer describe the release head.
 
-That run successfully built the newer repairs to `SingleShiftOrbit`, `TernaryWittExtension`, `TernaryReducedDegree`, and `TernaryPrimitiveCount`, along with the earlier repaired dependency layers. The failing run remains part of the public audit trail.
+An isolated file build is useful during repair, but it is not the publication
+gate. The accepted unit is the complete pinned dependency graph at the exact
+commit being published.
 
-## Local repair and research batch awaiting CI
+## Independent finite-oracle gate
 
-The current worktree preserves the remote proofs that passed and replaces the four failing modules with targeted repairs. It also adds the strengthened first-two-symmetric orbit theorem, a Frobenius scalar obstruction, prime-rank detector experiments, exact finite-orbit certificates, and the accompanying discovery and novelty-audit packets.
+The Julia and Python workflow runs eleven bounded certificate suites and
+uploads their machine-readable results. The suite covers Witt carries, divided
+power kernels, multivariate cases, detector constants, chart restrictions, and
+selected prime/rank boundary cases.
 
-The batch removes every use of `native_decide` under `LeanMathlib/`. It has passed local syntax, JSON, finite-linear-algebra, exact-oracle, and diff checks. Two dependency-minimized targets also build against the pinned toolchain:
+This gate is logically separate from Lean:
 
-- `LeanMathlib.Rigidity.DetectorTransfer`, including the corrected `3/8` spectral arithmetic and the `1/12`, `1/8`, and `4/45` chart constants;
-- `LeanMathlib.Rigidity.FrobeniusTwistObstruction`.
+- Lean checks general statements represented in the formal source;
+- the finite programs check only their enumerated domains;
+- agreement between them is useful cross-validation where their scopes
+  overlap, but neither evidence class inherits claims from the other.
 
-The full graph could not be rebuilt locally because 6,284 Mathlib cache objects returned HTTP 502. These focused successes do not replace the full gate. The batch is **not promoted** until a new clean remote `lake build` succeeds.
+## Reproduction
 
-## Promotion rule
+```bash
+python3 scripts/audit_lean_trust.py
+lake build
+```
 
-No headline theorem depending transitively on a failing or unaudited module is considered promoted. Every repair requires:
-
-1. a focused module build;
-2. a full clean `lake build`;
-3. a theorem-dependency review;
-4. correction of stale website or repository claims;
-5. separate disclosure if a future proof uses finite compiler-checked evidence rather than a small kernel-only derivation.
+The finite commands and their bounds are listed in
+`.github/workflows/julia-experiments.yml`.

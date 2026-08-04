@@ -1,37 +1,46 @@
-# Paper workspace
+# Publication workspace
 
-The first focused manuscript should center on the stable/critical pair of
-theorems: divided-`p` cyclicity for `r>p` and odd `r=p`, and infinite
-polynomial-tensor orbits for `m<r` and first-two-symmetric critical tensors.
-The ternary rank-three theorem and binary rank-three corollary should be
-presented as the two smallest boundary cases.
+No research manuscript is promoted from this directory yet.
 
-Only the rank-three orbit theorem has formal source, and “Lean verified” is
-used only after a clean full dependency build. The general cyclicity/orbit
-proofs are paper candidates with exact certificates at primes two, three, and
-five; they are not yet formalized.
+The repository currently supports a formalization note describing the checked
+rank-three tensor-orbit theorem, Hopf reconstruction, Frobenius obstruction,
+shifted ternary carry identities, and finite certificate suite. A stronger
+research paper requires a result beyond that checked companion package.
 
-The broader construction now has a prime-uniform minimal-rank synthesis
-`r_p=max(p,3)` and paper proof candidates for relative property (T),
-amenable-radical recovery, product Haar measure, Pontryagin duality, and common
-crossed products. Its interfaces remain unformalized and unreviewed, so it is
-still a research program rather than a promoted theorem.
+## Strongest paper candidate
 
-The first manuscript must position the construction against Chapter 4 of
-OpenAI's August 2026 *Ten Advances in Mathematics and Theoretical Computer
-Science*. That paper already proves the binary rank-four counterexample using
-the same carry/common-action, finite-orbit, and primitive-detector architecture.
-It must also compare Shuoxing Zhou's concurrent arXiv:2608.02327, which reaches
-binary rank three using affine charts and a different action-shear
-construction.
-The defensible focus is the stable/critical algebra and the exact way it meets
-the prime--rank/degree--rank detector phase boundary. A second manuscript can
-develop the minimal-rank carry synthesis, including the candidate binary
-rank-three cardinal `2^(3n)` and odd-prime cardinals `p^(pn)`. A separate short note should develop
-the amenable-radical simplification of the published binary construction; if
-verified, it removes the auxiliary torsion-free acting-group section entirely
-and gives direct ICC and relative-property-(T) proofs for the carry groups.
+The most defensible possible paper would center on two proposed theorems:
 
-A 1 August PhilArchive manuscript disputing the public counterexamples must be
-acknowledged and source-audited, but its current abstract concerns different
-groups and does not presently change this manuscript's prior-art boundary.
+1. divided-`p` cyclicity in stable rank `r > p` and odd critical rank `r = p`;
+2. infinite polynomial-tensor orbits for tensor degree `m < r`, together with
+   the first-two-symmetric critical case `m = r`.
+
+The rank-three critical orbit theorem is Lean checked. The general orbit and
+cyclicity statements have written arguments and selected exact certificates,
+but they are not fully formalized or independently reviewed.
+
+## Paper gate
+
+A manuscript should begin only after all of the following hold:
+
+- the focal general theorem has a complete proof, preferably machine checked;
+- a modular-representation specialist has reviewed the proof and definitions;
+- a targeted literature review supports a precise novelty statement;
+- an independent reviewer has reproduced the argument;
+- the paper avoids depending on unfinished property-(T), characteristic
+  subgroup, or operator-algebra interfaces unless those interfaces are also
+  completed.
+
+If those conditions are not met, the appropriate publication is a tutorial or
+formalization note with explicit nonclaims.
+
+## Prior-art boundary
+
+OpenAI's binary rank-four carry construction already contains the
+carry/common-action, finite-orbit, and primitive-detector architecture.
+Shuoxing Zhou's independent binary rank-three construction uses affine charts
+and an action shear. Neither architecture is claimed as new here.
+
+The plausible contribution is the stable and critical algebra itself, if its
+correctness and priority survive review. The broader minimal-rank prime-uniform
+construction remains a research program.

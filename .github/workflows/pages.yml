@@ -6,6 +6,10 @@ on:
       - main
     paths:
       - 'site/**'
+      - 'README.md'
+      - 'docs/**'
+      - 'paper/**'
+      - 'scripts/audit_public_content.py'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -23,13 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Validate static site files
-        run: |
-          test -f site/index.html
-          test -f site/styles.css
-          test -f site/app.js
-          test -f site/status.json
-          python -m json.tool site/status.json >/dev/null
+      - name: Audit public content and static site files
+        run: python3 scripts/audit_public_content.py
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact

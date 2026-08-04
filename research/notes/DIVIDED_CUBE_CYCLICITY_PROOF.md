@@ -6,7 +6,7 @@ explicit tensor-basis calculations written below.
 **Machine status:** independently verified in the total-degree quotients through
 degree `12` and in the ring quotients `F₃[t]/(t^N)` for `N = 1,2,3,4`.
 The infinite cyclicity proof itself is not yet formalized in Lean. The separate
-infinite-orbit theorem is formalized, subject to the repository's full-build gate.
+infinite-orbit theorem passes the repository's full pinned Lean build.
 
 **Novelty status:** not established. The proof should be compared with modular
 divided-power/current-group literature and reviewed by a specialist before any

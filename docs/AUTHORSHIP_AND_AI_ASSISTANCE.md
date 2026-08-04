@@ -1,37 +1,49 @@
 # Authorship and AI assistance
 
-## Research direction and repository stewardship
+## Research direction and stewardship
 
-Dana Edwards specified the research goals, selected the Connes-rigidity problem, directed the adversarial and constructive exploration, supplied the repository infrastructure, and is the repository steward.
+Dana Edwards selected the research problem, supplied the research tools,
+directed the exploration, provided the repository infrastructure, and is the
+repository steward and responsible publisher.
 
 ## AI-assisted work
 
-OpenAI language models were used to:
+OpenAI language models assisted with:
 
-- analyze the OpenAI/Codex rigidity construction and proposed rebuttals;
-- generate candidate generalizations, including the stable/critical
-  divided-power theorems and prime-uniform Witt-carry program;
-- propose mathematical proof strategies and theorem decompositions;
-- draft and revise Lean source files;
-- run GitHub-based compilation experiments and interpret compiler feedback;
-- prepare research documentation and migration metadata.
+- mathematical exploration and candidate generalizations;
+- proof decomposition and adversarial checks;
+- Lean drafting and compiler-guided repairs;
+- Julia and Python experiments;
+- literature retrieval and research documentation;
+- explanatory site content.
 
-Model output is not itself mathematical verification. A Lean file is treated as verified only when its complete dependency chain builds in the pinned environment, and a formal theorem is treated as relevant only after its definitions are reviewed against the intended mathematical statement.
+The model family is disclosed at this level because the repository does not
+contain a durable, independently verifiable receipt for a more specific model
+variant. A narrower model label should be added only when such provenance is
+preserved.
 
-## Current validation warning
+## Verification and responsibility
 
-The first complete standalone build in this dedicated repository exposed failures in eleven imported modules. Accordingly, this repository currently presents a research formalization program rather than a blanket set of completed machine-checked results. See `CI_STATUS.md` and `THEOREM_STATUS.md`.
+Model output is not mathematical verification. A result is called Lean checked
+only when its exact statement and full dependency graph pass the pinned build.
+Finite verified means only that a deterministic program exhausted its declared
+finite domain. Neither label establishes novelty or substitutes for qualified
+human review.
+
+Language models are disclosed as research tools, not listed as scholarly
+authors. A future paper must have human authors who can approve the manuscript,
+defend its arguments, correct errors, and accept responsibility under the
+chosen venue's authorship policy.
 
 ## Publication policy
 
-Any paper or public announcement based on this repository should:
+A public paper or release based on this repository should:
 
-1. distinguish human research direction from AI-generated exploration and drafting;
-2. identify the exact tagged commit and toolchain used;
-3. disclose the modules and assumptions in the promoted theorem dependency chain;
-4. report independent expert review and any unresolved objections;
-5. distinguish the published binary counterexample architecture from this
-   unreviewed prime-uniform synthesis, acknowledge current adversarial claims,
-   and avoid a new-counterexample claim until the property-(T), ICC,
-   intrinsic-invariant, and operator-algebra interfaces are formalized and
-   independently checked.
+1. identify the exact tagged commit and pinned toolchain;
+2. state which results are Lean checked, finite verified, written candidates,
+   or open;
+3. disclose AI assistance and the limits of available model provenance;
+4. acknowledge the 2026 counterexamples as prior art;
+5. report independent expert review and unresolved objections;
+6. avoid claiming a new counterexample until every required group-theoretic
+   and operator-algebraic interface is complete.

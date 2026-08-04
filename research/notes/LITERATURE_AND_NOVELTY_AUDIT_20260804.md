@@ -152,7 +152,7 @@ The coordinate argument generalizes. For `2<=m<=r`, every nonzero tensor in
 diagonal `r=m`, invariance under the first-factor transposition suffices. The
 divided power is contained in this fixed subspace. Neither web search nor the
 archived TheoremSearch results found this exact statement. Priority remains
-unproved; only the rank-three instance is represented in Lean source.
+unproved; only the rank-three instance is Lean checked in this repository.
 
 ### 5.2 Ternary divided-cube cyclicity
 

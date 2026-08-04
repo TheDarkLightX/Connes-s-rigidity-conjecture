@@ -1,9 +1,9 @@
 # A stable/critical polynomial-tensor orbit theorem
 
 **Status:** complete paper proof candidate. The rank-three, tensor-cube
-critical case is represented in Lean source; its full dependency graph is
-awaiting CI. The general statement below is new source-level mathematics and
-has not been formalized or independently reviewed.
+critical case is Lean checked in the repository's full pinned dependency
+graph. The general statement below is a written candidate and has not been
+formalized or independently reviewed.
 
 ## 1. The theorem
 

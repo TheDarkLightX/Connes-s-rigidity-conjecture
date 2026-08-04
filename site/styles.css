@@ -175,6 +175,15 @@ main, footer { position: relative; }
 }
 .formula.compact { font-size: clamp(1.25rem, 3vw, 2.35rem); }
 .fineprint { font-size: .92rem !important; }
+.theorem-statement {
+  max-width: 760px;
+  margin-top: 34px;
+  padding: 22px 24px;
+  border-left: 3px solid var(--accent-2);
+  background: rgba(121,167,255,.07);
+}
+.theorem-statement p { margin: 6px 0; color: var(--muted); }
+.theorem-statement strong { color: var(--text); }
 .falsifier-card {
   padding: 30px;
   border: 1px solid var(--line);
@@ -210,13 +219,35 @@ main, footer { position: relative; }
   border: 1px solid currentColor;
 }
 .status-open { color: var(--open); }
-.status-under-repair { color: var(--warning); }
-.status-finite-verification-running { color: var(--accent-2); }
+.status-candidate { color: var(--warning); }
 .status-checked { color: var(--accent); }
 .status-refuted { color: var(--danger); }
-.status-complete-proof-candidate { color: var(--accent-2); }
-.status-formal-source-awaiting-ci { color: var(--warning); }
-.status-proved-awaiting-ci { color: var(--accent); }
+
+.evidence-table {
+  margin-top: 42px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.evidence-table table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+}
+.evidence-table th,
+.evidence-table td {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+.evidence-table th {
+  color: var(--accent);
+  font-size: .75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.evidence-table td { color: var(--muted); }
+.evidence-table tr:last-child td { border-bottom: 0; }
 
 .pipeline {
   display: grid;
@@ -230,6 +261,7 @@ main, footer { position: relative; }
 .step { color: var(--accent-2); font-family: monospace; }
 .pipeline h3 { font-size: 1.45rem; margin: 30px 0 10px; }
 .pipeline p { color: var(--muted); }
+.evidence-ladder { grid-template-columns: repeat(4, 1fr); }
 
 .layers, .credit-grid {
   display: grid;
@@ -237,6 +269,7 @@ main, footer { position: relative; }
   gap: 18px;
   margin-top: 42px;
 }
+.checked-grid { grid-template-columns: repeat(2, 1fr); }
 .layers article, .credit-grid article {
   padding: 30px;
   border: 1px solid var(--line);
@@ -286,7 +319,7 @@ footer p { color: var(--muted); max-width: 620px; }
   .metrics article:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .result-grid { grid-template-columns: 1fr; }
   .falsifier-card { position: static; }
-  .pipeline, .layers { grid-template-columns: repeat(2, 1fr); }
+  .pipeline, .layers, .checked-grid, .evidence-ladder { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 640px) {

@@ -1,19 +1,22 @@
 const fallback = {
-  claimBoundary: "The broad rigidity conjecture was disproved in 2026. This repository distinguishes checked companion theorems, finite computations, and unreviewed proof candidates.",
-  lean: { moduleCount: 51, fullBuild: "pending" },
+  claimBoundary: "Two counterexamples to the broad rigidity conjecture were reported in 2026. This repository distinguishes external reports, checked companion theorems, finite computations, and unreviewed proof candidates.",
+  lean: {
+    moduleCount: 51,
+    fullBuild: "green",
+    lastFailingModules: 0,
+    trustBypasses: 0,
+    finiteSuites: 11
+  },
   claims: []
 };
 
 const statusStyles = {
   "finite-verified": "status-checked",
   "external-result": "status-checked",
-  "source-under-validation": "status-under-repair",
-  "paper-proof-candidate": "status-under-repair",
-  "conjecture": "status-open",
-  "under-repair": "status-under-repair",
+  "lean-checked": "status-checked",
+  "paper-proof-candidate": "status-candidate",
   "open": "status-open",
-  "refuted": "status-refuted",
-  "checked": "status-checked"
+  "refuted": "status-refuted"
 };
 
 function escapeHtml(value) {
@@ -29,6 +32,8 @@ function render(data) {
   document.getElementById("claim-boundary").textContent = data.claimBoundary;
   document.getElementById("module-count").textContent = data.lean.moduleCount;
   document.getElementById("failure-count").textContent = data.lean.lastFailingModules;
+  document.getElementById("trust-count").textContent = data.lean.trustBypasses;
+  document.getElementById("suite-count").textContent = data.lean.finiteSuites;
 
   const container = document.getElementById("claim-cards");
   container.innerHTML = data.claims.map(claim => {

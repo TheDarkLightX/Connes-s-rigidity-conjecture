@@ -4,13 +4,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - 'LeanMathlib/**'
-      - 'LeanMathlib.lean'
-      - 'lakefile.lean'
-      - 'lake-manifest.json'
-      - 'lean-toolchain'
-      - 'scripts/audit_lean_trust.py'
   workflow_dispatch:
 
 permissions:
@@ -28,6 +21,8 @@ jobs:
           test -f LeanMathlib.lean
       - name: Reject Lean placeholders and compiler-trusting proofs
         run: python3 scripts/audit_lean_trust.py
+      - name: Reject publication leaks and stale internal references
+        run: python3 scripts/audit_public_content.py
       - uses: leanprover/lean-action@v1
         with:
           build: true

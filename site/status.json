@@ -2,70 +2,59 @@
   "updated": "2026-08-04",
   "repository": "TheDarkLightX/Connes-s-rigidity-conjecture",
   "headline": "A formal companion to the 2026 counterexamples to Connes rigidity",
-  "claimBoundary": "The broad rigidity conjecture was disproved in 2026. This repository separates external counterexamples, Lean-checked companion theorems, exact finite computations, and unreviewed prime-uniform proof candidates.",
+  "claimBoundary": "The public counterexamples are external results. This repository separately labels Lean-checked theorems, exact finite computations, unreviewed proof candidates, refuted formulations, and open construction steps.",
   "lean": {
     "moduleCount": 51,
-    "fullBuild": "integrated branch awaiting exact CI",
-    "lastFailingModules": "pending",
-    "nativeDecideOccurrences": 0
+    "fullBuild": "green on the exact release candidate head",
+    "lastFailingModules": 0,
+    "trustBypasses": 0,
+    "finiteSuites": 11
   },
   "claims": [
     {
-      "name": "The broad ICC property-(T) rigidity conjecture is false",
+      "name": "Two counterexamples to the broad ICC property-(T) rigidity conjecture were reported",
       "status": "external-result",
-      "evidence": "Counterexamples were announced independently in 2026. They are prior art for this repository, not results established here."
+      "evidence": "Independent constructions were reported in 2026. Their operator-algebraic conclusions are prior art and are not reproved by this repository."
     },
     {
-      "name": "Canonical Hopf structure reconstructs the group",
-      "status": "source-under-validation",
-      "evidence": "A Lean formalization is present. Promotion requires the complete pinned-toolchain build, not an isolated file check."
+      "name": "Canonical group-algebra bialgebra structure reconstructs the group",
+      "status": "lean-checked",
+      "evidence": "The full pinned Lean graph checks the restriction to group-like elements and the induced group isomorphism. The statement assumes preservation of the canonical coproduct."
     },
     {
-      "name": "A nonzero first-two-symmetric rank-three tensor has infinite elementary orbit",
-      "status": "source-under-validation",
-      "evidence": "The Lean source contains the rank-three theorem. The public status remains provisional until the complete dependency graph passes."
+      "name": "A nonzero first-two-symmetric rank-three polynomial tensor has infinite elementary orbit",
+      "status": "lean-checked",
+      "evidence": "Lean checks an explicit elementary-transvection tail with infinite range over every field. The arbitrary-rank generalization is not included in this status."
     },
     {
-      "name": "Stable and critical polynomial tensors have infinite elementary orbit",
-      "status": "paper-proof-candidate",
-      "evidence": "A written coordinate-block argument covers tensor degree m<r and a symmetric critical case m=r. It is not yet generally formalized or independently reviewed."
+      "name": "The shifted ternary carry extension has exponent dividing nine",
+      "status": "lean-checked",
+      "evidence": "The checked cocycle chain proves the multiplication-by-three identity, exponent bound, three-torsion characterization, and shifted-kernel cardinality 3^(3n)."
     },
     {
-      "name": "Divided pth-power cyclicity holds in stable and odd-critical rank",
-      "status": "paper-proof-candidate",
-      "evidence": "A fresh-coordinate induction and an odd-characteristic two-source identity are written down. Exact finite certificates support selected instances but do not prove the general statement."
-    },
-    {
-      "name": "Prime and multivariate finite certificates reproduce",
+      "name": "Selected prime, rank, degree, and Witt cases reproduce exactly",
       "status": "finite-verified",
-      "evidence": "Deterministic Julia and Python programs check the reported bounded instances. These computations are evidence for finite cases only."
+      "evidence": "Eleven deterministic certificate suites pass on their declared bounded domains. No conclusion is extended beyond those domains by computation alone."
+    },
+    {
+      "name": "Stable and odd-critical divided-power cyclicity",
+      "status": "paper-proof-candidate",
+      "evidence": "A written induction and selected exact certificates support the claim. The general theorem is not yet formalized or independently reviewed."
+    },
+    {
+      "name": "General stable and critical polynomial-tensor orbit theorem",
+      "status": "paper-proof-candidate",
+      "evidence": "A coordinate-block argument extends the checked rank-three pattern on paper. Only the rank-three critical case is presently Lean checked."
     },
     {
       "name": "An untwisted linear cubic retraction works over every characteristic-three field",
       "status": "refuted",
-      "evidence": "Linearity would force lambda^3=lambda for every scalar. General fields require a Frobenius-twisted formulation."
+      "evidence": "The checked scalar obstruction shows that such a map forces x^3=x for every scalar. A general formulation needs a Frobenius twist."
     },
     {
-      "name": "Completed prime-uniform property-(T) counterexample families",
+      "name": "A completed prime-uniform property-(T) counterexample family",
       "status": "open",
-      "evidence": "The proposed synthesis still depends on unformalized interfaces and specialist review. This repository does not claim a completed new counterexample family."
-    }
-  ],
-  "tools": [
-    {
-      "name": "Lean",
-      "role": "kernel-check formal statements and proofs",
-      "status": "complete pinned-toolchain build pending"
-    },
-    {
-      "name": "Julia and Python",
-      "role": "replay exact bounded certificates",
-      "status": "finite oracle suite assembled"
-    },
-    {
-      "name": "TheoremSearch",
-      "role": "retrieve theorem-level prior art",
-      "status": "prior-art boundary recorded"
+      "evidence": "The synthesis still depends on unformalized group-theoretic and operator-algebraic interfaces, specialist review, and a stronger novelty audit."
     }
   ]
 }

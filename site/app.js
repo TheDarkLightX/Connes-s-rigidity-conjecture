@@ -1,8 +1,7 @@
 const fallback = {
-  claimBoundary: "Two counterexamples to the broad rigidity conjecture were reported in 2026. This repository distinguishes external reports, checked companion theorems, finite computations, and unreviewed proof candidates.",
+  claimBoundary: "The reported counterexamples are external prior work. This page separately labels Lean-checked theorems, exact finite computations, mathematical candidates, refuted formulations, and unresolved steps.",
   lean: {
     moduleCount: 51,
-    fullBuild: "green",
     lastFailingModules: 0,
     trustBypasses: 0,
     finiteSuites: 11
@@ -12,9 +11,9 @@ const fallback = {
 
 const statusStyles = {
   "finite-verified": "status-checked",
-  "external-result": "status-checked",
+  "external-result": "status-open",
   "lean-checked": "status-checked",
-  "paper-proof-candidate": "status-candidate",
+  "mathematical-candidate": "status-candidate",
   "open": "status-open",
   "refuted": "status-refuted"
 };
@@ -38,11 +37,14 @@ function render(data) {
   const container = document.getElementById("claim-cards");
   container.innerHTML = data.claims.map(claim => {
     const statusClass = statusStyles[claim.status] || "status-open";
+    const statusLabel = claim.status.replaceAll("-", " ");
     return `
-      <article class="claim-card">
-        <span class="status-pill ${escapeHtml(statusClass)}">${escapeHtml(claim.status.replaceAll("-", " "))}</span>
-        <h3>${escapeHtml(claim.name)}</h3>
-        <p>${escapeHtml(claim.evidence)}</p>
+      <article class="claim-entry">
+        <div class="claim-status ${escapeHtml(statusClass)}">${escapeHtml(statusLabel)}</div>
+        <div class="claim-copy">
+          <h3>${escapeHtml(claim.name)}</h3>
+          <p>${escapeHtml(claim.evidence)}</p>
+        </div>
       </article>`;
   }).join("");
 }

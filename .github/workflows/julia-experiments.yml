@@ -4,9 +4,15 @@ on:
   push:
     branches:
       - agent/import-lean-rigidity-research-20260804
+    paths:
+      - 'experiments/ternary_witt_exhaustive.jl'
+      - '.github/workflows/julia-experiments.yml'
   pull_request:
     branches:
       - main
+    paths:
+      - 'experiments/ternary_witt_exhaustive.jl'
+      - '.github/workflows/julia-experiments.yml'
   workflow_dispatch:
 
 permissions:

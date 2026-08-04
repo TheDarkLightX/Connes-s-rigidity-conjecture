@@ -26,6 +26,7 @@
         <a href="#decomposition">Decomposition</a>
         <a href="#diagonal">Diagonal lemma</a>
         <a href="#resolution">Resolution</a>
+        <a href="#corollaries">Corollaries</a>
         <a href="#ternary">Ternary case</a>
         <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture">Repository</a>
       </nav>
@@ -46,16 +47,17 @@
           <div><dt>Scope</dt><dd>prime \(p\), rank \(r\)</dd></div>
           <div><dt>Evidence</dt><dd>written proof candidate</dd></div>
           <div><dt>Certificate</dt><dd>exact symbolic replay</dd></div>
-          <div><dt>Lean</dt><dd>not yet formalized</dd></div>
+          <div><dt>Lean</dt><dd>arithmetic core checked</dd></div>
         </dl>
       </header>
 
       <aside class="status-note">
         <strong>Status convention.</strong>
         <span>
-          The argument is complete on paper and its polynomial identities are
-          replayed exactly. The module theorem is not yet Lean checked or
-          independently reviewed, and no priority claim is made.
+          Lean checks the prime binomial cancellation and the explicit ternary
+          diagonal-coefficient identities. The global module decomposition,
+          localization argument, and minimal resolution remain written proof
+          candidates awaiting formalization and independent review.
         </span>
       </aside>
 
@@ -142,7 +144,7 @@
         </div>
         <p>
           In \(e_jf\), the required coefficient is a sum of
-          \(inom pj\) equal coefficients. Hence in characteristic \(p\),
+          \(\binom pj\) equal coefficients. Hence in characteristic \(p\),
         </p>
         <div class="display-math">
           \[
@@ -165,6 +167,10 @@
           I_p=(e_1,\ldots,e_{p-1}).
           \]
         </div>
+        <p>
+          The coefficient multiplicity theorem and the ternary \(e_1,e_2,e_3\)
+          cases now pass the complete Lean trust and build gates.
+        </p>
       </section>
 
       <section id="resolution" aria-labelledby="resolution-heading">
@@ -220,6 +226,48 @@
         </div>
       </section>
 
+      <section id="corollaries" aria-labelledby="corollaries-heading">
+        <h2 id="corollaries-heading">Closed Betti series and exact nonfree locus</h2>
+        <p>
+          Let \(F_{\mathrm{mixed}}(q)=B_{p,r}(q)-r\). The subset-indexed
+          Koszul shifts assemble into one two-variable Betti series:
+        </p>
+        <div class="display-math">
+          \[
+          \mathcal P_{p,r}(z,q)=
+          F_{\mathrm{mixed}}(q)
+          +\frac r z\left[
+          \prod_{a=1}^{p-1}(1+zq^a)-1
+          \right].
+          \]
+        </div>
+        <p>
+          Its coefficient of \(z^j q^d\) is the proposed graded Betti number
+          \(\beta_{j,d}\). Substituting \(z=-1\) recovers the Hilbert
+          numerator. At \(q=1\),
+        </p>
+        <div class="display-math">
+          \[
+          \beta_0=r^p+r(p-2),\qquad
+          \beta_j=r\binom{p-1}{j+1}\quad(1\le j\le p-2).
+          \]
+        </div>
+        <p>For every \(p\ge3\), localization gives the sharper geometric claim</p>
+        <div class="display-math">
+          \[
+          \operatorname{NonFree}_S(K_{p,r})
+          =V(e_1,\ldots,e_{p-1}).
+          \]
+        </div>
+        <p>
+          Away from this Frobenius small diagonal, one \(e_j\) becomes a unit
+          and \(I_p\) becomes free. On the diagonal, the localized ideal still
+          needs \(p-1>1\) generators although it has rank one. The kernel is
+          therefore torsion-free but not reflexive for odd primes. At the
+          generic point of the curve its depth is one.
+        </p>
+      </section>
+
       <section id="ternary" aria-labelledby="ternary-heading">
         <h2 id="ternary-heading">The ternary numerator is a Betti table</h2>
         <p>For \(p=r=3\), the free spectral module is</p>
@@ -250,7 +298,7 @@
         <p>
           The degree-three free generator contributes \(+q^3\). The three
           Frobenius-sector syzygies contribute \(-3q^3\). This explains the
-          previously mysterious coefficient \(-2q^3\).
+          coefficient \(-2q^3\).
         </p>
       </section>
 
@@ -265,18 +313,18 @@
           \]
         </div>
         <p>
-          Here \(I_2=(e_1)\) is principal. The transition from binary to odd
-          primes is visible both in cyclicity and in spectral homological
-          dimension.
+          Here \(I_2=(e_1)\) is principal. The nonfree locus is empty, and the
+          positive-degree Ext statement used for odd primes does not apply.
         </p>
       </section>
 
       <section aria-labelledby="meaning-heading">
         <h2 id="meaning-heading">Meaning and limits</h2>
         <ol class="reasoning-steps">
-          <li>The old Hilbert series now has an exact module explanation.</li>
+          <li>The earlier Hilbert series now has an exact proposed module explanation.</li>
           <li>Odd-prime kernels are not spectrally free.</li>
-          <li>The result offers smaller formalization targets: orbit blocks, the diagonal lemma, and a Koszul complex.</li>
+          <li>All higher syzygies are supported on one Frobenius curve.</li>
+          <li>The result offers smaller formalization targets: orbit blocks, the diagonal lemma, localization, and a Koszul complex.</li>
           <li>Current-group cyclicity and spectral generation remain different notions.</li>
         </ol>
         <p>
@@ -290,7 +338,10 @@
 
       <footer class="document-footer">
         <p>
-          <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/agent/spectral-frobenius-kernel-20260804/research/notes/SPECTRAL_FROBENIUS_KERNEL_RESOLUTION.md">Read the full proof candidate</a>.
+          <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/research/notes/SPECTRAL_FROBENIUS_KERNEL_RESOLUTION.md">Read the full decomposition argument</a>.
+        </p>
+        <p>
+          <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/research/notes/SPECTRAL_BETTI_AND_NONFREE_LOCUS.md">Read the Betti and localization corollaries</a>.
         </p>
         <p><a href="index.html">Return to the main mathematical note</a>.</p>
       </footer>

@@ -483,11 +483,9 @@ theorem ternaryPrimitiveCount_subtraction (N : ℕ) (hN : 0 < N) :
     calc
       3 ^ (3 * (n + 1)) = 3 ^ (3 * n + 3) := by
         congr 1
-        omega
       _ = 27 * 3 ^ (3 * n) := hcube
   have hprev : 3 ^ (3 * ((n + 1) - 1)) = 3 ^ (3 * n) := by
     congr 1
-    omega
   have hnext : 3 ^ (3 * n + 1) = 3 * 3 ^ (3 * n) := by
     calc
       3 ^ (3 * n + 1) = 3 ^ (3 * n) * 3 ^ 1 := by rw [pow_add]
@@ -507,10 +505,19 @@ theorem ternary_primitive_card_of_convolution (P : ℕ → ℕ)
   have hprevious := hP n
   rw [ternary_primitive_convolution_shift] at hcurrent
   rw [← hprevious] at hcurrent
-  have hsub := ternaryPrimitiveCount_subtraction (n + 1) (by omega)
-  have hindex : n + 1 - 1 = n := by omega
-  rw [hindex] at hsub
-  omega
+  have hsub :
+      (3 ^ (3 * (n + 1)) - 1) -
+          3 * (3 ^ (3 * n) - 1) =
+        ternaryPrimitiveCount (n + 1) := by
+    simpa using ternaryPrimitiveCount_subtraction (n + 1) (by omega)
+  calc
+    P (n + 1) =
+        (P (n + 1) + 3 * (3 ^ (3 * n) - 1)) -
+          3 * (3 ^ (3 * n) - 1) :=
+      (Nat.add_sub_cancel_right _ _).symm
+    _ = (3 ^ (3 * (n + 1)) - 1) -
+          3 * (3 ^ (3 * n) - 1) := by rw [← hcurrent]
+    _ = ternaryPrimitiveCount (n + 1) := hsub
 
 /-- Exact cardinality of primitive ternary rank-three polynomial vectors. -/
 theorem card_ternaryPrimitivePolynomialVector (N : ℕ) (hN : 0 < N) :

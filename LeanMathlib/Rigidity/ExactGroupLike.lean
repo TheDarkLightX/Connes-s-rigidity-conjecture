@@ -30,7 +30,7 @@ theorem exact_groupLike_coefficients
     ∃ g, ∀ h, a h = if h = g then 1 else 0 := by
   have hnonzero : ∃ g, a g ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     have hsumzero : ∑ g, a g = 0 := by simp [h]
     rw [hsumzero] at hcounit
     exact zero_ne_one hcounit
@@ -67,7 +67,7 @@ theorem delta_groupLike_coefficients
     by_cases hxy : x = y <;>
       by_cases hx : x = g <;>
       by_cases hy : y = g <;>
-      simp [diagonalCoeffs, tensorSquareCoeffs, hxy, hx, hy]
+      simp_all [diagonalCoeffs, tensorSquareCoeffs]
 
 /-- Exact finite-dimensional characterization of group-like coefficient vectors. -/
 theorem groupLike_coefficients_iff_delta
@@ -82,6 +82,6 @@ theorem groupLike_coefficients_iff_delta
   · rintro ⟨g, hg⟩
     have ha : a = fun h => if h = g then 1 else 0 := funext hg
     rw [ha]
-    exact delta_groupLike_coefficients g
+    exact delta_groupLike_coefficients (G := G) (K := K) g
 
 end LeanMathlib.Rigidity

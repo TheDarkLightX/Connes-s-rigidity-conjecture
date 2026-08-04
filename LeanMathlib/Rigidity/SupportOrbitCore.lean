@@ -11,7 +11,7 @@ theorem exists_mem_support_of_ne_zero
   push_neg at h
   apply hf
   ext x
-  exact Finsupp.not_mem_support_iff.mp (h x)
+  exact Finsupp.notMem_support_iff.mp (h x)
 
 /--
 Two finitely supported terms with disjoint supports cannot cancel if the first
@@ -29,7 +29,7 @@ theorem add_ne_zero_of_disjoint_support
     intro hxg
     exact Finset.disjoint_left.mp hdisjoint hx hxg
   have hfx : f x ≠ 0 := Finsupp.mem_support_iff.mp hx
-  have hgx : g x = 0 := Finsupp.not_mem_support_iff.mp hx_not_g
+  have hgx : g x = 0 := Finsupp.notMem_support_iff.mp hx_not_g
   intro hsum
   have hpoint := DFunLike.congr_fun hsum x
   simp [hgx] at hpoint

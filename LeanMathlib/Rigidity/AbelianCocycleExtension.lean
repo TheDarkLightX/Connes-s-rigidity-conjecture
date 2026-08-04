@@ -21,7 +21,7 @@ theorem zero_right (a : A) : C.c a 0 = 0 := by
 
 /-- The carrier of the abelian extension defined by a cocycle. -/
 @[ext]
-structure Extension where
+structure Extension (C : NormalizedSymmetricAddCocycle A B) where
   base : A
   fiber : B
 
@@ -111,7 +111,7 @@ theorem fiberHom_fiber (b : B) : (C.fiberHom b).fiber = b := rfl
 /-- The fiber inclusion is injective. -/
 theorem fiberHom_injective : Function.Injective C.fiberHom := by
   intro x y h
-  exact congrArg Extension.fiber h
+  exact congrArg (fun z : C.Extension => z.fiber) h
 
 /-- The base projection is surjective. -/
 theorem baseHom_surjective : Function.Surjective C.baseHom := by

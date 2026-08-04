@@ -63,7 +63,7 @@ theorem single_satisfies_groupLike_finsupp
     by_cases hxy : x = y <;>
       by_cases hx : x = g <;>
       by_cases hy : y = g <;>
-      simp [FinsuppGroupLikeEquation, Finsupp.single_apply, hxy, hx, hy] at *
+      simp [FinsuppGroupLikeEquation, Finsupp.single_apply, hxy, hx, hy]
 
 /-- Exact characterization of group-like finitely supported coefficient vectors. -/
 theorem groupLike_finsupp_iff_single
@@ -75,6 +75,6 @@ theorem groupLike_finsupp_iff_single
   · rintro ⟨hcounit, hcomul⟩
     exact exact_groupLike_finsupp a hcounit hcomul
   · rintro ⟨g, rfl⟩
-    exact single_satisfies_groupLike_finsupp g
+    exact single_satisfies_groupLike_finsupp (K := K) g
 
 end LeanMathlib.Rigidity

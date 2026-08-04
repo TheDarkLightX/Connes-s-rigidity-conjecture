@@ -34,7 +34,7 @@ theorem shifted_difference_supports_disjoint
   have hneg : negativeDifferenceShift n e < 0 := by
     simp [negativeDifferenceShift]
     linarith
-  rw [← heq] at hneg
+  rw [heq] at hneg
   linarith
 
 /-- Each positive shifted difference is strictly positive beyond the support bound. -/

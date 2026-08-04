@@ -27,16 +27,21 @@ theorem tensorCubeMap_mem_dividedCube
     {w : PolynomialVectorTensorCube F}
     (hw : w ∈ dividedCubeSubmodule F) :
     tensorCubeMap L w ∈ dividedCubeSubmodule F := by
-  refine Submodule.span_induction hw ?_ ?_ ?_ ?_
+  refine Submodule.span_induction
+    (p := fun x _ => tensorCubeMap L x ∈ dividedCubeSubmodule F)
+    ?_ ?_ ?_ ?_ hw
   · intro x hx
     obtain ⟨v, rfl⟩ := hx
     rw [tensorCubeMap_pureCube]
     exact Submodule.subset_span (Set.mem_range_self (L v))
-  · simp
-  · intro x y hx hy
-    simpa [map_add] using (dividedCubeSubmodule F).add_mem hx hy
-  · intro c x hx
-    simpa [map_smul] using (dividedCubeSubmodule F).smul_mem c hx
+  · rw [(tensorCubeMap L).map_zero]
+    exact (dividedCubeSubmodule F).zero_mem
+  · intro x y hx hy hLx hLy
+    rw [(tensorCubeMap L).map_add]
+    exact (dividedCubeSubmodule F).add_mem hLx hLy
+  · intro c x hx hLx
+    rw [(tensorCubeMap L).map_smul]
+    exact (dividedCubeSubmodule F).smul_mem c hLx
 
 /--
 On divided cubes, the ternary Frobenius diagonal intertwines every
@@ -49,15 +54,25 @@ theorem ternaryFrobeniusDiagonal_natural
     (hw : w ∈ dividedCubeSubmodule (ZMod 3)) :
     ternaryFrobeniusDiagonal (tensorCubeMap L w) =
       L (ternaryFrobeniusDiagonal w) := by
-  refine Submodule.span_induction hw ?_ ?_ ?_ ?_
+  refine Submodule.span_induction
+    (p := fun x _ =>
+      ternaryFrobeniusDiagonal (tensorCubeMap L x) =
+        L (ternaryFrobeniusDiagonal x))
+    ?_ ?_ ?_ ?_ hw
   · intro x hx
     obtain ⟨v, rfl⟩ := hx
     simp [tensorCubeMap_pureCube, ternaryFrobeniusDiagonal_pureCube]
-  · simp
-  · intro x y hx hy
-    simp [map_add, hx, hy]
-  · intro c x hx
-    simp [map_smul, hx]
+  · rw [(tensorCubeMap L).map_zero,
+      ternaryFrobeniusDiagonal.map_zero,
+      ternaryFrobeniusDiagonal.map_zero, L.map_zero]
+  · intro x y hx hy hnatX hnatY
+    rw [(tensorCubeMap L).map_add,
+      ternaryFrobeniusDiagonal.map_add,
+      ternaryFrobeniusDiagonal.map_add, L.map_add, hnatX, hnatY]
+  · intro c x hx hnat
+    rw [(tensorCubeMap L).map_smul,
+      ternaryFrobeniusDiagonal.map_smul,
+      ternaryFrobeniusDiagonal.map_smul, L.map_smul, hnat]
 
 /-- The actual polynomial transvection action preserves divided cubes. -/
 theorem polynomialSLTensorCubeAction_mem_dividedCube

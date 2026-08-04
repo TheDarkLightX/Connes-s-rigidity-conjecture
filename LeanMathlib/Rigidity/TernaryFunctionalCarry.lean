@@ -44,7 +44,10 @@ noncomputable def ternaryCarryTensorFunctional
         intro q
         induction q using TensorProduct.induction_on with
         | zero => simp
-        | add a b ha hb => simp; ring
+        | add a b ha hb =>
+            simp only [map_add, LinearMap.add_apply]
+            rw [ha, hb]
+            abel
         | tmul v z => simp; ring
       map_smul' := by
         intro c x
@@ -52,7 +55,9 @@ noncomputable def ternaryCarryTensorFunctional
         intro q
         induction q using TensorProduct.induction_on with
         | zero => simp
-        | add a b ha hb => simp; ring
+        | add a b ha hb =>
+            simp only [map_add, LinearMap.add_apply, smul_add]
+            rw [ha, hb]
         | tmul v z => simp; ring }
 
 @[simp]

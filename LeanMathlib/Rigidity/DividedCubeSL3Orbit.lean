@@ -40,7 +40,7 @@ theorem dividedCube_has_infinite_SL3_observation
           out₁ out₂ out₃) := by
     funext n
     exact polynomialSLTensorCubeAction_coords
-      F target source hts (N + n) w out₁ out₂ out₃ htout₃
+      F target source hts (N + n) w out₁ out₂ out₃ htout₃.symm
   rw [heq]
   exact hinfinite
 

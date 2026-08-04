@@ -24,7 +24,8 @@ noncomputable def BialgEquiv.groupLikeMulEquiv
   map_mul' := by
     intro a b
     apply GroupLike.val_injective
-    exact map_mul e a b
+    change e (a.1 * b.1) = e a.1 * e b.1
+    exact map_mul e a.1 b.1
 
 /--
 Any bialgebra equivalence between canonical group algebras reconstructs a group

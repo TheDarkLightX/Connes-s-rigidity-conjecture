@@ -18,7 +18,9 @@ theorem ternaryPrimitiveCount_succ (n : ℕ) :
 @[simp]
 theorem ternaryVectorCount_succ (n : ℕ) :
     ternaryVectorCount (n + 1) = 3 ^ (3 * n + 3) := by
-  simp [ternaryVectorCount]
+  unfold ternaryVectorCount
+  congr 1
+  omega
 
 /-- The predicted nonprimitive count is `3^(3n+1)-2`. -/
 theorem ternary_nonprimitive_count (n : ℕ) :
@@ -36,7 +38,9 @@ theorem ternary_primitive_density_identity (n : ℕ) :
   rw [ternaryVectorCount_succ, ternaryPrimitiveCount_succ]
   have hpow : 3 ^ (3 * n + 3) = 9 * 3 ^ (3 * n + 1) := by
     calc
-      3 ^ (3 * n + 3) = 3 ^ ((3 * n + 1) + 2) := by congr 1 <;> omega
+      3 ^ (3 * n + 3) = 3 ^ ((3 * n + 1) + 2) := by
+        congr 1
+        omega
       _ = 3 ^ (3 * n + 1) * 3 ^ 2 := by rw [pow_add]
       _ = 9 * 3 ^ (3 * n + 1) := by ring
   rw [hpow]
@@ -58,7 +62,9 @@ theorem ternary_nonprimitive_density_identity (n : ℕ) :
   rw [ternary_nonprimitive_count, ternaryVectorCount_succ]
   have hpow : 3 ^ (3 * n + 3) = 9 * 3 ^ (3 * n + 1) := by
     calc
-      3 ^ (3 * n + 3) = 3 ^ ((3 * n + 1) + 2) := by congr 1 <;> omega
+      3 ^ (3 * n + 3) = 3 ^ ((3 * n + 1) + 2) := by
+        congr 1
+        omega
       _ = 3 ^ (3 * n + 1) * 3 ^ 2 := by rw [pow_add]
       _ = 9 * 3 ^ (3 * n + 1) := by ring
   rw [hpow]

@@ -1,4 +1,4 @@
-name: Julia ternary Witt oracle
+name: Julia finite mathematics oracles
 
 on:
   push:
@@ -6,12 +6,14 @@ on:
       - agent/import-lean-rigidity-research-20260804
     paths:
       - 'experiments/ternary_witt_exhaustive.jl'
+      - 'experiments/divided_cube_truncations.jl'
       - '.github/workflows/julia-experiments.yml'
   pull_request:
     branches:
       - main
     paths:
       - 'experiments/ternary_witt_exhaustive.jl'
+      - 'experiments/divided_cube_truncations.jl'
       - '.github/workflows/julia-experiments.yml'
   workflow_dispatch:
 
@@ -30,10 +32,14 @@ jobs:
         run: julia -e 'using Pkg; Pkg.add(PackageSpec(name="JSON", version="1"))'
       - name: Exhaust ternary Witt finite models
         run: julia --project=@. experiments/ternary_witt_exhaustive.jl
+      - name: Analyze divided-cube truncations
+        run: julia --project=@. experiments/divided_cube_truncations.jl
       - name: Upload finite evidence
         uses: actions/upload-artifact@v4
         with:
-          name: ternary-witt-julia-result
-          path: experiments/ternary_witt_exhaustive_result.json
+          name: connes-rigidity-julia-results
+          path: |
+            experiments/ternary_witt_exhaustive_result.json
+            experiments/divided_cube_truncations_result.json
           if-no-files-found: error
           retention-days: 14

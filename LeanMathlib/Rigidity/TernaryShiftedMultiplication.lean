@@ -65,11 +65,19 @@ theorem ternaryShiftedCarry_three_nsmul
   rcases x with ⟨ell, q⟩
   simp only [three_nsmul]
   apply NormalizedSymmetricAddCocycle.Extension.ext
-  · simp
+  · module
   · change
-      ((q + q + ternaryShiftedFunctionalCarry n ell ell) + q +
-          ternaryShiftedFunctionalCarry n (ell + ell) ell) =
+      q + (q + q + ternaryShiftedFunctionalCarry n ell ell) +
+          ternaryShiftedFunctionalCarry n ell (ell + ell) =
         ternaryShiftedFrobeniusDual n ell
+    rw [ternaryShiftedFunctionalCarry_comm n ell (ell + ell)]
+    have hreassoc :
+        q + (q + q + ternaryShiftedFunctionalCarry n ell ell) +
+              ternaryShiftedFunctionalCarry n (ell + ell) ell =
+          (q + q + ternaryShiftedFunctionalCarry n ell ell) + q +
+              ternaryShiftedFunctionalCarry n (ell + ell) ell := by
+      abel
+    rw [hreassoc]
     ext b
     rcases b with ⟨w, hw⟩
     change
@@ -111,7 +119,9 @@ theorem ternaryShiftedCarry_nine_nsmul
   change 3 • (ternaryShiftedFunctionalCarryCocycle n).fiberHom
       (ternaryShiftedFrobeniusDual n x.base) = 0
   rw [← map_nsmul]
-  simp
+  have hzero : 3 • ternaryShiftedFrobeniusDual n x.base = 0 := by
+    module
+  simp [hzero]
 
 /-- Three-torsion is characterized by the kernel of shifted Frobenius dual. -/
 theorem ternaryShiftedCarry_mem_threeTorsion_iff

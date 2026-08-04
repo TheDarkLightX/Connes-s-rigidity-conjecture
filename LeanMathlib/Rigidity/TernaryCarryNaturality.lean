@@ -91,7 +91,13 @@ theorem ternaryFunctionalCarry_natural
       (polynomialVectorDualPrecompose L ell)
       (polynomialVectorDualPrecompose L m) b =
     ternaryCarryTensorFunctional ell m (tensorCubeMap L b)
-  refine Submodule.span_induction hb ?_ ?_ ?_ ?_
+  refine Submodule.span_induction
+    (p := fun x _ =>
+      ternaryCarryTensorFunctional
+          (polynomialVectorDualPrecompose L ell)
+          (polynomialVectorDualPrecompose L m) x =
+        ternaryCarryTensorFunctional ell m (tensorCubeMap L x))
+    ?_ ?_ ?_ ?_ hb
   · intro x hx
     obtain ⟨v, rfl⟩ := hx
     simp [tensorCubeMap_pureCube]
@@ -121,7 +127,7 @@ theorem dualPrecompose_commutes_dualShift
   ext v
   have hv := LinearMap.congr_fun hcomm v
   simp [CommutesWithPolynomialShift] at hv
-  simpa using congrArg ell hv
+  simpa using (congrArg ell hv).symm
 
 /-- Naturality of shifted carry under shift-commuting linear maps. -/
 theorem ternaryShiftedFunctionalCarry_natural

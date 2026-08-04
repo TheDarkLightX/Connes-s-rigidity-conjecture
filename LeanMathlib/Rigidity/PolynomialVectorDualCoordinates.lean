@@ -17,7 +17,7 @@ theorem polynomialVectorBasis_apply
     (i : Fin 3) (k : ℕ) :
     polynomialVectorBasis ⟨i, k⟩ =
       Pi.single i ((Polynomial.X : Polynomial (ZMod 3)) ^ k) := by
-  simp [polynomialVectorBasis]
+  simp [polynomialVectorBasis, Polynomial.monomial_one_right_eq_X_pow]
 
 /-- Algebraic duals are arbitrary coefficient functions on the monomial basis. -/
 noncomputable def polynomialVectorDualEquivFun :
@@ -31,9 +31,7 @@ theorem polynomialVectorDualEquivFun_apply
     (i : Fin 3) (k : ℕ) :
     polynomialVectorDualEquivFun ell ⟨i, k⟩ =
       ell (polynomialVectorBasis ⟨i, k⟩) := by
-  change ((polynomialVectorBasis).constr (ZMod 3)).symm ell ⟨i, k⟩ = _
-  exact LinearEquiv.symm_apply_eq.mpr <| by
-    simp
+  rfl
 
 /-- Multiplication by `t^n` shifts a monomial basis index by `n`. -/
 theorem polynomialVectorShift_basis

@@ -1,0 +1,33 @@
+name: Julia ternary Witt oracle
+
+on:
+  push:
+    branches:
+      - agent/import-lean-rigidity-research-20260804
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exhaustive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: '1.11'
+      - name: Install JSON serializer
+        run: julia -e 'using Pkg; Pkg.add(PackageSpec(name="JSON", version="1"))'
+      - name: Exhaust ternary Witt finite models
+        run: julia --project=@. experiments/ternary_witt_exhaustive.jl
+      - name: Upload finite evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: ternary-witt-julia-result
+          path: experiments/ternary_witt_exhaustive_result.json
+          if-no-files-found: error
+          retention-days: 14

@@ -25,7 +25,7 @@ noncomputable def tensorProductScalarEval
       map_add' := by
         intro x y
         ext z
-        simp
+        simp [add_mul]
       map_smul' := by
         intro c x
         ext z
@@ -57,6 +57,7 @@ theorem ternaryCarryTensorFunctional_tmul
     ternaryCarryTensorFunctional ell m (u ⊗ₜ[ZMod 3] (v ⊗ₜ[ZMod 3] z)) =
       -(ell u * ell v * m z + ell u * m v * m z) := by
   simp [ternaryCarryTensorFunctional]
+  ring
 
 /-- Restrict the tensor representative to the divided-cube submodule. -/
 noncomputable def ternaryFunctionalCarry

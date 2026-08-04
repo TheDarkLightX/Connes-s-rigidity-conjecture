@@ -67,7 +67,7 @@ theorem ternaryFrobeniusDiagonal_natural
       L (ternaryFrobeniusDiagonal 0)
     rw [(tensorCubeMap L).map_zero,
       ternaryFrobeniusDiagonal.map_zero,
-      ternaryFrobeniusDiagonal.map_zero, L.map_zero]
+      L.map_zero]
   · intro x y hx hy hnatX hnatY
     rw [(tensorCubeMap L).map_add,
       ternaryFrobeniusDiagonal.map_add,

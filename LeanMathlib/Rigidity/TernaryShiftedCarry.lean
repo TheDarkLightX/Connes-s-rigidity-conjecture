@@ -4,7 +4,7 @@ import LeanMathlib.Rigidity.TernaryFunctionalCarry
 namespace LeanMathlib.Rigidity
 
 /-- Multiply every polynomial-vector coordinate by `X^n`. -/
-def polynomialVectorShift (n : ℕ) :
+noncomputable def polynomialVectorShift (n : ℕ) :
     PolynomialVector3 (ZMod 3) →ₗ[ZMod 3]
       PolynomialVector3 (ZMod 3) where
   toFun v i := (Polynomial.X : Polynomial (ZMod 3)) ^ n * v i
@@ -76,12 +76,12 @@ theorem ternaryShiftedFunctionalCarry_cocycle
       (polynomialVectorDualShift n d)
 
 /-- Shifted ternary carry as normalized symmetric cocycle data. -/
-noncomputable def ternaryShiftedFunctionalCarryCocycle (n : ℕ) :
-    NormalizedSymmetricAddCocycle PolynomialVectorDual DividedCubeDual where
-  c := ternaryShiftedFunctionalCarry n
-  zero_left := ternaryShiftedFunctionalCarry_zero_left n
-  symmetric := ternaryShiftedFunctionalCarry_comm n
-  cocycle := ternaryShiftedFunctionalCarry_cocycle n
+noncomputable opaque ternaryShiftedFunctionalCarryCocycle (n : ℕ) :
+    NormalizedSymmetricAddCocycle PolynomialVectorDual DividedCubeDual :=
+  { c := ternaryShiftedFunctionalCarry n
+    zero_left := ternaryShiftedFunctionalCarry_zero_left n
+    symmetric := ternaryShiftedFunctionalCarry_comm n
+    cocycle := ternaryShiftedFunctionalCarry_cocycle n }
 
 /-- Algebraic compact-dual carry group at shift `n`. -/
 abbrev TernaryShiftedCarryExtension (n : ℕ) :=

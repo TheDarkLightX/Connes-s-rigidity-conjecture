@@ -8,7 +8,6 @@ noncomputable def BialgEquiv.groupLikeMulEquiv
     {R A B : Type*}
     [CommSemiring R]
     [Semiring A] [Semiring B]
-    [Algebra R A] [Algebra R B]
     [Bialgebra R A] [Bialgebra R B]
     (e : A ≃ₐc[R] B) :
     GroupLike R A ≃* GroupLike R B where

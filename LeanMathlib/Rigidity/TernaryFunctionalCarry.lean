@@ -44,7 +44,7 @@ noncomputable def ternaryCarryTensorFunctional
         intro q
         induction q using TensorProduct.induction_on with
         | zero => simp
-        | add a b ha hb => simp [ha, hb]
+        | add a b ha hb => simp; ring
         | tmul v z => simp; ring
       map_smul' := by
         intro c x
@@ -52,7 +52,7 @@ noncomputable def ternaryCarryTensorFunctional
         intro q
         induction q using TensorProduct.induction_on with
         | zero => simp
-        | add a b ha hb => simp [ha, hb]
+        | add a b ha hb => simp; ring
         | tmul v z => simp; ring }
 
 @[simp]
@@ -114,9 +114,9 @@ theorem ternaryFunctionalCarry_comm
     ?_ ?_ ?_ ?_ hw
   · intro x hx
     obtain ⟨v, rfl⟩ := hx
-    simpa using ternaryCarry_comm (ell v) (m v)
-  · rw [(ternaryCarryTensorFunctional ell m).map_zero,
-      (ternaryCarryTensorFunctional m ell).map_zero]
+    simp
+    ring
+  · simp
   · intro x y hx hy hcommX hcommY
     rw [(ternaryCarryTensorFunctional ell m).map_add,
       (ternaryCarryTensorFunctional m ell).map_add, hcommX, hcommY]
@@ -145,7 +145,8 @@ theorem ternaryFunctionalCarry_cocycle
     ?_ ?_ ?_ ?_ hw
   · intro x hx
     obtain ⟨v, rfl⟩ := hx
-    simpa using ternaryCarry_cocycle (ell v) (m v) (d v)
+    simp
+    ring
   · simp
   · intro x y hx hy hcocycleX hcocycleY
     rw [(ternaryCarryTensorFunctional ell m).map_add,

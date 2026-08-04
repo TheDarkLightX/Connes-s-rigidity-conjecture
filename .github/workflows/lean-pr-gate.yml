@@ -10,6 +10,7 @@ on:
       - 'lakefile.lean'
       - 'lake-manifest.json'
       - 'lean-toolchain'
+      - 'scripts/audit_lean_trust.py'
   workflow_dispatch:
 
 permissions:
@@ -25,6 +26,8 @@ jobs:
           test -f lakefile.lean
           test -f lean-toolchain
           test -f LeanMathlib.lean
+      - name: Reject Lean placeholders and report compiler-trusting proofs
+        run: python3 scripts/audit_lean_trust.py --allow-native-decide
       - uses: leanprover/lean-action@v1
         with:
           build: true

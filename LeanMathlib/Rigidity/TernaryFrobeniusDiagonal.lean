@@ -98,10 +98,10 @@ theorem ternaryFrobeniusDiagonal_pureCube
   funext i
   apply Polynomial.ext
   intro n
-  simp [ternaryFrobeniusDiagonal,
+  simp only [ternaryFrobeniusDiagonal, LinearMap.coe_comp, Function.comp_apply,
     cubeCoordinateFrobeniusDiagonal_coeff,
-    polynomialVectorTensorCubeCoords_tmul,
-    zmod3_cube]
+    polynomialVectorTensorCubeCoords_tmul]
+  simpa [pow_succ] using zmod3_cube ((v i).coeff n)
 
 /-- The Frobenius diagonal is surjective, witnessed by pure cubes. -/
 theorem ternaryFrobeniusDiagonal_surjective :

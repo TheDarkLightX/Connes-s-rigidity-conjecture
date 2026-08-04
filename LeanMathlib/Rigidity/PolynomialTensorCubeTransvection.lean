@@ -28,7 +28,7 @@ theorem polynomialTensorCubeTransvection_tmul
   simp [polynomialTensorCubeTransvection]
 
 /-- Coordinate-block action before taking monomial coefficients. -/
-def firstTwoTransvectionTensorOutput
+noncomputable def firstTwoTransvectionTensorOutput
     (F : Type*) [Field F]
     (target source : Fin 3) (n : ℕ)
     (w : Fin 3 → Fin 3 → Fin 3 → PolynomialTensorCube F)
@@ -82,9 +82,14 @@ theorem firstTwoTransvectionTensorOutput_add
         (w₁ + w₂) a b c =
       firstTwoTransvectionTensorOutput F target source n w₁ a b c +
         firstTwoTransvectionTensorOutput F target source n w₂ a b c := by
-  by_cases ha : a = target <;> by_cases hb : b = target <;>
-    simp [firstTwoTransvectionTensorOutput, ha, hb, map_add,
-      add_assoc, add_left_comm, add_comm]
+  classical
+  by_cases ha : a = target <;> by_cases hb : b = target
+  all_goals
+    simp only [firstTwoTransvectionTensorOutput, Pi.add_apply, ha, hb,
+      if_true, if_false, true_and, false_and,
+      (multiplyFirstPolynomialTensor F n).map_add,
+      (multiplySecondPolynomialTensor F n).map_add]
+    abel
 
 /-- Genuine tensor-cube action has the four-term block coordinate formula. -/
 theorem polynomialTensorCubeTransvection_blockCoords
@@ -97,17 +102,29 @@ theorem polynomialTensorCubeTransvection_blockCoords
       firstTwoTransvectionTensorOutput F target source n
         (polynomialVectorTensorCubeBlockCoords F w) a b c := by
   induction w using TensorProduct.induction_on with
-  | zero => simp [firstTwoTransvectionTensorOutput]
+  | zero =>
+      rw [(polynomialTensorCubeTransvection F target source n).map_zero,
+        (polynomialVectorTensorCubeBlockCoords F).map_zero]
+      simp [firstTwoTransvectionTensorOutput]
   | add x y hx hy =>
-      rw [map_add, map_add, Pi.add_apply, Pi.add_apply, Pi.add_apply,
-        firstTwoTransvectionTensorOutput_add]
+      rw [(polynomialTensorCubeTransvection F target source n).map_add,
+        (polynomialVectorTensorCubeBlockCoords F).map_add,
+        (polynomialVectorTensorCubeBlockCoords F).map_add]
+      simp only [Pi.add_apply, firstTwoTransvectionTensorOutput_add]
       exact congrArg₂ (· + ·) hx hy
   | tmul u q =>
       induction q using TensorProduct.induction_on with
-      | zero => simp [firstTwoTransvectionTensorOutput]
+      | zero =>
+          rw [TensorProduct.tmul_zero,
+            (polynomialTensorCubeTransvection F target source n).map_zero,
+            (polynomialVectorTensorCubeBlockCoords F).map_zero]
+          simp [firstTwoTransvectionTensorOutput]
       | add x y hx hy =>
-          rw [TensorProduct.tmul_add, map_add, map_add, Pi.add_apply, Pi.add_apply,
-            Pi.add_apply, firstTwoTransvectionTensorOutput_add]
+          rw [TensorProduct.tmul_add,
+            (polynomialTensorCubeTransvection F target source n).map_add,
+            (polynomialVectorTensorCubeBlockCoords F).map_add,
+            (polynomialVectorTensorCubeBlockCoords F).map_add]
+          simp only [Pi.add_apply, firstTwoTransvectionTensorOutput_add]
           exact congrArg₂ (· + ·) hx hy
       | tmul v z =>
           exact polynomialTensorCubeTransvection_blockCoords_tmul
@@ -126,11 +143,13 @@ theorem polynomialTensorCubeTransvection_coords
   have hblock := polynomialTensorCubeTransvection_blockCoords
     F target source n w a b c hc
   have h := congrArg (polynomialTensorCubeCoefficients F) hblock
-  simpa [polynomialVectorTensorCubeCoords,
-    firstTwoTransvectionTensorOutput, firstTwoTransvectionOutput,
-    polynomialTensorCubeCoefficients_multiplyFirst,
-    polynomialTensorCubeCoefficients_multiplySecond,
-    polynomialTensorCubeCoefficients_multiplyFirstSecond] using h
+  by_cases ha : a = target <;> by_cases hb : b = target
+  all_goals
+    simpa [polynomialVectorTensorCubeCoords,
+      firstTwoTransvectionTensorOutput, firstTwoTransvectionOutput, ha, hb,
+      polynomialTensorCubeCoefficients_multiplyFirst,
+      polynomialTensorCubeCoefficients_multiplySecond,
+      polynomialTensorCubeCoefficients_multiplyFirstSecond] using h
 
 /-- Diagonal action of the actual special-linear transvection on the tensor cube. -/
 noncomputable def polynomialSLTensorCubeAction
@@ -138,13 +157,10 @@ noncomputable def polynomialSLTensorCubeAction
     (target source : Fin 3) (hts : target ≠ source) (n : ℕ) :
     PolynomialVectorTensorCube F →ₗ[F] PolynomialVectorTensorCube F :=
   TensorProduct.map
-    (Matrix.SpecialLinearGroup.toLin'
-      (polynomialSLTransvection F target source hts n)).toLinearMap.restrictScalars F <|
+    (polynomialSLTransvectionLinearMap F target source hts n) <|
       TensorProduct.map
-        (Matrix.SpecialLinearGroup.toLin'
-          (polynomialSLTransvection F target source hts n)).toLinearMap.restrictScalars F
-        (Matrix.SpecialLinearGroup.toLin'
-          (polynomialSLTransvection F target source hts n)).toLinearMap.restrictScalars F
+        (polynomialSLTransvectionLinearMap F target source hts n)
+        (polynomialSLTransvectionLinearMap F target source hts n)
 
 /-- The actual `SL₃(F[t])` tensor action equals the explicit transvection action. -/
 theorem polynomialSLTensorCubeAction_eq
@@ -152,8 +168,8 @@ theorem polynomialSLTensorCubeAction_eq
     (target source : Fin 3) (hts : target ≠ source) (n : ℕ) :
     polynomialSLTensorCubeAction F target source hts n =
       polynomialTensorCubeTransvection F target source n := by
-  rw [polynomialSLTensorCubeAction, polynomialTensorCubeTransvection]
-  rw [polynomialSLTransvection_toLinearMap]
+  simp [polynomialSLTensorCubeAction, polynomialTensorCubeTransvection,
+    polynomialSLTransvection_toLinearMap]
 
 /-- Final coordinate formula for the actual special-linear tensor action. -/
 theorem polynomialSLTensorCubeAction_coords

@@ -77,12 +77,19 @@ theorem polynomialSLTransvection_toLin_apply
     (Matrix.transvection target source ((Polynomial.X : Polynomial F) ^ n) *ᵥ v) i = _
   exact transvection_mulVec_apply F target source n v i
 
+/-- The special-linear transvection action, restricted from `F[t]` scalars to `F`. -/
+noncomputable def polynomialSLTransvectionLinearMap
+    (F : Type*) [Field F]
+    (target source : Fin 3) (hts : target ≠ source) (n : ℕ) :
+    PolynomialVector3 F →ₗ[F] PolynomialVector3 F :=
+  (Matrix.SpecialLinearGroup.toLin'
+    (polynomialSLTransvection F target source hts n)).toLinearMap.restrictScalars F
+
 /-- Equality of the actual `SL₃` linear action and the explicit update map. -/
 theorem polynomialSLTransvection_toLinearMap
     (F : Type*) [Field F]
     (target source : Fin 3) (hts : target ≠ source) (n : ℕ) :
-    (Matrix.SpecialLinearGroup.toLin'
-      (polynomialSLTransvection F target source hts n)).toLinearMap.restrictScalars F =
+    polynomialSLTransvectionLinearMap F target source hts n =
       polynomialVectorTransvection F target source n := by
   apply LinearMap.ext
   intro v

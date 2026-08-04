@@ -15,7 +15,7 @@ noncomputable def tensorCoefficient
     { toFun := fun x =>
         { toFun := fun y => x g * y h
           map_add' := by intro a b; simp [mul_add]
-          map_smul' := by intro c y; simp [mul_assoc, mul_left_comm, mul_comm] }
+          map_smul' := by intro c y; simp [mul_left_comm] }
       map_add' := by
         intro a b
         ext y
@@ -39,15 +39,20 @@ theorem groupAlgebra_counit_eq_sum
     Coalgebra.counit (R := K) a = a.sum (fun _ c => c) := by
   induction a using Finsupp.induction_linear with
   | zero =>
-      simpa using
+      change Coalgebra.counit (R := K) (0 : MonoidAlgebra K G) = 0
+      exact
         (Coalgebra.counit (R := K) : MonoidAlgebra K G →ₗ[K] K).map_zero
   | add a b ha hb =>
       calc
         Coalgebra.counit (R := K) (a + b) =
             Coalgebra.counit (R := K) a + Coalgebra.counit (R := K) b :=
           (Coalgebra.counit (R := K) : MonoidAlgebra K G →ₗ[K] K).map_add a b
-        _ = a.sum (fun _ c => c) + b.sum (fun _ c => c) := by rw [ha, hb]
-        _ = (a + b).sum (fun _ c => c) := by simp
+        _ = a.sum (fun _ c => c) + b.sum (fun _ c => c) :=
+          congrArg₂ (· + ·) ha hb
+        _ = (a + b).sum (fun _ c => c) := by
+          symm
+          exact Finsupp.sum_add_index'
+            (fun _ => rfl) (fun _ _ _ => rfl)
   | single g c => simp
 
 /-- The canonical coproduct has only diagonal coefficient support. -/
@@ -58,24 +63,35 @@ theorem tensorCoefficient_groupAlgebra_comul
       if g = h then a g else 0 := by
   induction a using Finsupp.induction_linear with
   | zero =>
-      have hzero := congrArg (tensorCoefficient g h)
-        ((Coalgebra.comul (R := K) :
+      have hc :
+          Coalgebra.comul (R := K) (0 : MonoidAlgebra K G) = 0 :=
+        (Coalgebra.comul (R := K) :
           MonoidAlgebra K G →ₗ[K]
-            MonoidAlgebra K G ⊗[K] MonoidAlgebra K G).map_zero)
-      simpa using hzero
+            MonoidAlgebra K G ⊗[K] MonoidAlgebra K G).map_zero
+      calc
+        tensorCoefficient g h
+            (Coalgebra.comul (R := K) (0 : MonoidAlgebra K G)) =
+            tensorCoefficient g h 0 := congrArg (tensorCoefficient g h) hc
+        _ = 0 := (tensorCoefficient g h).map_zero
+        _ = if g = h then (0 : MonoidAlgebra K G) g else 0 := by simp
   | add a b ha hb =>
+      have hc :
+          Coalgebra.comul (R := K) (a + b) =
+            Coalgebra.comul (R := K) a + Coalgebra.comul (R := K) b :=
+        (Coalgebra.comul (R := K) :
+          MonoidAlgebra K G →ₗ[K]
+            MonoidAlgebra K G ⊗[K] MonoidAlgebra K G).map_add a b
       calc
         tensorCoefficient g h (Coalgebra.comul (R := K) (a + b)) =
             tensorCoefficient g h
-              (Coalgebra.comul (R := K) a + Coalgebra.comul (R := K) b) := by
-          rw [(Coalgebra.comul (R := K) :
-            MonoidAlgebra K G →ₗ[K]
-              MonoidAlgebra K G ⊗[K] MonoidAlgebra K G).map_add]
+              (Coalgebra.comul (R := K) a + Coalgebra.comul (R := K) b) :=
+          congrArg (tensorCoefficient g h) hc
         _ = tensorCoefficient g h (Coalgebra.comul (R := K) a) +
               tensorCoefficient g h (Coalgebra.comul (R := K) b) :=
           (tensorCoefficient g h).map_add _ _
         _ = (if g = h then a g else 0) +
-              (if g = h then b g else 0) := by rw [ha, hb]
+              (if g = h then b g else 0) :=
+          congrArg₂ (· + ·) ha hb
         _ = if g = h then (a + b) g else 0 := by
           by_cases hgh : g = h <;> simp [hgh]
   | single i c =>

@@ -24,6 +24,7 @@ import LeanMathlib.Rigidity.PolynomialVectorDualCoordinates
 import LeanMathlib.Rigidity.PolynomialVectorShear
 import LeanMathlib.Rigidity.PolynomialVectorTensorCubeCoords
 import LeanMathlib.Rigidity.PolynomialVectorTransvection
+import LeanMathlib.Rigidity.PrimeSpectralDiagonalArithmetic
 import LeanMathlib.Rigidity.SingleShiftOrbit
 import LeanMathlib.Rigidity.SupportMaxDegree
 import LeanMathlib.Rigidity.SupportOrbitCore
@@ -42,6 +43,7 @@ import LeanMathlib.Rigidity.TernaryReducedPolynomial
 import LeanMathlib.Rigidity.TernaryShiftedCarry
 import LeanMathlib.Rigidity.TernaryShiftedFrobeniusKernel
 import LeanMathlib.Rigidity.TernaryShiftedMultiplication
+import LeanMathlib.Rigidity.TernarySpectralDiagonal
 import LeanMathlib.Rigidity.TernarySupportCore
 import LeanMathlib.Rigidity.TernarySupportRecurrence
 import LeanMathlib.Rigidity.TernaryTruncatedInvariant

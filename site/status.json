@@ -4,11 +4,11 @@
   "headline": "Prime-uniform divided powers and tensor orbits",
   "claimBoundary": "The reported counterexamples are external prior work. This page separately labels Lean-checked theorems, exact finite computations, mathematical candidates, refuted formulations, and unresolved steps.",
   "lean": {
-    "moduleCount": 51,
-    "fullBuild": "green on the exact release candidate head",
+    "moduleCount": 53,
+    "fullBuild": "green on the PR 13 formalization head",
     "lastFailingModules": 0,
     "trustBypasses": 0,
-    "finiteSuites": 11
+    "finiteSuites": 12
   },
   "claims": [
     {
@@ -32,9 +32,20 @@
       "evidence": "The checked cocycle chain proves the multiplication-by-three identity, exponent bound, three-torsion characterization, and shifted-kernel cardinality 3^(3n)."
     },
     {
-      "name": "Selected prime, rank, degree, and Witt cases reproduce exactly",
+      "name": "Interior prime binomial coefficients and ternary spectral diagonals cancel",
+      "status": "lean-checked",
+      "evidence": "Lean checks that p choose j vanishes in F_p for 0<j<p. It also checks the explicit ternary e_1 and e_2 diagonal-coefficient cancellations and the e_3 simultaneous shift. This is the arithmetic core of the spectral quotient, not the full module decomposition."
+    },
+    {
+      "name": "Selected prime, rank, degree, Witt, and spectral-resolution cases reproduce exactly",
       "status": "finite-verified",
-      "evidence": "Eleven deterministic certificate suites pass on their declared bounded domains. No conclusion is extended beyond those domains by computation alone."
+      "evidence": "Twelve deterministic certificate suites pass on their declared bounded or symbolic domains. The spectral suite reproduces the complete Betti polynomials for p=2,3,5,7. No conclusion is extended beyond those domains by computation alone."
+    },
+    {
+      "name": "Spectral Frobenius-kernel decomposition and prime-uniform free resolution",
+      "status": "mathematical-candidate",
+      "evidence": "A written orbit-block proof decomposes the divided power over the symmetric spectral ring and concentrates all nonfreeness in r copies of (e_1,...,e_(p-1)). It predicts projective dimension p-2 for p>=3, identifies the nonfree locus with the Frobenius small diagonal, and explains the ternary numerator 7+11q+11q^2-2q^3 by three degree-three syzygies. The arithmetic core is Lean checked and the Betti identities are replayed, but the module theorem is not yet Lean checked or independently reviewed.",
+      "url": "spectral-kernel.html"
     },
     {
       "name": "Stable and odd-critical divided-power cyclicity",

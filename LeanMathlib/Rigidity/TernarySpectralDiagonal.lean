@@ -1,0 +1,81 @@
+import Mathlib
+
+namespace LeanMathlib.Rigidity
+
+/-- Coefficients of a polynomial symmetric in three spectral variables. -/
+structure TernarySymmetricCoefficients where
+  coeff : ℕ → ℕ → ℕ → ZMod 3
+  swap_first_second : ∀ a b c, coeff a b c = coeff b a c
+  swap_second_third : ∀ a b c, coeff a b c = coeff a c b
+
+namespace TernarySymmetricCoefficients
+
+/-- Three equal coefficients sum to zero over `F_3`. -/
+theorem three_equal_sum_zero (x : ZMod 3) : x + x + x = 0 := by
+  have hthree : (3 : ZMod 3) = 0 := by
+    exact (CharP.cast_eq_zero_iff (ZMod 3) 3 3).2 dvd_rfl
+  calc
+    x + x + x = (3 : ZMod 3) * x := by ring
+    _ = 0 := by rw [hthree, zero_mul]
+
+/--
+The diagonal coefficient in `e_1 f` vanishes for every symmetric ternary
+spectral coefficient family. The three possible one-coordinate decrements are
+permutations of one another and therefore occur with total coefficient three.
+-/
+theorem elementaryOne_diagonal_cancellation
+    (a : TernarySymmetricCoefficients) (n : ℕ) :
+    a.coeff (n - 1) n n +
+      a.coeff n (n - 1) n +
+      a.coeff n n (n - 1) = 0 := by
+  have hsecond :
+      a.coeff n (n - 1) n = a.coeff (n - 1) n n := by
+    exact (a.swap_first_second (n - 1) n n).symm
+  have hthird :
+      a.coeff n n (n - 1) = a.coeff (n - 1) n n := by
+    calc
+      a.coeff n n (n - 1) = a.coeff n (n - 1) n :=
+        a.swap_second_third n n (n - 1)
+      _ = a.coeff (n - 1) n n := hsecond
+  rw [hsecond, hthird]
+  exact three_equal_sum_zero _
+
+/--
+The diagonal coefficient in `e_2 f` also vanishes. The three possible
+complements of a single coordinate are again permutations of one another.
+-/
+theorem elementaryTwo_diagonal_cancellation
+    (a : TernarySymmetricCoefficients) (n : ℕ) :
+    a.coeff (n - 1) (n - 1) n +
+      a.coeff (n - 1) n (n - 1) +
+      a.coeff n (n - 1) (n - 1) = 0 := by
+  have hmiddle :
+      a.coeff (n - 1) n (n - 1) =
+        a.coeff (n - 1) (n - 1) n := by
+    exact a.swap_second_third (n - 1) n (n - 1)
+  have hlast :
+      a.coeff n (n - 1) (n - 1) =
+        a.coeff (n - 1) (n - 1) n := by
+    calc
+      a.coeff n (n - 1) (n - 1) =
+          a.coeff (n - 1) n (n - 1) :=
+        (a.swap_first_second (n - 1) n (n - 1)).symm
+      _ = a.coeff (n - 1) (n - 1) n := hmiddle
+  rw [hmiddle, hlast]
+  exact three_equal_sum_zero _
+
+/-- The diagonal coefficient sequence after multiplication by `e_3`. -/
+def elementaryThreeDiagonalCoefficient
+    (a : TernarySymmetricCoefficients) : ℕ → ZMod 3
+  | 0 => 0
+  | n + 1 => a.coeff n n n
+
+/-- Multiplication by `e_3` shifts all three spectral exponents together. -/
+@[simp]
+theorem elementaryThreeDiagonalCoefficient_succ
+    (a : TernarySymmetricCoefficients) (n : ℕ) :
+    a.elementaryThreeDiagonalCoefficient (n + 1) = a.coeff n n n := rfl
+
+end TernarySymmetricCoefficients
+
+end LeanMathlib.Rigidity

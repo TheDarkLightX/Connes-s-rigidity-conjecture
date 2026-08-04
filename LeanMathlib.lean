@@ -45,5 +45,6 @@ import LeanMathlib.Rigidity.TernarySupportCore
 import LeanMathlib.Rigidity.TernarySupportRecurrence
 import LeanMathlib.Rigidity.TernaryTruncatedInvariant
 import LeanMathlib.Rigidity.TernaryWittCarry
+import LeanMathlib.Rigidity.TernaryWittCoordinate
 import LeanMathlib.Rigidity.TernaryWittExtension
 import LeanMathlib.Rigidity.TripleExponentBlock

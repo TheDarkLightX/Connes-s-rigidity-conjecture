@@ -13,6 +13,33 @@ abbrev PolynomialVectorDual :=
 abbrev DividedCubeDual :=
   Module.Dual (ZMod 3) (dividedCubeSubmodule (ZMod 3))
 
+/-- Evaluate a tensor by a pair of scalar-valued linear maps. -/
+noncomputable def tensorProductScalarEval
+    {R M N : Type*} [CommSemiring R]
+    [AddCommMonoid M] [Module R M]
+    [AddCommMonoid N] [Module R N]
+    (f : M →ₗ[R] R) (g : N →ₗ[R] R) :
+    TensorProduct R M N →ₗ[R] R :=
+  TensorProduct.lift
+    { toFun := fun x => (f x) • g
+      map_add' := by
+        intro x y
+        ext z
+        simp
+      map_smul' := by
+        intro c x
+        ext z
+        simp [mul_assoc] }
+
+@[simp]
+theorem tensorProductScalarEval_tmul
+    {R M N : Type*} [CommSemiring R]
+    [AddCommMonoid M] [Module R M]
+    [AddCommMonoid N] [Module R N]
+    (f : M →ₗ[R] R) (g : N →ₗ[R] R) (x : M) (y : N) :
+    tensorProductScalarEval f g (x ⊗ₜ[R] y) = f x * g y := by
+  simp [tensorProductScalarEval]
+
 /--
 Ordered tensor representative of the ternary carry polynomial. On a pure cube
 it evaluates to `C₃(ℓ(v), m(v))`.
@@ -20,45 +47,8 @@ it evaluates to `C₃(ℓ(v), m(v))`.
 noncomputable def ternaryCarryTensorFunctional
     (ell m : PolynomialVectorDual) :
     PolynomialVectorTensorCube (ZMod 3) →ₗ[ZMod 3] ZMod 3 :=
-  TensorProduct.lift
-    { toFun := fun u =>
-        TensorProduct.lift
-          { toFun := fun v =>
-              { toFun := fun z =>
-                  -(ell u * ell v * m z + ell u * m v * m z)
-                map_add' := by intro x y; simp; ring
-                map_smul' := by intro c x; simp; ring }
-            map_add' := by
-              intro x y
-              ext z
-              simp
-              ring
-            map_smul' := by
-              intro c x
-              ext z
-              simp
-              ring }
-      map_add' := by
-        intro x y
-        apply LinearMap.ext
-        intro q
-        induction q using TensorProduct.induction_on with
-        | zero => simp
-        | add a b ha hb =>
-            simp only [map_add, LinearMap.add_apply]
-            rw [ha, hb]
-            abel
-        | tmul v z => simp; ring
-      map_smul' := by
-        intro c x
-        apply LinearMap.ext
-        intro q
-        induction q using TensorProduct.induction_on with
-        | zero => simp
-        | add a b ha hb =>
-            simp only [map_add, LinearMap.add_apply, smul_add]
-            rw [ha, hb]
-        | tmul v z => simp; ring }
+  -(tensorProductScalarEval ell
+    (tensorProductScalarEval ell m + tensorProductScalarEval m m))
 
 @[simp]
 theorem ternaryCarryTensorFunctional_tmul

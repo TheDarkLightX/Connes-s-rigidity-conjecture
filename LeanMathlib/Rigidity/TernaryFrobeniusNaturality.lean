@@ -34,7 +34,8 @@ theorem tensorCubeMap_mem_dividedCube
     obtain ⟨v, rfl⟩ := hx
     rw [tensorCubeMap_pureCube]
     exact Submodule.subset_span (Set.mem_range_self (L v))
-  · rw [(tensorCubeMap L).map_zero]
+  · change tensorCubeMap L 0 ∈ dividedCubeSubmodule F
+    rw [(tensorCubeMap L).map_zero]
     exact (dividedCubeSubmodule F).zero_mem
   · intro x y hx hy hLx hLy
     rw [(tensorCubeMap L).map_add]
@@ -62,7 +63,9 @@ theorem ternaryFrobeniusDiagonal_natural
   · intro x hx
     obtain ⟨v, rfl⟩ := hx
     simp [tensorCubeMap_pureCube, ternaryFrobeniusDiagonal_pureCube]
-  · rw [(tensorCubeMap L).map_zero,
+  · change ternaryFrobeniusDiagonal (tensorCubeMap L 0) =
+      L (ternaryFrobeniusDiagonal 0)
+    rw [(tensorCubeMap L).map_zero,
       ternaryFrobeniusDiagonal.map_zero,
       ternaryFrobeniusDiagonal.map_zero, L.map_zero]
   · intro x y hx hy hnatX hnatY

@@ -39,7 +39,7 @@ noncomputable def groupMulEquivOfGroupAlgebraBialgEquiv
     (e : MonoidAlgebra K G ≃ₐc[K] MonoidAlgebra K H) :
     G ≃* H :=
   (groupLikeGroupAlgebraMulEquiv (G := G) (K := K)).trans <|
-    (e.groupLikeMulEquiv).trans <|
+    (BialgEquiv.groupLikeMulEquiv e).trans <|
       (groupLikeGroupAlgebraMulEquiv (G := H) (K := K)).symm
 
 /-- Nonisomorphic groups cannot have bialgebra-equivalent canonical group algebras. -/

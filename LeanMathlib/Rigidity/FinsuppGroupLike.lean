@@ -28,7 +28,7 @@ theorem exact_groupLike_finsupp
     simp at hcounit
   have hnonzero : ∃ g, a g ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     apply ha_ne_zero
     ext g
     simp [h g]
@@ -56,14 +56,14 @@ theorem single_satisfies_groupLike_finsupp
     {G K : Type*} [DecidableEq G] [Field K]
     (g : G) :
     (Finsupp.single g (1 : K)).sum (fun _ c => c) = 1 ∧
-      FinsuppGroupLikeEquation (Finsupp.single g 1) := by
+      FinsuppGroupLikeEquation (Finsupp.single g (1 : K)) := by
   constructor
   · simp
   · intro x y
     by_cases hxy : x = y <;>
       by_cases hx : x = g <;>
       by_cases hy : y = g <;>
-      simp [FinsuppGroupLikeEquation, Finsupp.single_apply, hxy, hx, hy]
+      simp_all [FinsuppGroupLikeEquation, Finsupp.single_apply]
 
 /-- Exact characterization of group-like finitely supported coefficient vectors. -/
 theorem groupLike_finsupp_iff_single
@@ -75,6 +75,6 @@ theorem groupLike_finsupp_iff_single
   · rintro ⟨hcounit, hcomul⟩
     exact exact_groupLike_finsupp a hcounit hcomul
   · rintro ⟨g, rfl⟩
-    exact single_satisfies_groupLike_finsupp (K := K) g
+    exact single_satisfies_groupLike_finsupp (G := G) (K := K) g
 
 end LeanMathlib.Rigidity

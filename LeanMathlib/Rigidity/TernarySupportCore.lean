@@ -59,6 +59,9 @@ noncomputable def ternaryPolySupportSliceEquiv {n : ℕ}
     · rfl
   right_inv := by
     rintro ⟨a, ⟨y, hy⟩⟩
+    apply Sigma.ext rfl
+    apply heq_of_eq
+    apply Subtype.ext
     rfl
 
 /-- Exact support-card recursion through the three slices. -/
@@ -66,8 +69,8 @@ theorem ternaryPolySupportCard_slices {n : ℕ}
     (p : TernaryPoly (n + 1)) :
     ternaryPolySupportCard p =
       ∑ a : ZMod 3, ternaryPolySupportCard (ternaryPolySlice a p) := by
-  rw [ternaryPolySupportCard,
-    Fintype.card_congr (ternaryPolySupportSliceEquiv p)]
+  unfold ternaryPolySupportCard
+  rw [Fintype.card_congr (ternaryPolySupportSliceEquiv p)]
   exact Fintype.card_sigma
 
 /-- Explicit three-slice cardinal formula. -/
@@ -84,7 +87,13 @@ theorem ternaryPolySupportCard_three_slices {n : ℕ}
   have huniv : (Finset.univ : Finset (ZMod 3)) = {0, 1, 2} := by
     native_decide
   rw [huniv]
-  norm_num [Finset.sum_insert]
+  have h0 : (0 : ZMod 3) ∉ ({1, 2} : Finset (ZMod 3)) := by
+    native_decide
+  have h1 : (1 : ZMod 3) ∉ ({2} : Finset (ZMod 3)) := by
+    native_decide
+  rw [Finset.sum_insert h0, Finset.sum_insert h1]
+  simp only [Finset.sum_singleton]
+  ac_rfl
 
 @[simp]
 theorem ternaryPolySupportCard_zero (n : ℕ) :

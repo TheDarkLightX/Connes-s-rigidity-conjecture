@@ -33,52 +33,69 @@ def shiftFirst (n : ℕ) : TripleExponent ↪ TripleExponent where
   toFun e := ⟨e.first + n, e.second, e.third⟩
   inj' := by
     intro a b h
-    apply TripleExponent.ext
-    · exact Nat.add_right_cancel
-        (congrArg (fun e : TripleExponent => e.first) h)
-    · exact congrArg (fun e : TripleExponent => e.second) h
-    · exact congrArg (fun e : TripleExponent => e.third) h
+    have hfirst : a.first + n = b.first + n :=
+      congrArg TripleExponent.first h
+    have hsecond : a.second = b.second := by
+      simpa using congrArg TripleExponent.second h
+    have hthird : a.third = b.third := by
+      simpa using congrArg TripleExponent.third h
+    exact TripleExponent.ext (Nat.add_right_cancel hfirst) hsecond hthird
 
 /-- Add `n` to the second exponent. -/
 def shiftSecond (n : ℕ) : TripleExponent ↪ TripleExponent where
   toFun e := ⟨e.first, e.second + n, e.third⟩
   inj' := by
     intro a b h
-    apply TripleExponent.ext
-    · exact congrArg (fun e : TripleExponent => e.first) h
-    · exact Nat.add_right_cancel
-        (congrArg (fun e : TripleExponent => e.second) h)
-    · exact congrArg (fun e : TripleExponent => e.third) h
+    have hfirst : a.first = b.first := by
+      simpa using congrArg TripleExponent.first h
+    have hsecond : a.second + n = b.second + n :=
+      congrArg TripleExponent.second h
+    have hthird : a.third = b.third := by
+      simpa using congrArg TripleExponent.third h
+    exact TripleExponent.ext hfirst (Nat.add_right_cancel hsecond) hthird
 
 @[simp]
 theorem difference_swapFirstSecond (e : TripleExponent) :
     difference (swapFirstSecond e) = -difference e := by
-  simp [difference, swapFirstSecond] <;> omega
+  change (e.second : ℤ) - (e.first : ℤ) =
+    -((e.first : ℤ) - (e.second : ℤ))
+  ring
 
 @[simp]
 theorem difference_shiftFirst (n : ℕ) (e : TripleExponent) :
     difference (shiftFirst n e) = (n : ℤ) + difference e := by
-  simp [difference, shiftFirst] <;> omega
+  change ((e.first + n : ℕ) : ℤ) - (e.second : ℤ) =
+    (n : ℤ) + ((e.first : ℤ) - (e.second : ℤ))
+  rw [Nat.cast_add]
+  ring
 
 @[simp]
 theorem difference_shiftSecond (n : ℕ) (e : TripleExponent) :
     difference (shiftSecond n e) = difference e - n := by
-  simp [difference, shiftSecond] <;> omega
+  change (e.first : ℤ) - ((e.second + n : ℕ) : ℤ) =
+    ((e.first : ℤ) - (e.second : ℤ)) - (n : ℤ)
+  rw [Nat.cast_add]
+  ring
 
 @[simp]
 theorem totalDegree_swapFirstSecond (e : TripleExponent) :
     totalDegree (swapFirstSecond e) = totalDegree e := by
-  simp [totalDegree, swapFirstSecond] <;> omega
+  change e.second + e.first + e.third = e.first + e.second + e.third
+  omega
 
 @[simp]
 theorem totalDegree_shiftFirst (n : ℕ) (e : TripleExponent) :
     totalDegree (shiftFirst n e) = n + totalDegree e := by
-  simp [totalDegree, shiftFirst] <;> omega
+  change (e.first + n) + e.second + e.third =
+    n + (e.first + e.second + e.third)
+  omega
 
 @[simp]
 theorem totalDegree_shiftSecond (n : ℕ) (e : TripleExponent) :
     totalDegree (shiftSecond n e) = n + totalDegree e := by
-  simp [totalDegree, shiftSecond] <;> omega
+  change e.first + (e.second + n) + e.third =
+    n + (e.first + e.second + e.third)
+  omega
 
 end TripleExponent
 
@@ -111,9 +128,11 @@ theorem positiveShiftTerm_difference_pos
   obtain ⟨y, hy, rfl⟩ := Finset.mem_map.mp hx
   rw [swapFirstSecondBlock, Finsupp.support_embDomain] at hy
   obtain ⟨e, he, rfl⟩ := Finset.mem_map.mp hy
-  have hb := hbound e he
-  have hb_upper : TripleExponent.difference e < (n : ℤ) := (abs_lt.mp hb).2
-  simp only [TripleExponent.difference_shiftFirst,
+  have hb_upper : TripleExponent.difference e < (n : ℤ) :=
+    (abs_lt.mp (hbound e he)).2
+  change 0 < TripleExponent.difference
+    (TripleExponent.shiftFirst n (TripleExponent.swapFirstSecond e))
+  rw [TripleExponent.difference_shiftFirst,
     TripleExponent.difference_swapFirstSecond]
   omega
 
@@ -126,10 +145,11 @@ theorem negativeShiftTerm_difference_neg
     TripleExponent.difference x < 0 := by
   rw [negativeShiftTerm, Finsupp.support_embDomain] at hx
   obtain ⟨e, he, rfl⟩ := Finset.mem_map.mp hx
-  have hb := hbound e he
-  have hb_upper : TripleExponent.difference e < (n : ℤ) := (abs_lt.mp hb).2
-  simpa only [TripleExponent.difference_shiftSecond] using
-    (sub_neg.mpr hb_upper)
+  have hb_upper : TripleExponent.difference e < (n : ℤ) :=
+    (abs_lt.mp (hbound e he)).2
+  change TripleExponent.difference (TripleExponent.shiftSecond n e) < 0
+  rw [TripleExponent.difference_shiftSecond]
+  exact sub_neg.mpr hb_upper
 
 /-- The two all-distinct transvection summands have disjoint monomial support. -/
 theorem positive_negative_shift_support_disjoint

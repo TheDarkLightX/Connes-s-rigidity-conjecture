@@ -86,7 +86,9 @@ instance : AddCommGroup C.Extension where
   neg_add_cancel x := by
     apply Extension.ext
     · simp
-    · simp only [add_fiber, neg_fiber, neg_base]
+    · change
+        (-x.fiber - C.c x.base (-x.base)) + x.fiber +
+            C.c (-x.base) x.base = 0
       rw [C.symmetric (-x.base) x.base]
       abel
   add_comm x y := by
@@ -98,12 +100,16 @@ instance : AddCommGroup C.Extension where
   nsmul := nsmulRec
   zsmul := zsmulRec
 
+end Extension
+
 /-- Canonical inclusion of the fiber subgroup. -/
 def fiberHom : B →+ C.Extension where
   toFun b := ⟨0, b⟩
   map_zero' := rfl
   map_add' x y := by
-    ext <;> simp [C.zero_left]
+    apply Extension.ext
+    · simp
+    · simp [C.zero_left]
 
 /-- Canonical projection to the base group. -/
 def baseHom : C.Extension →+ A where
@@ -135,12 +141,15 @@ theorem mem_ker_baseHom_iff (x : C.Extension) :
     x ∈ C.baseHom.ker ↔ ∃ b, x = C.fiberHom b := by
   constructor
   · intro hx
-    have hbase : x.base = 0 := by simpa using hx
-    exact ⟨x.fiber, by ext <;> simp [hbase]⟩
+    have hbase : x.base = 0 := by
+      simpa [baseHom] using hx
+    refine ⟨x.fiber, ?_⟩
+    apply Extension.ext
+    · simpa [fiberHom] using hbase
+    · simp [fiberHom]
   · rintro ⟨b, rfl⟩
-    simp
+    simp [baseHom, fiberHom]
 
-end Extension
 end NormalizedSymmetricAddCocycle
 
 end LeanMathlib.Rigidity

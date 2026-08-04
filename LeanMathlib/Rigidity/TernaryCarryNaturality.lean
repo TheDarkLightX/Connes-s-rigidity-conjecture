@@ -102,10 +102,12 @@ theorem ternaryFunctionalCarry_natural
     obtain ⟨v, rfl⟩ := hx
     simp [tensorCubeMap_pureCube]
   · simp
-  · intro x y hx hy
-    simp [map_add, hx, hy]
-  · intro c x hx
-    simp [map_smul, hx]
+  · intro x y hx hy hnatX hnatY
+    simpa only [map_add] using
+      congrArg₂ (fun a b : ZMod 3 => a + b) hnatX hnatY
+  · intro c x hx hnat
+    simpa only [map_smul] using
+      congrArg (fun a : ZMod 3 => c • a) hnat
 
 /-- A linear map commutes with the degree shift `t^n`. -/
 def CommutesWithPolynomialShift
@@ -124,10 +126,11 @@ theorem dualPrecompose_commutes_dualShift
         (polynomialVectorDualShift n ell) =
       polynomialVectorDualShift n
         (polynomialVectorDualPrecompose L ell) := by
-  ext v
-  have hv := LinearMap.congr_fun hcomm v
-  simp [CommutesWithPolynomialShift] at hv
-  simpa using (congrArg ell hv).symm
+  apply LinearMap.ext
+  intro v
+  change ell (polynomialVectorShift n (L v)) =
+    ell (L (polynomialVectorShift n v))
+  exact (congrArg ell (LinearMap.congr_fun hcomm v)).symm
 
 /-- Naturality of shifted carry under shift-commuting linear maps. -/
 theorem ternaryShiftedFunctionalCarry_natural

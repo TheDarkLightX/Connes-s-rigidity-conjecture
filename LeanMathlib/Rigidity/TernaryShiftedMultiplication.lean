@@ -62,53 +62,66 @@ theorem ternaryShiftedCarry_three_nsmul
     3 • x =
       (ternaryShiftedFunctionalCarryCocycle n).fiberHom
         (ternaryShiftedFrobeniusDual n x.base) := by
-  rcases x with ⟨ell, q⟩
-  simp only [three_nsmul]
   apply NormalizedSymmetricAddCocycle.Extension.ext
-  · module
-  · change
+  · change (ternaryShiftedFunctionalCarryCocycle n).baseHom (3 • x) = 0
+    rw [map_nsmul]
+    exact ZModModule.char_nsmul_eq_zero 3 x.base
+  · rcases x with ⟨ell, q⟩
+    simp only [three_nsmul]
+    change
       q + (q + q + ternaryShiftedFunctionalCarry n ell ell) +
           ternaryShiftedFunctionalCarry n ell (ell + ell) =
         ternaryShiftedFrobeniusDual n ell
     rw [ternaryShiftedFunctionalCarry_comm n ell (ell + ell)]
-    have hreassoc :
+    have hqzero : q + q + q = 0 := by
+      rw [← three_nsmul]
+      exact ZModModule.char_nsmul_eq_zero 3 q
+    calc
         q + (q + q + ternaryShiftedFunctionalCarry n ell ell) +
               ternaryShiftedFunctionalCarry n (ell + ell) ell =
-          (q + q + ternaryShiftedFunctionalCarry n ell ell) + q +
-              ternaryShiftedFunctionalCarry n (ell + ell) ell := by
-      abel
-    rw [hreassoc]
-    ext b
-    rcases b with ⟨w, hw⟩
-    change
-      ((q w + q w + ternaryCarryTensorFunctional
-          (polynomialVectorDualShift n ell)
-          (polynomialVectorDualShift n ell) w) + q w +
+          (q + q + q) +
+            (ternaryShiftedFunctionalCarry n ell ell +
+              ternaryShiftedFunctionalCarry n (ell + ell) ell) := by
+            abel
+      _ = ternaryShiftedFunctionalCarry n ell ell +
+            ternaryShiftedFunctionalCarry n (ell + ell) ell := by
+              rw [hqzero, zero_add]
+      _ = ternaryShiftedFrobeniusDual n ell := by
+        ext b
+        rcases b with ⟨w, hw⟩
+        change
+          ternaryCarryTensorFunctional
+              (polynomialVectorDualShift n ell)
+              (polynomialVectorDualShift n ell) w +
           ternaryCarryTensorFunctional
             (polynomialVectorDualShift n (ell + ell))
-            (polynomialVectorDualShift n ell) w) =
-        ell (polynomialVectorShift n
-          (ternaryFrobeniusDiagonal w))
-    refine Submodule.span_induction hw ?_ ?_ ?_ ?_
-    · intro z hz
-      obtain ⟨v, rfl⟩ := hz
-      simp [ternaryCarryTensorFunctional_tmul,
-        ternaryCarry, ternaryCarry_three_identity]
-      have hq : q
-          ⟨v ⊗ₜ[ZMod 3] (v ⊗ₜ[ZMod 3] v),
-            Submodule.subset_span (Set.mem_range_self v)⟩ * 3 = 0 := by
-        simp
-      ring_nf at hq ⊢
-      simpa [ternaryCarry_three_identity] using hq
-    · simp
-    · intro u v hu hv
-      simp only [map_add]
-      rw [hu, hv]
-      ring
-    · intro c v hv
-      simp only [map_smul]
-      rw [hv]
-      ring
+              (polynomialVectorDualShift n ell) w =
+            ell (polynomialVectorShift n
+              (ternaryFrobeniusDiagonal w))
+        refine Submodule.span_induction
+          (p := fun z _ =>
+            ternaryCarryTensorFunctional
+                (polynomialVectorDualShift n ell)
+                (polynomialVectorDualShift n ell) z +
+              ternaryCarryTensorFunctional
+                (polynomialVectorDualShift n (ell + ell))
+                (polynomialVectorDualShift n ell) z =
+              ell (polynomialVectorShift n
+                (ternaryFrobeniusDiagonal z)))
+          ?_ ?_ ?_ ?_ hw
+        · intro z hz
+          obtain ⟨v, rfl⟩ := hz
+          simp [ternaryCarryTensorFunctional_tmul,
+            ternaryCarry, ternaryCarry_three_identity]
+        · simp
+        · intro u v hu hv hresultU hresultV
+          simp only [map_add]
+          rw [hresultU, hresultV]
+          ring
+        · intro c v hv hresult
+          simp only [map_smul]
+          rw [hresult]
+          ring
 
 /-- Every shifted ternary carry-group element has exponent dividing nine. -/
 theorem ternaryShiftedCarry_nine_nsmul
@@ -119,8 +132,8 @@ theorem ternaryShiftedCarry_nine_nsmul
   change 3 • (ternaryShiftedFunctionalCarryCocycle n).fiberHom
       (ternaryShiftedFrobeniusDual n x.base) = 0
   rw [← map_nsmul]
-  have hzero : 3 • ternaryShiftedFrobeniusDual n x.base = 0 := by
-    module
+  have hzero : 3 • ternaryShiftedFrobeniusDual n x.base = 0 :=
+    ZModModule.char_nsmul_eq_zero 3 _
   simp [hzero]
 
 /-- Three-torsion is characterized by the kernel of shifted Frobenius dual. -/

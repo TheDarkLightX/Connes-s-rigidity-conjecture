@@ -49,7 +49,8 @@ theorem coordinateShiftKernel_eq_zero_of_ge
     (i : Fin 3) (k : ℕ) (hk : n ≤ k) :
     f.1 ⟨i, k⟩ = 0 := by
   let r := k - n
-  have hcoord := DFunLike.congr_fun f.property ⟨i, r⟩
+  have hkernel : polynomialDualCoordinateShift n f.1 = 0 := f.property
+  have hcoord := congrFun hkernel ⟨i, r⟩
   have hsum : n + r = k := by
     simp [r, Nat.add_sub_of_le hk]
   simpa [polynomialDualCoordinateShift, hsum] using hcoord
@@ -90,6 +91,8 @@ noncomputable def polynomialVectorDualShiftKernelCoordinateEquiv (n : ℕ) :
     LinearMap.ker (polynomialVectorDualShift n) ≃ₗ[ZMod 3]
       LinearMap.ker (polynomialDualCoordinateShift n) where
   toFun ell := ⟨polynomialVectorDualEquivFun ell.1, by
+    change polynomialDualCoordinateShift n
+      (polynomialVectorDualEquivFun ell.1) = 0
     rw [← polynomialVectorDualEquivFun_shift, ell.property]
     simp⟩
   invFun f := ⟨polynomialVectorDualEquivFun.symm f.1, by
@@ -130,6 +133,6 @@ theorem card_polynomialVectorDualShiftKernel (n : ℕ) :
     Fintype.card (LinearMap.ker (polynomialVectorDualShift n)) =
       3 ^ (3 * n) := by
   rw [Fintype.card_congr (polynomialVectorDualShiftKernelEquiv n).toEquiv]
-  simp [TernaryTruncatedCoefficients, Fintype.card_fun, Nat.pow_mul]
+  simp [TernaryTruncatedCoefficients, Nat.mul_comm, Nat.pow_mul]
 
 end LeanMathlib.Rigidity

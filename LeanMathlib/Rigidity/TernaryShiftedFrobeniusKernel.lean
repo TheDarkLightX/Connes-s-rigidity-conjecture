@@ -64,7 +64,7 @@ theorem card_ternaryShiftedFrobeniusKernel (n : ℕ) :
     Fintype.card (LinearMap.ker (ternaryShiftedFrobeniusDual n)) =
       3 ^ (3 * n) := by
   rw [Fintype.card_congr (ternaryShiftedFrobeniusKernelEquiv n).toEquiv]
-  simp [TernaryTruncatedCoefficients, Fintype.card_fun, Nat.pow_mul]
+  simp [TernaryTruncatedCoefficients, Nat.mul_comm, Nat.pow_mul]
 
 /-- Distinct shifts have distinct shifted-Frobenius kernel sizes. -/
 theorem card_ternaryShiftedFrobeniusKernel_injective :

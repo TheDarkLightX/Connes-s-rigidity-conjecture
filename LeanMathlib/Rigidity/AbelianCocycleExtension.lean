@@ -63,8 +63,18 @@ instance : AddCommGroup C.Extension where
     apply Extension.ext
     · simp [add_assoc]
     · simp only [add_fiber, add_base]
-      rw [C.cocycle]
-      abel
+      calc
+        x.fiber + y.fiber + C.c x.base y.base + z.fiber +
+              C.c (x.base + y.base) z.base =
+            x.fiber + y.fiber + z.fiber +
+              (C.c x.base y.base + C.c (x.base + y.base) z.base) := by
+                abel
+        _ = x.fiber + y.fiber + z.fiber +
+              (C.c y.base z.base + C.c x.base (y.base + z.base)) := by
+                rw [C.cocycle]
+        _ = x.fiber + (y.fiber + z.fiber + C.c y.base z.base) +
+              C.c x.base (y.base + z.base) := by
+                abel
   zero_add x := by
     apply Extension.ext
     · simp
@@ -76,7 +86,9 @@ instance : AddCommGroup C.Extension where
   neg_add_cancel x := by
     apply Extension.ext
     · simp
-    · simp
+    · simp only [add_fiber, neg_fiber, neg_base]
+      rw [C.symmetric (-x.base) x.base]
+      abel
   add_comm x y := by
     apply Extension.ext
     · simp [add_comm]
@@ -123,7 +135,7 @@ theorem mem_ker_baseHom_iff (x : C.Extension) :
     x ∈ C.baseHom.ker ↔ ∃ b, x = C.fiberHom b := by
   constructor
   · intro hx
-    have hbase : x.base = 0 := hx
+    have hbase : x.base = 0 := by simpa using hx
     exact ⟨x.fiber, by ext <;> simp [hbase]⟩
   · rintro ⟨b, rfl⟩
     simp

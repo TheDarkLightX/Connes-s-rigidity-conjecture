@@ -47,9 +47,9 @@ theorem polynomialTensorCubeCoefficients_tmul
     (u v z : Polynomial F) (e : TripleExponent) :
     polynomialTensorCubeCoefficients F (u ⊗ₜ[F] (v ⊗ₜ[F] z)) e =
       u.coeff e.first * v.coeff e.second * z.coeff e.third := by
-  rw [polynomialTensorCubeCoefficients,
-    Module.Basis.repr_reindex_apply]
-  simp [polynomialTensorCubeBasis, nestedExponentEquiv,
+  unfold polynomialTensorCubeCoefficients polynomialTensorCubeBasis
+  rw [Module.Basis.repr_reindex_apply]
+  simp [nestedExponentEquiv,
     Module.Basis.tensorProduct_repr_tmul_apply,
     mul_assoc, mul_left_comm, mul_comm]
 

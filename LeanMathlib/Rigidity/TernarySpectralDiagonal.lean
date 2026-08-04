@@ -12,9 +12,10 @@ namespace TernarySymmetricCoefficients
 
 /-- Three equal coefficients sum to zero over `F_3`. -/
 theorem three_equal_sum_zero (x : ZMod 3) : x + x + x = 0 := by
+  have hthree : (3 : ZMod 3) = 0 := by norm_num
   calc
     x + x + x = (3 : ZMod 3) * x := by ring
-    _ = 0 := by norm_num
+    _ = 0 := by rw [hthree, zero_mul]
 
 /--
 The diagonal coefficient in `e_1 f` vanishes for every symmetric ternary

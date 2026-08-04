@@ -4,7 +4,7 @@ import LeanMathlib.Rigidity.AllDistinctOrbitAutomatic
 namespace LeanMathlib.Rigidity
 
 /-- Shift a three-variable coefficient block in its first exponent. -/
-def singleShiftTerm
+noncomputable def singleShiftTerm
     {F : Type*} [Zero F] (n : ℕ) (A : TripleBlock F) : TripleBlock F :=
   A.embDomain (TripleExponent.shiftFirst n)
 

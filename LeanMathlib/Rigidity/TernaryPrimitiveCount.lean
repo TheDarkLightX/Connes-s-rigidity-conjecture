@@ -475,19 +475,25 @@ theorem ternaryPrimitiveCount_subtraction (N : ℕ) (hN : 0 < N) :
       ternaryPrimitiveCount N := by
   obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hN)
   rw [ternaryPrimitiveCount_succ]
-  have hpow : 3 ^ (3 * (n + 1)) = 9 * 3 ^ (3 * n + 1) := by
+  have hcube : 3 ^ (3 * n + 3) = 27 * 3 ^ (3 * n) := by
     calc
-      3 ^ (3 * (n + 1)) = 3 ^ ((3 * n + 1) + 2) := by congr 1 <;> omega
-      _ = 3 ^ (3 * n + 1) * 3 ^ 2 := by rw [pow_add]
-      _ = 9 * 3 ^ (3 * n + 1) := by ring
-  have hprev : 3 ^ (3 * ((n + 1) - 1)) =
-      3 ^ (3 * n) := by congr 2 <;> omega
-  rw [hpow, hprev]
+      3 ^ (3 * n + 3) = 3 ^ (3 * n) * 3 ^ 3 := by rw [pow_add]
+      _ = 27 * 3 ^ (3 * n) := by ring
+  have hcurrent : 3 ^ (3 * (n + 1)) = 27 * 3 ^ (3 * n) := by
+    calc
+      3 ^ (3 * (n + 1)) = 3 ^ (3 * n + 3) := by
+        congr 1
+        omega
+      _ = 27 * 3 ^ (3 * n) := hcube
+  have hprev : 3 ^ (3 * ((n + 1) - 1)) = 3 ^ (3 * n) := by
+    congr 1
+    omega
+  have hnext : 3 ^ (3 * n + 1) = 3 * 3 ^ (3 * n) := by
+    calc
+      3 ^ (3 * n + 1) = 3 ^ (3 * n) * 3 ^ 1 := by rw [pow_add]
+      _ = 3 * 3 ^ (3 * n) := by ring
+  rw [hcurrent, hprev, hcube, hnext]
   have hpositive : 0 < 3 ^ (3 * n) := pow_pos (by omega) _
-  have hsplit : 3 ^ (3 * n + 1) = 3 * 3 ^ (3 * n) := by
-    rw [show 3 * n + 1 = 3 * n + 1 by rfl, pow_succ]
-    ring
-  rw [hsplit]
   omega
 
 /-- A convolution satisfying the gcd identity has the ternary closed form. -/
@@ -502,7 +508,8 @@ theorem ternary_primitive_card_of_convolution (P : ℕ → ℕ)
   rw [ternary_primitive_convolution_shift] at hcurrent
   rw [← hprevious] at hcurrent
   have hsub := ternaryPrimitiveCount_subtraction (n + 1) (by omega)
-  have hpositive : 0 < 3 ^ (3 * n) := pow_pos (by omega) _
+  have hindex : n + 1 - 1 = n := by omega
+  rw [hindex] at hsub
   omega
 
 /-- Exact cardinality of primitive ternary rank-three polynomial vectors. -/

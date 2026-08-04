@@ -8,17 +8,23 @@ abbrev CubeCoordinateBlock (F : Type*) [Zero F] :=
   Fin 3 → Fin 3 → Fin 3 → TripleBlock F
 
 /-- Shift both the first and second polynomial exponents by `n`. -/
-def doubleShiftTerm
+noncomputable def doubleShiftTerm
     {F : Type*} [Zero F] (n : ℕ) (A : TripleBlock F) : TripleBlock F :=
   (A.embDomain (TripleExponent.shiftFirst n)).embDomain
     (TripleExponent.shiftSecond n)
+
+@[simp]
+theorem doubleShiftTerm_zero
+    {F : Type*} [Zero F] (n : ℕ) :
+    doubleShiftTerm n (0 : TripleBlock F) = 0 := by
+  simp [doubleShiftTerm]
 
 /--
 Coordinate formula for a transvection acting in the first two tensor slots,
 when the third output coordinate is different from the transvection target.
 The omitted third-slot terms are then identically absent.
 -/
-def firstTwoTransvectionOutput
+noncomputable def firstTwoTransvectionOutput
     {F : Type*} [AddGroup F]
     (target source : Fin 3) (n : ℕ)
     (w : CubeCoordinateBlock F)
@@ -50,10 +56,11 @@ theorem freshCoordinate_output_injective
     (hsource : w source b c ≠ 0) :
     Function.Injective (fun n : ℕ =>
       firstTwoTransvectionOutput target source n w target b c) := by
+  have hbt : b ≠ target := Ne.symm htb
   have hout (n : ℕ) :
       firstTwoTransvectionOutput target source n w target b c =
         w target b c + singleShiftTerm n (w source b c) := by
-    simp [firstTwoTransvectionOutput, htb, htc]
+    simp [firstTwoTransvectionOutput, hbt]
   intro m n hmn
   apply const_add_singleShift_injective (w target b c) (w source b c) hsource
   simpa only [hout] using hmn

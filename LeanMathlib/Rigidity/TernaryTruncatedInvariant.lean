@@ -26,17 +26,17 @@ noncomputable instance ternaryTruncatedPolynomialVectorFintype (n : ℕ) :
 theorem card_ternaryTruncatedPolynomialVector (n : ℕ) :
     Fintype.card (TernaryTruncatedPolynomialVector n) = 3 ^ (3 * n) := by
   rw [Fintype.card_congr (ternaryTruncatedPolynomialVectorEquiv n).toEquiv]
-  simp [TernaryTruncatedCoefficients, Fintype.card_fun, Nat.mul_comm,
-    Nat.pow_mul]
+  simp [TernaryTruncatedCoefficients, Nat.mul_comm, Nat.pow_mul]
 
-/-- Distinct positive shift parameters yield distinct predicted invariant sizes. -/
+/-- Distinct shift parameters yield distinct predicted invariant sizes. -/
 theorem card_ternaryTruncatedPolynomialVector_injective :
     Function.Injective
       (fun n : ℕ => Fintype.card (TernaryTruncatedPolynomialVector n)) := by
   intro m n h
-  rw [card_ternaryTruncatedPolynomialVector,
-    card_ternaryTruncatedPolynomialVector] at h
-  have hpow : 3 * m = 3 * n := Nat.pow_right_injective (by omega) h
+  have hpowEq : 3 ^ (3 * m) = 3 ^ (3 * n) := by
+    simpa only [card_ternaryTruncatedPolynomialVector] using h
+  have hpow : 3 * m = 3 * n :=
+    Nat.pow_right_injective (by norm_num) hpowEq
   omega
 
 end LeanMathlib.Rigidity

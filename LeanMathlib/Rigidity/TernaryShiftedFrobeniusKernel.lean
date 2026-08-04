@@ -72,9 +72,10 @@ theorem card_ternaryShiftedFrobeniusKernel_injective :
       (fun n : ℕ =>
         Fintype.card (LinearMap.ker (ternaryShiftedFrobeniusDual n))) := by
   intro m n h
-  rw [card_ternaryShiftedFrobeniusKernel,
-    card_ternaryShiftedFrobeniusKernel] at h
-  have hpow : 3 * m = 3 * n := Nat.pow_right_injective (by omega) h
+  have hcard : 3 ^ (3 * m) = 3 ^ (3 * n) := by
+    simpa only [card_ternaryShiftedFrobeniusKernel] using h
+  have hpow : 3 * m = 3 * n :=
+    Nat.pow_right_injective (by omega) hcard
   omega
 
 end LeanMathlib.Rigidity

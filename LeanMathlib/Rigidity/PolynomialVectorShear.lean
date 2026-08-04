@@ -50,7 +50,6 @@ noncomputable def polynomialVectorShearEquiv
     by_cases hi : i = target
     · subst i
       simp [polynomialVectorShear, hts, Ne.symm hts]
-      ring
     · simp [polynomialVectorShear, hi]
   right_inv := by
     intro v
@@ -58,7 +57,6 @@ noncomputable def polynomialVectorShearEquiv
     by_cases hi : i = target
     · subst i
       simp [polynomialVectorShear, hts, Ne.symm hts]
-      ring
     · simp [polynomialVectorShear, hi]
 
 @[simp]

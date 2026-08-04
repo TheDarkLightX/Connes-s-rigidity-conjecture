@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An exact spectral decomposition and candidate minimal free resolution for the Frobenius kernel in divided prime powers.">
+  <title>Spectral Frobenius-kernel resolution</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["\\(", "\\)"]],
+        displayMath: [["\\[", "\\]"]]
+      },
+      chtml: { scale: 1 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to the mathematics</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="index.html">Connes rigidity notes</a>
+      <nav aria-label="Page contents">
+        <a href="#theorem">Theorem</a>
+        <a href="#diagonal">Diagonal lemma</a>
+        <a href="#resolution">Resolution</a>
+        <a href="#ternary">Ternary case</a>
+        <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture">Repository</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content">
+    <article class="document">
+      <header class="document-header">
+        <p class="overline">New structural candidate</p>
+        <h1>Spectral decomposition of the Frobenius kernel</h1>
+        <p class="subtitle">
+          An exact orbit-block decomposition over symmetric spectral variables,
+          with a prime-uniform Koszul resolution and a homological explanation
+          of the ternary Hilbert numerator.
+        </p>
+        <dl class="document-meta" aria-label="Result summary">
+          <div><dt>Updated</dt><dd>4 August 2026</dd></div>
+          <div><dt>Scope</dt><dd>prime \(p\), rank \(r\)</dd></div>
+          <div><dt>Evidence</dt><dd>written proof candidate</dd></div>
+          <div><dt>Certificate</dt><dd>exact symbolic replay</dd></div>
+          <div><dt>Lean</dt><dd>not yet formalized</dd></div>
+        </dl>
+      </header>
+
+      <aside class="status-note">
+        <strong>Status convention.</strong>
+        <span>
+          The decomposition and resolution have a complete written argument and
+          an exact combinatorial certificate, but they are not yet Lean checked
+          or independently reviewed. No novelty priority is claimed.
+        </span>
+      </aside>
+
+      <section id="theorem" aria-labelledby="theorem-heading">
+        <p class="section-marker">Main structural statement</p>
+        <h2 id="theorem-heading">Coordinate multiplicities determine the spectral blocks</h2>
+        <p>Let \(p\) be prime and put</p>
+        <div class="display-math">
+          \[
+          k=\mathbf F_p,\qquad
+          V=k^r\otimes_k k[t],\qquad
+          P=k[t_1,\ldots,t_p],\qquad
+          S=P^{\mathfrak S_p}=k[e_1,\ldots,e_p].
+          \]
+        </div>
+        <p>
+          The group \(\mathfrak S_p\) simultaneously permutes tensor positions
+          and spectral variables. For a partition
+          \(\lambda=(\lambda_1,\ldots,\lambda_\ell)\vdash p\), let
+        </p>
+        <div class="display-math">
+          \[
+          H_\lambda=
+          \mathfrak S_{\lambda_1}\times\cdots\times
+          \mathfrak S_{\lambda_\ell}.
+          \]
+        </div>
+        <p>
+          If \(a_s(\lambda)\) counts parts of size \(s\), the number of
+          coordinate multisets of type \(\lambda\) is
+        </p>
+        <div class="display-math">
+          \[
+          m_{r,\lambda}=
+          \frac{r!}{(r-\ell)!\prod_s a_s(\lambda)!}.
+          \]
+        </div>
+
+        <div class="theorem candidate">
+          <p class="theorem-label">Spectral orbit-block decomposition</p>
+          <div class="display-math">
+            \[
+            \Gamma^p(V)
+            \cong
+            \bigoplus_{\substack{\lambda\vdash p\\\ell(\lambda)\le r}}
+            \left(P^{H_\lambda}\right)^{\oplus m_{r,\lambda}}
+            \]
+          </div>
+          <p>
+            as graded modules over \(S=P^{\mathfrak S_p}\). For one coordinate
+            orbit, an invariant family is uniquely determined by its polynomial
+            at a representative tuple; the stabilizer condition is exactly
+            membership in \(P^{H_\lambda}\).
+          </p>
+        </div>
+
+        <p>
+          Each proper Young subgroup has order prime to \(p\). Its invariant
+          block is therefore a projective, hence free, \(S\)-module. Its Hilbert
+          numerator is the Gaussian multinomial
+        </p>
+        <div class="display-math">
+          \[
+          C_\lambda(q)=
+          \frac{\prod_{j=1}^{p}(1-q^j)}
+          {\prod_{a=1}^{\ell}\prod_{j=1}^{\lambda_a}(1-q^j)}.
+          \]
+        </div>
+        <p>The total numerator is</p>
+        <div class="display-math">
+          \[
+          B_{p,r}(q)=
+          \sum_\lambda m_{r,\lambda}C_\lambda(q),
+          \qquad B_{p,r}(1)=r^p.
+          \]
+        </div>
+      </section>
+
+      <section id="diagonal" aria-labelledby="diagonal-heading">
+        <h2 id="diagonal-heading">The spectral diagonal lemma</h2>
+        <p>
+          For a symmetric polynomial \(f\in S\), let \(\Delta(f)\) retain only
+          coefficients whose \(p\) spectral exponents are equal:
+        </p>
+        <div class="display-math">
+          \[
+          \Delta(f)=
+          \sum_{n\ge0}
+          [t_1^n\cdots t_p^n]f\;\tau^n.
+          \]
+        </div>
+        <p>
+          The coefficient of \(t_1^n\cdots t_p^n\) in \(e_jf\) is a sum of
+          \(inom pj\) equal coefficients, because \(f\) is symmetric. Therefore
+        </p>
+        <div class="display-math">
+          \[
+          \Delta(e_jf)=0\quad(1\le j<p),
+          \qquad
+          \Delta(e_pf)=\tau\Delta(f).
+          \]
+        </div>
+        <p>
+          Since every intermediate binomial coefficient is divisible by \(p\),
+          the diagonal extraction is exactly
+        </p>
+        <div class="display-math">
+          \[
+          S\longrightarrow k[\tau],\qquad
+          e_1,\ldots,e_{p-1}\longmapsto0,
+          \quad e_p\longmapsto\tau.
+          \]
+        </div>
+        <p>Its kernel is the regular-sequence ideal</p>
+        <div class="display-math short">
+          \[
+          I_p=(e_1,\ldots,e_{p-1}).
+          \]
+        </div>
+      </section>
+
+      <section id="resolution" aria-labelledby="resolution-heading">
+        <h2 id="resolution-heading">The kernel has one nonfree spectral sector</h2>
+        <p>
+          The Frobenius diagonal vanishes on every mixed-label coordinate block.
+          On each of the \(r\) all-same-label blocks it is the quotient
+          \(S\to S/I_p\). Hence
+        </p>
+        <div class="theorem candidate">
+          <p class="theorem-label">Frobenius-kernel decomposition</p>
+          <div class="display-math">
+            \[
+            K_{p,r}:=\ker d_p
+            \cong
+            I_p^{\oplus r}
+            \oplus
+            \bigoplus_{\lambda\ne(p)}
+            \left(P^{H_\lambda}\right)^{\oplus m_{r,\lambda}}.
+            \]
+          </div>
+        </div>
+        <p>Its Hilbert numerator is therefore</p>
+        <div class="display-math">
+          \[
+          K_{p,r}(q)=
+          B_{p,r}(q)-r\prod_{j=1}^{p-1}(1-q^j).
+          \]
+        </div>
+        <p>
+          All mixed-label sectors are free. The only nonfree part consists of
+          \(r\) copies of \(I_p\), so the truncated Koszul complex gives the
+          complete minimal resolution. In positive homological degree,
+        </p>
+        <div class="display-math">
+          \[
+          F_j=
+          \left[
+          \bigoplus_{\substack{J\subseteq\{1,\ldots,p-1\}\\|J|=j+1}}
+          S\!\left(-\sum_{a\in J}a\right)
+          \right]^{\oplus r},
+          \qquad1\le j\le p-2.
+          \]
+        </div>
+        <p>This yields the prime-uniform homological phase change</p>
+        <div class="display-math">
+          \[
+          \begin{array}{c|c|c}
+          &\operatorname{pd}_S K_{p,r}&\operatorname{depth}_S K_{p,r}\\
+          \hline
+          p=2&0&2\\
+          p\ge3&p-2&2.
+          \end{array}
+          \]
+        </div>
+        <p>
+          Up to its grading shift, the top Ext group is
+          \((S/I_p)^{\oplus r}\). The kernel therefore remembers the Frobenius
+          spectral curve homologically even though it has the same generic
+          \(S\)-rank \(r^p\) as the whole divided power.
+        </p>
+      </section>
+
+      <section id="ternary" aria-labelledby="ternary-heading">
+        <h2 id="ternary-heading">The ternary numerator is a Betti table</h2>
+        <p>For \(p=r=3\), the coordinate types are</p>
+        <ul>
+          <li>three \((3)\)-blocks with stabilizer \(\mathfrak S_3\);</li>
+          <li>six \((2,1)\)-blocks with stabilizer \(\mathfrak S_2\);</li>
+          <li>one all-distinct block with trivial stabilizer.</li>
+        </ul>
+        <p>The free spectral decomposition is</p>
+        <div class="display-math">
+          \[
+          \Gamma^3(\mathbf F_3^3[t])
+          \cong
+          S^{10}\oplus S(-1)^8\oplus S(-2)^8\oplus S(-3).
+          \]
+        </div>
+        <p>The Frobenius kernel has the proposed minimal presentation</p>
+        <div class="display-math">
+          \[
+          0\longrightarrow S(-3)^3
+          \longrightarrow
+          S^7\oplus S(-1)^{11}\oplus S(-2)^{11}\oplus S(-3)
+          \longrightarrow K_{3,3}\longrightarrow0.
+          \]
+        </div>
+        <p>Consequently</p>
+        <div class="display-math">
+          \[
+          \operatorname{Hilb}(K_{3,3};q)=
+          \frac{7+11q+11q^2-2q^3}
+          {(1-q)(1-q^2)(1-q^3)}.
+          \]
+        </div>
+        <p>
+          The negative coefficient is not a failed dimension count. The free
+          generators contribute \(+q^3\); the three Frobenius-sector syzygies
+          contribute \(-3q^3\). Their difference is the observed \(-2q^3\).
+        </p>
+      </section>
+
+      <section aria-labelledby="binary-heading">
+        <h2 id="binary-heading">Binary rank three is spectrally free</h2>
+        <div class="display-math">
+          \[
+          \Gamma^2(\mathbf F_2^3[t])
+          \cong S^6\oplus S(-1)^3,
+          \qquad
+          K_{2,3}\cong S^3\oplus S(-1)^6.
+          \]
+        </div>
+        <p>
+          Here \(I_2=(e_1)\) is principal. The change from \(p=2\) to odd
+          primes is therefore visible both in the cyclicity proof and in the
+          spectral homological dimension.
+        </p>
+      </section>
+
+      <section aria-labelledby="meaning-heading">
+        <h2 id="meaning-heading">Why this matters for the rigidity program</h2>
+        <ol class="reasoning-steps">
+          <li>
+            It converts the earlier Hilbert-series observation into an exact
+            module decomposition rather than a numerical guess.
+          </li>
+          <li>
+            It rules out any proposed identification of the odd-prime kernel
+            with a spectrally free global-Weyl-type module.
+          </li>
+          <li>
+            It provides a smaller formalization target: mixed-label freeness,
+            the diagonal coefficient lemma, and a standard Koszul resolution.
+          </li>
+          <li>
+            It separates current-group cyclicity from spectral generation. A
+            single group orbit may cross many spectral blocks.
+          </li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="boundary-heading">
+        <h2 id="boundary-heading">Evidence and novelty boundary</h2>
+        <p>
+          The repository's new symbolic oracle checks partition multiplicities,
+          Gaussian multinomials, spectral ranks, kernel numerators, and every
+          Betti-polynomial alternating sum for the declared prime/rank cases.
+          It reproduces the ternary and binary formulas exactly.
+        </p>
+        <p>
+          The ingredients—symmetric polynomial freeness, Young-subgroup
+          invariants, Koszul complexes, Frobenius twists, and global Weyl
+          modules—are classical. The possible new contribution is their exact
+          assembly into this Frobenius-kernel resolution and its application to
+          the carry construction. Specialist review and a targeted prior-art
+          search remain necessary before a novelty claim.
+        </p>
+      </section>
+
+      <footer class="document-footer">
+        <p>
+          Detailed proof candidate:
+          <a href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/research/notes/SPECTRAL_FROBENIUS_KERNEL_RESOLUTION.md">repository note</a>.
+        </p>
+        <p><a href="index.html">Return to the main mathematical note</a>.</p>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>

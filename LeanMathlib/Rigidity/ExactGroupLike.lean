@@ -82,6 +82,12 @@ theorem groupLike_coefficients_iff_delta
   · rintro ⟨g, hg⟩
     have ha : a = fun h => if h = g then 1 else 0 := funext hg
     rw [ha]
-    exact delta_groupLike_coefficients (G := G) (K := K) g
+    constructor
+    · simp
+    · intro x y
+      by_cases hxy : x = y <;>
+        by_cases hx : x = g <;>
+        by_cases hy : y = g <;>
+        simp_all [diagonalCoeffs, tensorSquareCoeffs]
 
 end LeanMathlib.Rigidity

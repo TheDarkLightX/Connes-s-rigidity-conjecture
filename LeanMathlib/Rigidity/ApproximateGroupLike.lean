@@ -6,7 +6,7 @@ open scoped BigOperators
 
 /-- A finite weighted average is bounded above by one of its entries. -/
 theorem exists_ge_weighted_average
-    {ι : Type*} [Finite ι] [Nonempty ι]
+    {ι : Type*} [Fintype ι] [Nonempty ι]
     (w x : ι → ℝ)
     (hw : ∀ i, 0 ≤ w i)
     (hsum : ∑ i, w i = 1) :
@@ -79,10 +79,21 @@ theorem coefficient_distance_to_basis
     Complex.normSq (a i - 1) +
         ∑ j ∈ (Finset.univ.erase i), Complex.normSq (a j) =
       2 - 2 * (a i).re := by
+  have herase :
+      (∑ j ∈ (Finset.univ.erase i), Complex.normSq (a j)) +
+          Complex.normSq (a i) =
+        ∑ j, Complex.normSq (a j) := by
+    exact Finset.sum_erase_add Finset.univ _ (Finset.mem_univ i)
   have hsplit :
       Complex.normSq (a i) +
           ∑ j ∈ (Finset.univ.erase i), Complex.normSq (a j) = 1 := by
-    simpa [Finset.sum_erase_add _ (Finset.mem_univ i)] using hnorm
+    calc
+      Complex.normSq (a i) +
+          ∑ j ∈ (Finset.univ.erase i), Complex.normSq (a j) =
+          (∑ j ∈ (Finset.univ.erase i), Complex.normSq (a j)) +
+            Complex.normSq (a i) := by ac_rfl
+      _ = ∑ j, Complex.normSq (a j) := herase
+      _ = 1 := hnorm
   rw [normSq_sub_one]
   linarith
 

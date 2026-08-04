@@ -1,48 +1,65 @@
 # Standalone Lean CI status
 
-## Latest complete audit
+## Toolchain
 
 - Repository: `TheDarkLightX/Connes-s-rigidity-conjecture`
 - Branch: `agent/import-lean-rigidity-research-20260804`
-- Audited branch commit: `f4512cf05c0c704f3bb301333080c1fc9bf1d32e`
-- Workflow run: `30894406560`
 - Command: `lake build`
 - Lean: `4.30.0-rc2`
 - Mathlib revision: `9977002c3c9492b622fb469b0d18acc7e73aed3e`
-- Result: **failed**
 
-## Failing modules reported by Lake
+## Initial standalone audit
 
-1. `LeanMathlib.Rigidity.TernaryPrimitiveArithmetic`
-2. `LeanMathlib.Rigidity.TernaryTruncatedInvariant`
-3. `LeanMathlib.Rigidity.TernaryWittCarry`
-4. `LeanMathlib.Rigidity.TernaryReducedPolynomial`
-5. `LeanMathlib.Rigidity.ExponentSeparation`
-6. `LeanMathlib.Rigidity.ExactGroupLike`
-7. `LeanMathlib.Rigidity.FinsuppGroupLike`
-8. `LeanMathlib.Rigidity.SupportOrbitCore`
-9. `LeanMathlib.Rigidity.ApproximateGroupLike`
-10. `LeanMathlib.Rigidity.HopfRoundingEquiv`
-11. `LeanMathlib.Rigidity.AbelianCocycleExtension`
+The first dedicated-repository build, workflow run `30894406560`, failed in eleven modules. That result corrected the earlier assumption that incremental source-workspace runs established the final imported dependency graph.
 
-## Failure classes
+Initial failures:
 
-The log shows several categories rather than one common packaging error:
+1. `TernaryPrimitiveArithmetic`
+2. `TernaryTruncatedInvariant`
+3. `TernaryWittCarry`
+4. `TernaryReducedPolynomial`
+5. `ExponentSeparation`
+6. `ExactGroupLike`
+7. `FinsuppGroupLike`
+8. `SupportOrbitCore`
+9. `ApproximateGroupLike`
+10. `HopfRoundingEquiv`
+11. `AbelianCocycleExtension`
 
-- renamed or unavailable Mathlib lemmas;
-- typeclass inference failures in recursively defined structures;
-- proof scripts that leave goals unsolved;
-- rewrite direction and extensionality failures;
-- field-notation errors in the generic cocycle extension;
-- arithmetic normalization failures over `ZMod 3`.
+## Last completed build frontier
+
+Workflow run `30900303939`, testing research commit `55030c1f9e644921e4b284739ea34abefd103697`, reduced the failures to six:
+
+1. `TernaryReducedDegree`
+2. `TernaryPrimitiveCount`
+3. `GroupAlgebraHopfBridge`
+4. `TernaryWittExtension`
+5. `PolynomialTensorCubeBasis`
+6. `SingleShiftOrbit`
+
+That run successfully built the repaired generic cocycle extension, reduced-polynomial foundation, scalar Witt carry, exact and approximate group-like coefficient kernels, Hopf rounding, support separation, and the first all-distinct orbit layers.
+
+## Repairs present after the last completed build
+
+The current branch contains additional repairs not covered by run `30900303939`:
+
+- `SingleShiftOrbit.singleShiftTerm` is explicitly noncomputable because it uses `Finsupp.embDomain`.
+- `TernaryWittExtension` proves the exponent-nine identity through the fiber homomorphism and the characteristic-three base coordinate.
+- `GroupAlgebraHopfBridge` handles the zero coproduct coefficient case explicitly.
+- `TernaryReducedDegree` uses explicit recursive hypotheses and factor-quotient degree statements rather than brittle simplification.
+- `TernaryPrimitiveCount` replaces unsupported `omega` power reasoning with explicit power decompositions.
+- `PolynomialTensorCubeBasis` now reindexes monomial tensor bases explicitly and states basis vectors as polynomial monomials.
+
+A fresh complete build is required before any of these are promoted.
 
 ## Promotion rule
 
-No headline theorem depending transitively on a failing module is considered promoted. Repairs should proceed in dependency order, with every repair accompanied by:
+No headline theorem depending transitively on a failing or unaudited module is considered promoted. Every repair requires:
 
 1. a focused module build;
-2. a full `lake build`;
+2. a full clean `lake build`;
 3. a theorem-dependency review;
-4. removal of any stale claim in documentation.
+4. correction of stale website or repository claims;
+5. separate disclosure when `native_decide` supplies finite compiler-checked evidence rather than a small kernel-only derivation.
 
-The failing CI is intentionally retained as an audit signal rather than replaced by a partial green build.
+The failing runs remain part of the public audit trail rather than being replaced by partial green targets.

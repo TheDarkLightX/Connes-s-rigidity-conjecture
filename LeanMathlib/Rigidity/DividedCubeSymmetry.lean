@@ -62,15 +62,31 @@ theorem polynomialVectorTensorCubeCoords_swapFirstTwo
       swapFirstSecondBlock
         (polynomialVectorTensorCubeCoords F w j i k) := by
   induction w using TensorProduct.induction_on with
-  | zero => simp
-  | add x y hx hy => simp [map_add, hx, hy]
+  | zero =>
+      rw [(swapFirstTwoTensorCube F).map_zero,
+        (polynomialVectorTensorCubeCoords F).map_zero]
+      simp
+  | add x y hx hy =>
+      rw [(swapFirstTwoTensorCube F).map_add,
+        (polynomialVectorTensorCubeCoords F).map_add,
+        (polynomialVectorTensorCubeCoords F).map_add]
+      simp only [Pi.add_apply, swapFirstSecondBlock_add, hx, hy]
   | tmul u q =>
       induction q using TensorProduct.induction_on with
-      | zero => simp
-      | add x y hx hy => simp [TensorProduct.tmul_add, map_add, hx, hy]
+      | zero =>
+          rw [TensorProduct.tmul_zero,
+            (swapFirstTwoTensorCube F).map_zero,
+            (polynomialVectorTensorCubeCoords F).map_zero]
+          simp
+      | add x y hx hy =>
+          rw [TensorProduct.tmul_add,
+            (swapFirstTwoTensorCube F).map_add,
+            (polynomialVectorTensorCubeCoords F).map_add,
+            (polynomialVectorTensorCubeCoords F).map_add]
+          simp only [Pi.add_apply, swapFirstSecondBlock_add, hx, hy]
       | tmul v z =>
           ext e
-          simp [mul_assoc, mul_left_comm, mul_comm]
+          simp [TripleExponent.swapFirstSecond, mul_assoc, mul_comm]
 
 /-- A tensor fixed by the first-factor transposition has symmetric coordinates. -/
 theorem fixed_swapFirstTwo_coords_symmetric
@@ -97,15 +113,16 @@ theorem dividedCube_fixed_swapFirstTwo
     {w : PolynomialVectorTensorCube F}
     (hw : w ∈ dividedCubeSubmodule F) :
     swapFirstTwoTensorCube F w = w := by
-  refine Submodule.span_induction hw ?_ ?_ ?_ ?_
+  refine Submodule.span_induction
+    (p := fun x _ => swapFirstTwoTensorCube F x = x) ?_ ?_ ?_ ?_ hw
   · intro x hx
     obtain ⟨v, rfl⟩ := hx
-    simp
-  · simp
-  · intro x y hx hy
-    simp [map_add, hx, hy]
-  · intro c x hx
-    simp [map_smul, hx]
+    exact swapFirstTwoTensorCube_tmul F v v v
+  · exact (swapFirstTwoTensorCube F).map_zero
+  · intro x y hx hy hfixx hfixy
+    rw [(swapFirstTwoTensorCube F).map_add, hfixx, hfixy]
+  · intro c x hx hfix
+    rw [(swapFirstTwoTensorCube F).map_smul, hfix]
 
 /-- Genuine divided cubes satisfy the coordinate symmetry used by the rank-three orbit theorem. -/
 theorem dividedCube_coords_swapFirstTwoSymmetric

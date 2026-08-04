@@ -99,9 +99,13 @@ theorem ternaryDegreeZero_eq_zero_of_slice_zero {n : ℕ}
     p = 0 := by
   rcases p with ⟨p₀, p₁, p₂⟩
   rcases hp with ⟨hp₀, hp₁, hp₂⟩
+  have hp₁' : p₁ = 0 := by
+    simpa using hp₁
+  have hp₂' : p₂ = 0 := by
+    simpa using hp₂
   have hp₀zero : p₀ = 0 := by
-    simpa [ternaryPolySlice, hp₁, hp₂] using hzero
-  ext <;> simp [hp₀zero, hp₁, hp₂]
+    simpa [ternaryPolySlice, hp₁', hp₂'] using hzero
+  exact Prod.ext hp₀zero (Prod.ext hp₁' hp₂')
 
 /-- Exact support size of a nonzero degree-zero reduced ternary polynomial. -/
 theorem ternaryDegreeZero_supportCard :
@@ -109,18 +113,23 @@ theorem ternaryDegreeZero_supportCard :
       TernaryDegreeZero p → p ≠ 0 →
         ternaryPolySupportCard p = 3 ^ n
   | 0, p, _, hp => by
-      fin_cases p <;> decide
+      fin_cases p
+      · exact (hp rfl).elim
+      · decide
+      · decide
   | n + 1, p, hdeg, hp => by
-      rcases p with ⟨p₀, p₁, p₂⟩
-      rcases hdeg with ⟨hp₀deg, hp₁, hp₂⟩
-      have hp₀ne : p₀ ≠ 0 := by
-        intro hzero
+      have hbaseDegree : TernaryDegreeZero p.1 := hdeg.1
+      have hbaseNe : p.1 ≠ 0 := by
+        intro hbase
         apply hp
-        ext <;> simp [hzero, hp₁, hp₂]
+        exact ternaryDegreeZero_eq_zero_of_slice_zero p hdeg 0
+          ((ternaryDegreeZero_slice_eq_base p hdeg 0).trans hbase)
       rw [ternaryPolySupportCard_three_slices]
-      simp [ternaryPolySlice, hp₁, hp₂,
-        ternaryDegreeZero_supportCard p₀ hp₀deg hp₀ne,
-        pow_succ]
-      ring
+      rw [ternaryDegreeZero_slice_eq_base p hdeg 0,
+        ternaryDegreeZero_slice_eq_base p hdeg 1,
+        ternaryDegreeZero_slice_eq_base p hdeg 2]
+      simp only [ternaryDegreeZero_supportCard p.1 hbaseDegree hbaseNe]
+      rw [pow_succ]
+      omega
 
 end LeanMathlib.Rigidity

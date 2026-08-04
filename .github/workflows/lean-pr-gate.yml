@@ -1,0 +1,35 @@
+name: Lean formalization PR gate
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'LeanMathlib/**'
+      - 'LeanMathlib.lean'
+      - 'lakefile.lean'
+      - 'lake-manifest.json'
+      - 'lean-toolchain'
+      - 'scripts/audit_lean_trust.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Require the formal project in the checked-out PR
+        run: |
+          test -f lakefile.lean
+          test -f lean-toolchain
+          test -f LeanMathlib.lean
+      - name: Reject Lean placeholders and compiler-trusting proofs
+        run: python3 scripts/audit_lean_trust.py
+      - uses: leanprover/lean-action@v1
+        with:
+          build: true
+          test: false
+          lint: false

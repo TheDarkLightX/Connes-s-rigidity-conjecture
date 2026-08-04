@@ -1,5 +1,6 @@
 import Mathlib
 import LeanMathlib.Rigidity.DividedCubeSymmetry
+import LeanMathlib.Rigidity.TernaryWittCarry
 
 namespace LeanMathlib.Rigidity
 
@@ -62,7 +63,7 @@ noncomputable def diagonalBlockPolynomialLinear
 /-- Frobenius-diagonal extraction on cube-coordinate arrays. -/
 noncomputable def cubeCoordinateFrobeniusDiagonal
     (R : Type*) [Semiring R] :
-    CubeCoordinateBlock R →ₗ[R] PolynomialVector3 R where
+    CubeCoordinateBlock R →ₗ[R] (Fin 3 → Polynomial R) where
   toFun w i := diagonalBlockPolynomial (w i i i)
   map_add' := by
     intro w₁ w₂
@@ -97,10 +98,10 @@ theorem ternaryFrobeniusDiagonal_pureCube
   funext i
   apply Polynomial.ext
   intro n
-  simp [ternaryFrobeniusDiagonal,
+  simp only [ternaryFrobeniusDiagonal, LinearMap.coe_comp, Function.comp_apply,
     cubeCoordinateFrobeniusDiagonal_coeff,
-    polynomialVectorTensorCubeCoords_tmul,
-    zmod3_cube]
+    polynomialVectorTensorCubeCoords_tmul]
+  simpa [pow_succ] using zmod3_cube ((v i).coeff n)
 
 /-- The Frobenius diagonal is surjective, witnessed by pure cubes. -/
 theorem ternaryFrobeniusDiagonal_surjective :

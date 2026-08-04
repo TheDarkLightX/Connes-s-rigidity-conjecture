@@ -1,6 +1,6 @@
 # Morph tactic search for Connes-rigidity Lean repair
 
-Source workflow: `TheDarkLightX/Morph`, run `30896588897`  
+Source workflow: `TheDarkLightX/Morph`, run `30896588897`
 Artifact digest: `sha256:40d89dad98a646ddabc7d68af84bc0c0395455103021179b5f88d30b213569c0`
 
 ## Search outcome

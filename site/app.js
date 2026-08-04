@@ -1,7 +1,19 @@
 const fallback = {
-  claimBoundary: "Two distinct counterexamples are publicly claimed; a recent adversarial manuscript disputes them but presently addresses different groups. This site presents unreviewed prime-uniform proof candidates and claims neither priority nor independently settled final status.",
-  lean: { moduleCount: 51, lastFailingModules: 6 },
+  claimBoundary: "The broad rigidity conjecture was disproved in 2026. This repository distinguishes checked companion theorems, finite computations, and unreviewed proof candidates.",
+  lean: { moduleCount: 51, fullBuild: "pending" },
   claims: []
+};
+
+const statusStyles = {
+  "finite-verified": "status-checked",
+  "external-result": "status-checked",
+  "source-under-validation": "status-under-repair",
+  "paper-proof-candidate": "status-under-repair",
+  "conjecture": "status-open",
+  "under-repair": "status-under-repair",
+  "open": "status-open",
+  "refuted": "status-refuted",
+  "checked": "status-checked"
 };
 
 function escapeHtml(value) {
@@ -20,7 +32,7 @@ function render(data) {
 
   const container = document.getElementById("claim-cards");
   container.innerHTML = data.claims.map(claim => {
-    const statusClass = `status-${claim.status}`;
+    const statusClass = statusStyles[claim.status] || "status-open";
     return `
       <article class="claim-card">
         <span class="status-pill ${escapeHtml(statusClass)}">${escapeHtml(claim.status.replaceAll("-", " "))}</span>

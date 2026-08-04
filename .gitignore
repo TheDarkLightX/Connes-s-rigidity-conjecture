@@ -2,3 +2,6 @@
 /.tools/
 /experiments/__pycache__/
 /experiments/*_result.json
+.pytest_cache/
+__pycache__/
+*.py[cod]

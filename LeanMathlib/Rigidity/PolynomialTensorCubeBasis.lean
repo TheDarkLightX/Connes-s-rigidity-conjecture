@@ -57,7 +57,9 @@ theorem polynomialTensorCubeCoefficients_tmul
         rfl]
   rw [Module.Basis.tensorProduct_repr_tmul_apply,
     Module.Basis.tensorProduct_repr_tmul_apply]
-  change z.coeff e.third * v.coeff e.second * u.coeff e.first = _
+  simp only [smul_eq_mul]
+  change z.coeff e.third * v.coeff e.second * u.coeff e.first =
+    u.coeff e.first * v.coeff e.second * z.coeff e.third
   ring
 
 end LeanMathlib.Rigidity

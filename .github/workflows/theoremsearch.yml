@@ -3,7 +3,7 @@ name: TheoremSearch prior-art scan
 on:
   push:
     branches:
-      - agent/import-lean-rigidity-research-20260804
+      - main
     paths:
       - 'experiments/theoremsearch_queries.py'
       - '.github/workflows/theoremsearch.yml'

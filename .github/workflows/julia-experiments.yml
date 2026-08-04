@@ -3,7 +3,7 @@ name: Julia finite mathematics oracles
 on:
   push:
     branches:
-      - agent/import-lean-rigidity-research-20260804
+      - main
     paths:
       - 'experiments/ternary_witt_exhaustive.jl'
       - 'experiments/divided_cube_truncations.jl'
@@ -13,6 +13,7 @@ on:
       - 'experiments/chart_detector_rank.py'
       - 'experiments/odd_prime_divided_power_certificates.py'
       - 'experiments/prime_witt_exhaustive.py'
+      - 'experiments/constant_kernel_psl3.jl'
       - '.github/workflows/julia-experiments.yml'
   pull_request:
     branches:
@@ -26,6 +27,7 @@ on:
       - 'experiments/chart_detector_rank.py'
       - 'experiments/odd_prime_divided_power_certificates.py'
       - 'experiments/prime_witt_exhaustive.py'
+      - 'experiments/constant_kernel_psl3.jl'
       - '.github/workflows/julia-experiments.yml'
   workflow_dispatch:
 
@@ -76,6 +78,8 @@ jobs:
           --output experiments/binary_rank3_divided_square_result.json
       - name: Exhaust prime Witt carry identities
         run: python experiments/prime_witt_exhaustive.py --primes 2 3 5 7
+      - name: Verify the constant-kernel PSL3 certificate
+        run: julia --project=@. experiments/constant_kernel_psl3.jl
       - name: Upload finite evidence
         uses: actions/upload-artifact@v4
         with:
@@ -91,5 +95,6 @@ jobs:
             experiments/odd_prime_divided_power_result.json
             experiments/binary_rank3_divided_square_result.json
             experiments/prime_witt_exhaustive_result.json
+            experiments/constant_kernel_psl3_result.json
           if-no-files-found: error
           retention-days: 14

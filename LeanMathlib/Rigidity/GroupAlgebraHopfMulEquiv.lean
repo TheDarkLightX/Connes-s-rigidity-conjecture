@@ -5,14 +5,14 @@ namespace LeanMathlib.Rigidity
 
 /-- The canonical embedding of a group into the group-like elements of its group algebra. -/
 noncomputable def groupToGroupLikeHom
-    {G K : Type*} [DecidableEq G] [Field K] :
+    {G K : Type*} [Group G] [DecidableEq G] [Field K] :
     G →* GroupLike K (MonoidAlgebra K G) where
   toFun := fun g =>
     ⟨Finsupp.single g 1,
       (isGroupLikeElem_groupAlgebra_iff_single _).2 ⟨g, rfl⟩⟩
   map_one' := by
     apply GroupLike.val_injective
-    simp
+    exact MonoidAlgebra.one_def.symm
   map_mul' := by
     intro g h
     apply GroupLike.val_injective
@@ -20,7 +20,7 @@ noncomputable def groupToGroupLikeHom
 
 /-- The canonical group-to-group-like homomorphism is injective. -/
 theorem groupToGroupLikeHom_injective
-    {G K : Type*} [DecidableEq G] [Field K] :
+    {G K : Type*} [Group G] [DecidableEq G] [Field K] :
     Function.Injective (groupToGroupLikeHom (G := G) (K := K)) := by
   intro g h hEq
   have hval : Finsupp.single g (1 : K) = Finsupp.single h 1 :=
@@ -32,7 +32,7 @@ theorem groupToGroupLikeHom_injective
 
 /-- The canonical group-to-group-like homomorphism is surjective. -/
 theorem groupToGroupLikeHom_surjective
-    {G K : Type*} [DecidableEq G] [Field K] :
+    {G K : Type*} [Group G] [DecidableEq G] [Field K] :
     Function.Surjective (groupToGroupLikeHom (G := G) (K := K)) := by
   intro x
   obtain ⟨g, hg⟩ :=
@@ -48,7 +48,7 @@ needed for distinguishing the incompatible Hopf structures in the rigidity
 counterexample.
 -/
 noncomputable def groupLikeGroupAlgebraMulEquiv
-    {G K : Type*} [DecidableEq G] [Field K] :
+    {G K : Type*} [Group G] [DecidableEq G] [Field K] :
     G ≃* GroupLike K (MonoidAlgebra K G) :=
   MulEquiv.ofBijective (groupToGroupLikeHom (G := G) (K := K))
     ⟨groupToGroupLikeHom_injective, groupToGroupLikeHom_surjective⟩

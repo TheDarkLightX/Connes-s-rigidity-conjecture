@@ -8,7 +8,6 @@ noncomputable def BialgEquiv.groupLikeMulEquiv
     {R A B : Type*}
     [CommSemiring R]
     [Semiring A] [Semiring B]
-    [Algebra R A] [Algebra R B]
     [Bialgebra R A] [Bialgebra R B]
     (e : A ≃ₐc[R] B) :
     GroupLike R A ≃* GroupLike R B where
@@ -25,7 +24,8 @@ noncomputable def BialgEquiv.groupLikeMulEquiv
   map_mul' := by
     intro a b
     apply GroupLike.val_injective
-    exact map_mul e a b
+    change e (a.1 * b.1) = e a.1 * e b.1
+    exact map_mul e a.1 b.1
 
 /--
 Any bialgebra equivalence between canonical group algebras reconstructs a group
@@ -39,7 +39,7 @@ noncomputable def groupMulEquivOfGroupAlgebraBialgEquiv
     (e : MonoidAlgebra K G ≃ₐc[K] MonoidAlgebra K H) :
     G ≃* H :=
   (groupLikeGroupAlgebraMulEquiv (G := G) (K := K)).trans <|
-    (e.groupLikeMulEquiv).trans <|
+    (BialgEquiv.groupLikeMulEquiv e).trans <|
       (groupLikeGroupAlgebraMulEquiv (G := H) (K := K)).symm
 
 /-- Nonisomorphic groups cannot have bialgebra-equivalent canonical group algebras. -/

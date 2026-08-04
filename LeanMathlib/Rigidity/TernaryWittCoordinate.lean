@@ -38,8 +38,13 @@ theorem ternaryTeichCoordinate_injective :
   intro x y h
   rcases x with ⟨a, b⟩
   rcases y with ⟨c, d⟩
-  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    decide
+  apply NormalizedSymmetricAddCocycle.Extension.ext
+  · revert h
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+      decide
+  · revert h
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+      decide
 
 /-- The scalar Teichmüller coordinate is surjective onto `ZMod 9`. -/
 theorem ternaryTeichCoordinate_surjective :
@@ -63,9 +68,10 @@ The scalar length-two ternary Witt extension is additively equivalent to
 noncomputable def ternaryWittAddEquivZMod9 :
     TernaryWittExtension ≃+ ZMod 9 :=
   AddEquiv.ofBijective
-    { toFun := ternaryTeichCoordinate
-      map_zero' := ternaryTeichCoordinate_zero
-      map_add' := ternaryTeichCoordinate_add }
+    ({ toFun := ternaryTeichCoordinate
+       map_zero' := ternaryTeichCoordinate_zero
+       map_add' := ternaryTeichCoordinate_add } :
+      TernaryWittExtension →+ ZMod 9)
     ⟨ternaryTeichCoordinate_injective, ternaryTeichCoordinate_surjective⟩
 
 @[simp]

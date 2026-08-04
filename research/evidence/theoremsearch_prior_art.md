@@ -1,6 +1,6 @@
 # TheoremSearch prior-art assessment
 
-Workflow run: `30897349795`  
+Workflow run: `30897349795`
 Artifact digest: `sha256:1a24da7e481d2ec4bb4cfdd2ea6e9eb7184a0220d12ce90546714b6cc338471e`
 
 TheoremSearch semantic retrieval is evidence for literature triage. A missing close hit is **not** proof of novelty, and a returned hit must be read in context before it is used as prior art.

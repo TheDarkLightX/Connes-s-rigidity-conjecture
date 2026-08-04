@@ -1,100 +1,71 @@
 {
-  "updated": "2026-08-04T13:34:03Z",
+  "updated": "2026-08-04",
   "repository": "TheDarkLightX/Connes-s-rigidity-conjecture",
-  "headline": "Prime-uniform Witt carry and polynomial-tensor rigidity research",
-  "claimBoundary": "Two distinct counterexamples are publicly claimed; a recent adversarial manuscript disputes them but presently addresses different groups. This site presents unreviewed prime-uniform proof candidates and claims neither priority nor independently settled final status.",
+  "headline": "A formal companion to the 2026 counterexamples to Connes rigidity",
+  "claimBoundary": "The broad rigidity conjecture was disproved in 2026. This repository separates external counterexamples, Lean-checked companion theorems, exact finite computations, and unreviewed prime-uniform proof candidates.",
   "lean": {
     "moduleCount": 51,
-    "fullBuild": "repair patch awaiting CI; two focused targets green",
-    "initialFailingModules": 11,
-    "lastFailingModules": 6,
-    "foundationalRepairsSubmitted": 17,
-    "nativeDecideOccurrences": 0,
-    "repairIssue": 2
+    "fullBuild": "integrated branch awaiting exact CI",
+    "lastFailingModules": "pending",
+    "nativeDecideOccurrences": 0
   },
   "claims": [
     {
+      "name": "The broad ICC property-(T) rigidity conjecture is false",
+      "status": "external-result",
+      "evidence": "Counterexamples were announced independently in 2026. They are prior art for this repository, not results established here."
+    },
+    {
       "name": "Canonical Hopf structure reconstructs the group",
-      "status": "formal-source-awaiting-ci",
-      "evidence": "Lean source repaired; standalone dependency build must still pass."
+      "status": "source-under-validation",
+      "evidence": "A Lean formalization is present. Promotion requires the complete pinned-toolchain build, not an isolated file check."
     },
     {
-      "name": "Every nonzero first-two-symmetric tensor has infinite SL3(F[t]) orbit",
-      "status": "formal-source-awaiting-ci",
-      "evidence": "New formal strengthening of the divided-cube theorem; complete build pending."
+      "name": "A nonzero first-two-symmetric rank-three tensor has infinite elementary orbit",
+      "status": "source-under-validation",
+      "evidence": "The Lean source contains the rank-three theorem. The public status remains provisional until the complete dependency graph passes."
     },
     {
-      "name": "Stable/critical polynomial tensors have infinite elementary orbit",
-      "status": "complete-proof-candidate",
-      "evidence": "Coordinate-block proof covers every tensor degree m<r without symmetry and the critical line m=r under first-two-factor symmetry; only the rank-three instance has Lean source."
+      "name": "Stable and critical polynomial tensors have infinite elementary orbit",
+      "status": "paper-proof-candidate",
+      "evidence": "A written coordinate-block argument covers tensor degree m<r and a symmetric critical case m=r. It is not yet generally formalized or independently reviewed."
     },
     {
-      "name": "Divided pth-power cyclicity holds in the stable and odd-critical range",
-      "status": "complete-proof-candidate",
-      "evidence": "Fresh-coordinate and antisymmetrized two-source inductions cover r>p and odd r=p over every finite-variable polynomial ring; exact ledgers pass at primes 2, 3, and 5."
+      "name": "Divided pth-power cyclicity holds in stable and odd-critical rank",
+      "status": "paper-proof-candidate",
+      "evidence": "A fresh-coordinate induction and an odd-characteristic two-source identity are written down. Exact finite certificates support selected instances but do not prove the general statement."
     },
     {
-      "name": "The ternary divided-cube kernel is cyclic",
-      "status": "complete-proof-candidate",
-      "evidence": "Simultaneous-induction proof written; degree-12 oracle matches dimension 2258 and replays a seed-or-identity ledger for every kernel basis vector."
+      "name": "Prime and multivariate finite certificates reproduce",
+      "status": "finite-verified",
+      "evidence": "Deterministic Julia and Python programs check the reported bounded instances. These computations are evidence for finite cases only."
     },
     {
-      "name": "Divided-cube cyclicity extends to F3[t_1,...,t_d]",
-      "status": "complete-proof-candidate",
-      "evidence": "Two-step finite-difference proof written; bivariate degree-3 orbit is 444/444 and trivariate degree-2 orbit is 304/304."
-    },
-    {
-      "name": "Finite-orbit subgroup of A_n[3]/3A_n has order 3^(3n)",
-      "status": "complete-proof-candidate",
-      "evidence": "Exact-sequence proof written; classical higher-rank lattice theorems make A_n the amenable radical. Bockstein construction and formalization remain."
-    },
-    {
-      "name": "Untwisted cubic diagonal over a general characteristic-three field",
+      "name": "An untwisted linear cubic retraction works over every characteristic-three field",
       "status": "refuted",
-      "evidence": "Linearity forces lambda^3=lambda for every scalar; the general statement needs a Frobenius twist. The focused Lean module builds against the pinned toolchain."
-    },
-    {
-      "name": "All shifts have common von Neumann and group C*-algebras",
-      "status": "complete-proof-candidate",
-      "evidence": "The carrier, product Haar measure, and Gamma action are shift-independent; Fourier transform identifies the common crossed products."
-    },
-    {
-      "name": "The ternary candidate groups are mutually commensurable",
-      "status": "complete-proof-candidate",
-      "evidence": "The shift-forgetting quotient dualizes to G_0 inside G_n with index 3^(3n), conditional on the compact-dual construction."
-    },
-    {
-      "name": "The proposed semidirect products have property (T)",
-      "status": "complete-proof-candidate",
-      "evidence": "A joint 1/8 invariant-measure escape bound contradicts the Cornulier-Tessera failure sequence after property-(T) invariantization."
-    },
-    {
-      "name": "Primitive boxes and affine charts cover every prime in rank at least three",
-      "status": "complete-proof-candidate",
-      "evidence": "Primitive boxes have c_prim>0 exactly when (p-1)p^(r-3)>1; a degree-p polynomial is nonzero on at least r-p charts. Six exact restriction-rank cases pass, and the focused Lean target checks the resulting constants."
-    },
-    {
-      "name": "The minimal-rank line r_p=max(p,3) supports a uniform prime carry family",
-      "status": "complete-proof-candidate",
-      "evidence": "Cyclicity, orbit growth, detector positivity, Witt carries, Bockstein recovery, and common crossed products align with intrinsic cardinal p^(r_p n). General formalization and independent review remain."
-    },
-    {
-      "name": "The binary construction may not need its torsion-free acting-group detour",
-      "status": "complete-proof-candidate",
-      "evidence": "SL_4(F_2[t]) has trivial amenable radical, so the abelian layer is characteristic. The published orbit extension gives ICC directly and its 1/7 pointed-space detector gives relative property (T), making the auxiliary lift and factor transfer for group properties optional."
+      "evidence": "Linearity would force lambda^3=lambda for every scalar. General fields require a Frobenius-twisted formulation."
     },
     {
       "name": "Completed prime-uniform property-(T) counterexample families",
       "status": "open",
-      "evidence": "The binary architecture is published elsewhere. The minimal-rank prime synthesis has paper proof candidates, but key interfaces remain unformalized and no independent expert review has occurred."
+      "evidence": "The proposed synthesis still depends on unformalized interfaces and specialist review. This repository does not claim a completed new counterexample family."
     }
   ],
   "tools": [
-    {"name": "Lean", "role": "kernel-checked formal proof", "status": "detector arithmetic and Frobenius obstruction green; full graph awaiting CI"},
-    {"name": "LEAP", "role": "bounded verifier-gated abstraction test", "status": "evidence archived"},
-    {"name": "Morph", "role": "proof-representation and tactic search", "status": "evidence archived"},
-    {"name": "Research Kernel", "role": "fail-closed evidence and promotion ledger", "status": "evidence archived"},
-    {"name": "Julia/Python", "role": "independent exhaustive finite oracle", "status": "Ternary degree 12/multivariate, six chart ranks, stable/critical cyclicity at primes 2/3/5, and scalar Witt laws at p=2/3/5/7 pass; prime-rank Julia oracle added for CI"},
-    {"name": "TheoremSearch", "role": "theorem-level prior-art retrieval", "status": "binary counterexample overlap and narrower ternary novelty boundary recorded"}
+    {
+      "name": "Lean",
+      "role": "kernel-check formal statements and proofs",
+      "status": "complete pinned-toolchain build pending"
+    },
+    {
+      "name": "Julia and Python",
+      "role": "replay exact bounded certificates",
+      "status": "finite oracle suite assembled"
+    },
+    {
+      "name": "TheoremSearch",
+      "role": "retrieve theorem-level prior art",
+      "status": "prior-art boundary recorded"
+    }
   ]
 }

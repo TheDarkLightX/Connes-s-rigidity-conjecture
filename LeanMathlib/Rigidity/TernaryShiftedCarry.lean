@@ -4,7 +4,7 @@ import LeanMathlib.Rigidity.TernaryFunctionalCarry
 namespace LeanMathlib.Rigidity
 
 /-- Multiply every polynomial-vector coordinate by `X^n`. -/
-def polynomialVectorShift (n : ℕ) :
+noncomputable def polynomialVectorShift (n : ℕ) :
     PolynomialVector3 (ZMod 3) →ₗ[ZMod 3]
       PolynomialVector3 (ZMod 3) where
   toFun v i := (Polynomial.X : Polynomial (ZMod 3)) ^ n * v i
@@ -94,15 +94,5 @@ def ternaryShiftedCarryUnderlyingEquiv (n m : ℕ) :
   invFun x := ⟨x.base, x.fiber⟩
   left_inv := by intro x; cases x; rfl
   right_inv := by intro x; cases x; rfl
-
-@[simp]
-theorem ternaryShiftedCarryUnderlyingEquiv_base
-    (n m : ℕ) (x : TernaryShiftedCarryExtension n) :
-    (ternaryShiftedCarryUnderlyingEquiv n m x).base = x.base := rfl
-
-@[simp]
-theorem ternaryShiftedCarryUnderlyingEquiv_fiber
-    (n m : ℕ) (x : TernaryShiftedCarryExtension n) :
-    (ternaryShiftedCarryUnderlyingEquiv n m x).fiber = x.fiber := rfl
 
 end LeanMathlib.Rigidity

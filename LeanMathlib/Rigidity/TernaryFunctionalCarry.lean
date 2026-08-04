@@ -13,6 +13,33 @@ abbrev PolynomialVectorDual :=
 abbrev DividedCubeDual :=
   Module.Dual (ZMod 3) (dividedCubeSubmodule (ZMod 3))
 
+/-- Evaluate a tensor by a pair of scalar-valued linear maps. -/
+noncomputable def tensorProductScalarEval
+    {R M N : Type*} [CommSemiring R]
+    [AddCommMonoid M] [Module R M]
+    [AddCommMonoid N] [Module R N]
+    (f : M →ₗ[R] R) (g : N →ₗ[R] R) :
+    TensorProduct R M N →ₗ[R] R :=
+  TensorProduct.lift
+    { toFun := fun x => (f x) • g
+      map_add' := by
+        intro x y
+        ext z
+        simp [add_mul]
+      map_smul' := by
+        intro c x
+        ext z
+        simp [mul_assoc] }
+
+@[simp]
+theorem tensorProductScalarEval_tmul
+    {R M N : Type*} [CommSemiring R]
+    [AddCommMonoid M] [Module R M]
+    [AddCommMonoid N] [Module R N]
+    (f : M →ₗ[R] R) (g : N →ₗ[R] R) (x : M) (y : N) :
+    tensorProductScalarEval f g (x ⊗ₜ[R] y) = f x * g y := by
+  simp [tensorProductScalarEval]
+
 /--
 Ordered tensor representative of the ternary carry polynomial. On a pure cube
 it evaluates to `C₃(ℓ(v), m(v))`.
@@ -20,38 +47,8 @@ it evaluates to `C₃(ℓ(v), m(v))`.
 noncomputable def ternaryCarryTensorFunctional
     (ell m : PolynomialVectorDual) :
     PolynomialVectorTensorCube (ZMod 3) →ₗ[ZMod 3] ZMod 3 :=
-  TensorProduct.lift
-    { toFun := fun u =>
-        TensorProduct.lift
-          { toFun := fun v =>
-              { toFun := fun z =>
-                  -(ell u * ell v * m z + ell u * m v * m z)
-                map_add' := by intro x y; simp; ring
-                map_smul' := by intro c x; simp; ring }
-            map_add' := by
-              intro x y
-              ext z
-              simp
-              ring
-            map_smul' := by
-              intro c x
-              ext z
-              simp
-              ring }
-      map_add' := by
-        intro x y
-        ext q
-        induction q using TensorProduct.induction_on with
-        | zero => simp
-        | add a b ha hb => simp [ha, hb]
-        | tmul v z => simp; ring
-      map_smul' := by
-        intro c x
-        ext q
-        induction q using TensorProduct.induction_on with
-        | zero => simp
-        | add a b ha hb => simp [ha, hb]
-        | tmul v z => simp; ring }
+  -(tensorProductScalarEval ell
+    (tensorProductScalarEval ell m + tensorProductScalarEval m m))
 
 @[simp]
 theorem ternaryCarryTensorFunctional_tmul
@@ -60,6 +57,7 @@ theorem ternaryCarryTensorFunctional_tmul
     ternaryCarryTensorFunctional ell m (u ⊗ₜ[ZMod 3] (v ⊗ₜ[ZMod 3] z)) =
       -(ell u * ell v * m z + ell u * m v * m z) := by
   simp [ternaryCarryTensorFunctional]
+  ring
 
 /-- Restrict the tensor representative to the divided-cube submodule. -/
 noncomputable def ternaryFunctionalCarry
@@ -85,15 +83,18 @@ theorem ternaryFunctionalCarry_zero_left
   ext b
   rcases b with ⟨w, hw⟩
   change ternaryCarryTensorFunctional 0 ell w = 0
-  refine Submodule.span_induction hw ?_ ?_ ?_ ?_
+  refine Submodule.span_induction
+    (p := fun x _ => ternaryCarryTensorFunctional 0 ell x = 0)
+    ?_ ?_ ?_ ?_ hw
   · intro x hx
     obtain ⟨v, rfl⟩ := hx
     simp
-  · simp
-  · intro x y hx hy
-    simp [map_add, hx, hy]
-  · intro c x hx
-    simp [map_smul, hx]
+  · exact (ternaryCarryTensorFunctional 0 ell).map_zero
+  · intro x y hx hy hzeroX hzeroY
+    rw [(ternaryCarryTensorFunctional 0 ell).map_add, hzeroX, hzeroY,
+      add_zero]
+  · intro c x hx hzero
+    rw [(ternaryCarryTensorFunctional 0 ell).map_smul, hzero, smul_zero]
 
 /-- Symmetry holds on the divided-cube span. -/
 theorem ternaryFunctionalCarry_comm
@@ -103,15 +104,21 @@ theorem ternaryFunctionalCarry_comm
   rcases b with ⟨w, hw⟩
   change ternaryCarryTensorFunctional ell m w =
     ternaryCarryTensorFunctional m ell w
-  refine Submodule.span_induction hw ?_ ?_ ?_ ?_
+  refine Submodule.span_induction
+    (p := fun x _ => ternaryCarryTensorFunctional ell m x =
+      ternaryCarryTensorFunctional m ell x)
+    ?_ ?_ ?_ ?_ hw
   · intro x hx
     obtain ⟨v, rfl⟩ := hx
-    simpa using ternaryCarry_comm (ell v) (m v)
+    simp
+    ring
   · simp
-  · intro x y hx hy
-    simp [map_add, hx, hy]
-  · intro c x hx
-    simp [map_smul, hx]
+  · intro x y hx hy hcommX hcommY
+    rw [(ternaryCarryTensorFunctional ell m).map_add,
+      (ternaryCarryTensorFunctional m ell).map_add, hcommX, hcommY]
+  · intro c x hx hcomm
+    rw [(ternaryCarryTensorFunctional ell m).map_smul,
+      (ternaryCarryTensorFunctional m ell).map_smul, hcomm]
 
 /-- The scalar cocycle identity lifts to the divided-cube dual. -/
 theorem ternaryFunctionalCarry_cocycle
@@ -125,15 +132,47 @@ theorem ternaryFunctionalCarry_cocycle
         ternaryCarryTensorFunctional (ell + m) d w =
       ternaryCarryTensorFunctional m d w +
         ternaryCarryTensorFunctional ell (m + d) w
-  refine Submodule.span_induction hw ?_ ?_ ?_ ?_
+  refine Submodule.span_induction
+    (p := fun x _ =>
+      ternaryCarryTensorFunctional ell m x +
+          ternaryCarryTensorFunctional (ell + m) d x =
+        ternaryCarryTensorFunctional m d x +
+          ternaryCarryTensorFunctional ell (m + d) x)
+    ?_ ?_ ?_ ?_ hw
   · intro x hx
     obtain ⟨v, rfl⟩ := hx
-    simpa using ternaryCarry_cocycle (ell v) (m v) (d v)
+    simp
+    ring
   · simp
-  · intro x y hx hy
-    simp [map_add, hx, hy]
-  · intro c x hx
-    simp [map_smul, hx]
+  · intro x y hx hy hcocycleX hcocycleY
+    rw [(ternaryCarryTensorFunctional ell m).map_add,
+      (ternaryCarryTensorFunctional (ell + m) d).map_add,
+      (ternaryCarryTensorFunctional m d).map_add,
+      (ternaryCarryTensorFunctional ell (m + d)).map_add]
+    calc
+      (ternaryCarryTensorFunctional ell m x +
+            ternaryCarryTensorFunctional ell m y) +
+          (ternaryCarryTensorFunctional (ell + m) d x +
+            ternaryCarryTensorFunctional (ell + m) d y) =
+          (ternaryCarryTensorFunctional ell m x +
+              ternaryCarryTensorFunctional (ell + m) d x) +
+            (ternaryCarryTensorFunctional ell m y +
+              ternaryCarryTensorFunctional (ell + m) d y) := by abel
+      _ = (ternaryCarryTensorFunctional m d x +
+              ternaryCarryTensorFunctional ell (m + d) x) +
+            (ternaryCarryTensorFunctional m d y +
+              ternaryCarryTensorFunctional ell (m + d) y) := by
+            rw [hcocycleX, hcocycleY]
+      _ = (ternaryCarryTensorFunctional m d x +
+            ternaryCarryTensorFunctional m d y) +
+          (ternaryCarryTensorFunctional ell (m + d) x +
+            ternaryCarryTensorFunctional ell (m + d) y) := by abel
+  · intro c x hx hcocycle
+    rw [(ternaryCarryTensorFunctional ell m).map_smul,
+      (ternaryCarryTensorFunctional (ell + m) d).map_smul,
+      (ternaryCarryTensorFunctional m d).map_smul,
+      (ternaryCarryTensorFunctional ell (m + d)).map_smul]
+    rw [← smul_add, ← smul_add, hcocycle]
 
 /-- Ternary functional carry as normalized symmetric additive cocycle data. -/
 noncomputable def ternaryFunctionalCarryCocycle :

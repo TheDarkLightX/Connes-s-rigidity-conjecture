@@ -1,0 +1,4 @@
+/.lake/
+/.tools/
+/experiments/__pycache__/
+/experiments/*_result.json

@@ -11,6 +11,7 @@ import LeanMathlib.Rigidity.DividedCubeSymmetry
 import LeanMathlib.Rigidity.ExactGroupLike
 import LeanMathlib.Rigidity.ExponentSeparation
 import LeanMathlib.Rigidity.FinsuppGroupLike
+import LeanMathlib.Rigidity.FrobeniusTwistObstruction
 import LeanMathlib.Rigidity.GroupAlgebraHopfBridge
 import LeanMathlib.Rigidity.GroupAlgebraHopfMulEquiv
 import LeanMathlib.Rigidity.HopfRounding

@@ -1,6 +1,6 @@
 const fallback = {
-  claimBoundary: "This site does not claim a completed counterexample to Connes's rigidity conjecture.",
-  lean: { moduleCount: 49, initialFailingModules: 11 },
+  claimBoundary: "Two distinct counterexamples are publicly claimed; a recent adversarial manuscript disputes them but presently addresses different groups. This site presents unreviewed prime-uniform proof candidates and claims neither priority nor independently settled final status.",
+  lean: { moduleCount: 51, lastFailingModules: 6 },
   claims: []
 };
 
@@ -16,7 +16,7 @@ function escapeHtml(value) {
 function render(data) {
   document.getElementById("claim-boundary").textContent = data.claimBoundary;
   document.getElementById("module-count").textContent = data.lean.moduleCount;
-  document.getElementById("failure-count").textContent = data.lean.initialFailingModules;
+  document.getElementById("failure-count").textContent = data.lean.lastFailingModules;
 
   const container = document.getElementById("claim-cards");
   container.innerHTML = data.claims.map(claim => {

@@ -57,7 +57,7 @@ theorem ternaryWittAdd_assoc {R : Type*} [CommRing R] (u v w : R × R) :
 
 /-- Frobenius is the identity on the prime field `ZMod 3`. -/
 theorem zmod3_cube (x : ZMod 3) : x ^ 3 = x := by
-  fin_cases x <;> native_decide
+  fin_cases x <;> decide
 
 /--
 Three copies of a first-coordinate element create one unit of second-coordinate
@@ -66,7 +66,7 @@ in `W₂(𝔽₃)`.
 -/
 theorem ternaryWittAdd_threefold (a : ZMod 3) :
     ternaryWittAdd (ternaryWittAdd (a, 0) (a, 0)) (a, 0) = (0, a) := by
-  fin_cases a <;> native_decide
+  fin_cases a <;> decide
 
 /-- A coordinate model for a pure third tensor power. -/
 def pureCube {ι R : Type*} [CommRing R] (v : ι → R) :

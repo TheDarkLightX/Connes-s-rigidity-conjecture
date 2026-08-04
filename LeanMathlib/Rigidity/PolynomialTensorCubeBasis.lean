@@ -34,11 +34,11 @@ noncomputable def polynomialTensorCubeCoefficients
 theorem polynomialTensorCubeBasis_apply
     (F : Type*) [Field F] (e : TripleExponent) :
     polynomialTensorCubeBasis F e =
-      Polynomial.monomial e.first 1 ⊗ₜ[F]
-        (Polynomial.monomial e.second 1 ⊗ₜ[F]
-          Polynomial.monomial e.third 1) := by
-  rw [polynomialTensorCubeBasis, Module.Basis.reindex_apply]
-  simp [nestedExponentEquiv]
+      ((Polynomial.X : Polynomial F) ^ e.first) ⊗ₜ[F]
+        (((Polynomial.X : Polynomial F) ^ e.second) ⊗ₜ[F]
+          ((Polynomial.X : Polynomial F) ^ e.third)) := by
+  simp [polynomialTensorCubeBasis, nestedExponentEquiv,
+    Polynomial.monomial_one_right_eq_X_pow]
 
 /-- Pure tensor coefficients factor as the product of the three polynomial coefficients. -/
 @[simp]
@@ -47,12 +47,17 @@ theorem polynomialTensorCubeCoefficients_tmul
     (u v z : Polynomial F) (e : TripleExponent) :
     polynomialTensorCubeCoefficients F (u ⊗ₜ[F] (v ⊗ₜ[F] z)) e =
       u.coeff e.first * v.coeff e.second * z.coeff e.third := by
-  unfold polynomialTensorCubeCoefficients polynomialTensorCubeBasis
-  rw [Module.Basis.repr_reindex_apply,
-    Module.Basis.tensorProduct_repr_tmul_apply,
+  rw [show polynomialTensorCubeCoefficients F
+      (u ⊗ₜ[F] (v ⊗ₜ[F] z)) e =
+      (((Polynomial.basisMonomials F).tensorProduct
+        ((Polynomial.basisMonomials F).tensorProduct
+          (Polynomial.basisMonomials F))).repr
+            (u ⊗ₜ[F] (v ⊗ₜ[F] z)))
+          (nestedExponentEquiv.symm e) by
+        rfl]
+  rw [Module.Basis.tensorProduct_repr_tmul_apply,
     Module.Basis.tensorProduct_repr_tmul_apply]
-  change u.coeff e.first * (v.coeff e.second * z.coeff e.third) =
-    u.coeff e.first * v.coeff e.second * z.coeff e.third
+  change z.coeff e.third * v.coeff e.second * u.coeff e.first = _
   ring
 
 end LeanMathlib.Rigidity

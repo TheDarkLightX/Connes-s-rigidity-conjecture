@@ -25,12 +25,12 @@ theorem ternaryTeichCoordinate_add (x y : TernaryWittExtension) :
   rcases x with ⟨a, b⟩
   rcases y with ⟨c, d⟩
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    native_decide
+    decide
 
 @[simp]
 theorem ternaryTeichCoordinate_zero :
     ternaryTeichCoordinate (0 : TernaryWittExtension) = 0 := by
-  native_decide
+  decide
 
 /-- The scalar Teichmüller coordinate is injective on the nine Witt states. -/
 theorem ternaryTeichCoordinate_injective :
@@ -39,22 +39,22 @@ theorem ternaryTeichCoordinate_injective :
   rcases x with ⟨a, b⟩
   rcases y with ⟨c, d⟩
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    native_decide
+    decide
 
 /-- The scalar Teichmüller coordinate is surjective onto `ZMod 9`. -/
 theorem ternaryTeichCoordinate_surjective :
     Function.Surjective ternaryTeichCoordinate := by
   intro z
   fin_cases z
-  · exact ⟨ternaryWittMk 0 0, by native_decide⟩
-  · exact ⟨ternaryWittMk 1 0, by native_decide⟩
-  · exact ⟨ternaryWittMk 2 1, by native_decide⟩
-  · exact ⟨ternaryWittMk 0 1, by native_decide⟩
-  · exact ⟨ternaryWittMk 1 1, by native_decide⟩
-  · exact ⟨ternaryWittMk 2 2, by native_decide⟩
-  · exact ⟨ternaryWittMk 0 2, by native_decide⟩
-  · exact ⟨ternaryWittMk 1 2, by native_decide⟩
-  · exact ⟨ternaryWittMk 2 0, by native_decide⟩
+  · exact ⟨ternaryWittMk 0 0, by decide⟩
+  · exact ⟨ternaryWittMk 1 0, by decide⟩
+  · exact ⟨ternaryWittMk 2 1, by decide⟩
+  · exact ⟨ternaryWittMk 0 1, by decide⟩
+  · exact ⟨ternaryWittMk 1 1, by decide⟩
+  · exact ⟨ternaryWittMk 2 2, by decide⟩
+  · exact ⟨ternaryWittMk 0 2, by decide⟩
+  · exact ⟨ternaryWittMk 1 2, by decide⟩
+  · exact ⟨ternaryWittMk 2 0, by decide⟩
 
 /--
 The scalar length-two ternary Witt extension is additively equivalent to

@@ -173,6 +173,7 @@ main, footer { position: relative; }
   font-size: clamp(1.8rem, 4vw, 3.6rem);
   text-align: center;
 }
+.formula.compact { font-size: clamp(1.25rem, 3vw, 2.35rem); }
 .fineprint { font-size: .92rem !important; }
 .falsifier-card {
   padding: 30px;
@@ -213,6 +214,9 @@ main, footer { position: relative; }
 .status-finite-verification-running { color: var(--accent-2); }
 .status-checked { color: var(--accent); }
 .status-refuted { color: var(--danger); }
+.status-complete-proof-candidate { color: var(--accent-2); }
+.status-formal-source-awaiting-ci { color: var(--warning); }
+.status-proved-awaiting-ci { color: var(--accent); }
 
 .pipeline {
   display: grid;

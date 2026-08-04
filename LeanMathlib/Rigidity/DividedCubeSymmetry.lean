@@ -72,6 +72,18 @@ theorem polynomialVectorTensorCubeCoords_swapFirstTwo
           ext e
           simp [mul_assoc, mul_left_comm, mul_comm]
 
+/-- A tensor fixed by the first-factor transposition has symmetric coordinates. -/
+theorem fixed_swapFirstTwo_coords_symmetric
+    (F : Type*) [Field F]
+    {w : PolynomialVectorTensorCube F}
+    (hfixed : swapFirstTwoTensorCube F w = w) :
+    SwapFirstTwoSymmetric (polynomialVectorTensorCubeCoords F w) := by
+  intro i j k
+  have hswap :=
+    polynomialVectorTensorCubeCoords_swapFirstTwo F w j i k
+  rw [hfixed] at hswap
+  exact hswap
+
 /-- The span of pure cubes in the genuine tensor cube. -/
 noncomputable def dividedCubeSubmodule
     (F : Type*) [Field F] :
@@ -101,10 +113,7 @@ theorem dividedCube_coords_swapFirstTwoSymmetric
     {w : PolynomialVectorTensorCube F}
     (hw : w ∈ dividedCubeSubmodule F) :
     SwapFirstTwoSymmetric (polynomialVectorTensorCubeCoords F w) := by
-  intro i j k
-  have hswap :=
-    polynomialVectorTensorCubeCoords_swapFirstTwo F w j i k
-  rw [dividedCube_fixed_swapFirstTwo F hw] at hswap
-  exact hswap
+  exact fixed_swapFirstTwo_coords_symmetric F
+    (dividedCube_fixed_swapFirstTwo F hw)
 
 end LeanMathlib.Rigidity

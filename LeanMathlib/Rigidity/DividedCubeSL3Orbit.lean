@@ -5,13 +5,14 @@ import LeanMathlib.Rigidity.PolynomialTensorCubeTransvection
 namespace LeanMathlib.Rigidity
 
 /--
-Every nonzero divided cube admits an actual `SL₃(F[t])` transvection family
-whose one coordinate-block observation has infinite range.
+Every nonzero tensor fixed by the first-factor swap admits an actual
+`SL₃(F[t])` transvection family whose one coordinate-block observation has
+infinite range.
 -/
-theorem dividedCube_has_infinite_SL3_observation
+theorem fixed_swapFirstTwo_has_infinite_SL3_observation
     (F : Type*) [Field F]
     (w : PolynomialVectorTensorCube F)
-    (hwdiv : w ∈ dividedCubeSubmodule F)
+    (hfixed : swapFirstTwoTensorCube F w = w)
     (hwne : w ≠ 0) :
     ∃ (target source out₁ out₂ out₃ : Fin 3)
       (hts : target ≠ source) (N : ℕ),
@@ -24,7 +25,7 @@ theorem dividedCube_has_infinite_SL3_observation
   have hcoords_ne : coords ≠ 0 :=
     polynomialVectorTensorCubeCoords_ne_zero F hwne
   have hsym : SwapFirstTwoSymmetric coords :=
-    dividedCube_coords_swapFirstTwoSymmetric F hwdiv
+    fixed_swapFirstTwo_coords_symmetric F hfixed
   obtain ⟨target, source, out₁, out₂, out₃, N,
       hts, htout₃, hinfinite⟩ :=
     symmetricCubeCoordinate_has_infinite_transvection_observation
@@ -45,20 +46,39 @@ theorem dividedCube_has_infinite_SL3_observation
   exact hinfinite
 
 /--
-Main rank-three orbit theorem: every nonzero element in the span of pure cubes
-of `(F[t]^3)^{⊗3}` has an infinite orbit under actual elementary
-transvections in `SL₃(F[t])`.
+Every nonzero divided cube admits an actual `SL₃(F[t])` transvection family
+whose one coordinate-block observation has infinite range.
 -/
-theorem dividedCube_SL3_orbit_infinite
+theorem dividedCube_has_infinite_SL3_observation
     (F : Type*) [Field F]
     (w : PolynomialVectorTensorCube F)
     (hwdiv : w ∈ dividedCubeSubmodule F)
+    (hwne : w ≠ 0) :
+    ∃ (target source out₁ out₂ out₃ : Fin 3)
+      (hts : target ≠ source) (N : ℕ),
+      target ≠ out₃ ∧
+      (Set.range fun n : ℕ =>
+        polynomialVectorTensorCubeCoords F
+          (polynomialSLTensorCubeAction F target source hts (N + n) w)
+          out₁ out₂ out₃).Infinite := by
+  exact fixed_swapFirstTwo_has_infinite_SL3_observation F w
+    (dividedCube_fixed_swapFirstTwo F hwdiv) hwne
+
+/--
+Strong rank-three orbit theorem: every nonzero tensor fixed by swapping its
+first two factors has an infinite orbit under actual elementary
+transvections in `SL₃(F[t])`.
+-/
+theorem fixed_swapFirstTwo_SL3_orbit_infinite
+    (F : Type*) [Field F]
+    (w : PolynomialVectorTensorCube F)
+    (hfixed : swapFirstTwoTensorCube F w = w)
     (hwne : w ≠ 0) :
     ∃ (target source : Fin 3) (hts : target ≠ source) (N : ℕ),
       (Set.range fun n : ℕ =>
         polynomialSLTensorCubeAction F target source hts (N + n) w).Infinite := by
   obtain ⟨target, source, out₁, out₂, out₃, hts, N, htout₃, hobs⟩ :=
-    dividedCube_has_infinite_SL3_observation F w hwdiv hwne
+    fixed_swapFirstTwo_has_infinite_SL3_observation F w hfixed hwne
   refine ⟨target, source, hts, N, ?_⟩
   let orbitTerm : ℕ → PolynomialVectorTensorCube F := fun n =>
     polynomialSLTensorCubeAction F target source hts (N + n) w
@@ -76,5 +96,21 @@ theorem dividedCube_SL3_orbit_infinite
   rintro y ⟨n, rfl⟩
   refine ⟨orbitTerm n, ⟨n, rfl⟩, ?_⟩
   rfl
+
+/--
+Main rank-three orbit theorem: every nonzero element in the span of pure cubes
+of `(F[t]^3)^{⊗3}` has an infinite orbit under actual elementary
+transvections in `SL₃(F[t])`.
+-/
+theorem dividedCube_SL3_orbit_infinite
+    (F : Type*) [Field F]
+    (w : PolynomialVectorTensorCube F)
+    (hwdiv : w ∈ dividedCubeSubmodule F)
+    (hwne : w ≠ 0) :
+    ∃ (target source : Fin 3) (hts : target ≠ source) (N : ℕ),
+      (Set.range fun n : ℕ =>
+        polynomialSLTensorCubeAction F target source hts (N + n) w).Infinite := by
+  exact fixed_swapFirstTwo_SL3_orbit_infinite F w
+    (dividedCube_fixed_swapFirstTwo F hwdiv) hwne
 
 end LeanMathlib.Rigidity

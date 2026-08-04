@@ -74,8 +74,9 @@ theorem tensorCoefficient_groupAlgebra_comul
             tensorCoefficient g h 0 := congrArg (tensorCoefficient g h) hc
         _ = 0 := (tensorCoefficient g h).map_zero
         _ = if g = h then (0 : MonoidAlgebra K G) g else 0 := by
-          by_cases hgh : g = h <;>
-            simp [hgh, Finsupp.zero_apply]
+          by_cases hgh : g = h
+          · simp only [hgh, if_true, Finsupp.zero_apply]
+          · simp only [hgh, if_false]
   | add a b ha hb =>
       have hc :
           Coalgebra.comul (R := K) (a + b) =

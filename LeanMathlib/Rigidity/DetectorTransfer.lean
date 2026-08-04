@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
 
 namespace LeanMathlib.Rigidity
 
@@ -48,9 +49,28 @@ theorem ternary_detector_absolute_gap :
     (2 / 9 : ℚ) - 1 / 9 = 1 / 9 := by
   norm_num
 
-/-- Summing the two nontrivial ternary character energies gives `3/4`. -/
-theorem ternary_full_scalar_detector_energy :
-    (6 : ℚ) * detectorMargin (2 / 9) (1 / 9) = 3 / 4 := by
+/-- The two-generator ternary character energy gives the spectral gap `3/8`. -/
+theorem ternary_two_generator_detector_energy :
+    (3 : ℚ) * detectorMargin (2 / 9) (1 / 9) = 3 / 8 := by
   norm_num [detectorMargin]
+
+/-- Average support contributed by the charts on which a detector is nonzero. -/
+def chartMargin (rank degree support : ℚ) : ℚ :=
+  (rank - degree) / rank * support
+
+/-- Binary rank-three affine charts recover Zhou's `1/12` detector constant. -/
+theorem chartMargin_binary_rank_three :
+    chartMargin 3 2 (1 / 4) = 1 / 12 := by
+  norm_num [chartMargin]
+
+/-- The strengthened chart count gives `1/8` in binary rank four. -/
+theorem chartMargin_binary_rank_four :
+    chartMargin 4 2 (1 / 4) = 1 / 8 := by
+  norm_num [chartMargin]
+
+/-- The strengthened chart count gives `4/45` in ternary rank five. -/
+theorem chartMargin_ternary_rank_five :
+    chartMargin 5 3 (2 / 9) = 4 / 45 := by
+  norm_num [chartMargin]
 
 end LeanMathlib.Rigidity

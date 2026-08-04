@@ -32,8 +32,8 @@ theorem ternaryWitt_three_nsmul (x : TernaryWittExtension) :
     3 • x = (ternaryCarryCocycle (ZMod 3)).fiberHom x.base := by
   rcases x with ⟨a, b⟩
   apply NormalizedSymmetricAddCocycle.Extension.ext
-  · fin_cases a <;> fin_cases b <;> native_decide
-  · fin_cases a <;> fin_cases b <;> native_decide
+  · fin_cases a <;> fin_cases b <;> decide
+  · fin_cases a <;> fin_cases b <;> decide
 
 /-- Every length-two ternary Witt vector is killed by `9`. -/
 theorem ternaryWitt_nine_nsmul (x : TernaryWittExtension) :

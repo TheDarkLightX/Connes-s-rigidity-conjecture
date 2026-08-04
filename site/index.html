@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Public proof-status dashboard for AI-generated, Lean-audited research on Connes's rigidity conjecture, Hopf reconstruction, rank-three tensor orbits, and ternary Witt carries.">
+  <meta name="description" content="Public proof-status dashboard for generated, Lean-audited research on Connes's rigidity conjecture, prime-uniform divided-power cyclicity, tensor orbits, and finite-orbit invariants.">
   <title>Connes Rigidity — Generated Formal Research</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,10 +12,13 @@
   <header class="topbar">
     <a class="brand" href="#top">CR<span>/</span>Formal</a>
     <nav aria-label="Primary navigation">
-      <a href="#result">Result</a>
+      <a href="#result">New proof</a>
+      <a href="#detector">Detector</a>
+      <a href="#prime">Prime families</a>
+      <a href="#simplification">Simplification</a>
+      <a href="#invariant">Invariant</a>
+      <a href="#factors">Factors</a>
       <a href="#proof-state">Proof state</a>
-      <a href="#method">Method</a>
-      <a href="#credit">Credit</a>
       <a href="#open">Open problems</a>
     </nav>
     <a class="repo-link" href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture">GitHub ↗</a>
@@ -24,13 +27,14 @@
   <main id="top">
     <section class="hero">
       <div class="eyebrow">Generated formal mathematics · public audit trail</div>
-      <h1>Ternary Witt carries,<br><span>rank-three orbit growth,</span><br>and what a group factor forgets.</h1>
+      <h1>Divided-power cyclicity,<br><span>finite-orbit invariants,</span><br>and what a group factor forgets.</h1>
       <p class="lede">
-        A machine-generated research program extending the OpenAI/Codex work around Connes's rigidity conjecture.
+        A machine-generated prime-uniform research program extending the publicly claimed binary-carry counterexample architecture.
         Every claim is separated into generated mathematics, finite evidence, Lean source, full-build status, and remaining obligations.
       </p>
       <div class="hero-actions">
-        <a class="button primary" href="#result">See the current result</a>
+        <a class="button primary" href="#result">Read the new proof</a>
+        <a class="button secondary" href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/blob/main/research/notes/DISCOVERY_PACKET_20260804.md">Discovery packet ↗</a>
         <a class="button secondary" href="https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture/pull/1">Review the research PR</a>
       </div>
       <div class="boundary">
@@ -40,41 +44,222 @@
     </section>
 
     <section class="metrics" aria-label="Research metrics">
-      <article><span class="metric" id="module-count">49</span><span>rigidity modules</span></article>
-      <article><span class="metric">6</span><span>independent workflows</span></article>
-      <article><span class="metric warning" id="failure-count">11</span><span>initial CI failures</span></article>
+      <article><span class="metric" id="module-count">51</span><span>rigidity modules</span></article>
+      <article><span class="metric">12</span><span>candidate advances</span></article>
+      <article><span class="metric warning" id="failure-count">6</span><span>last CI failing modules</span></article>
       <article><span class="metric">0</span><span>completed counterexample claims</span></article>
     </section>
 
+    <section class="section prior-art-section">
+      <div class="section-label">Priority boundary · current literature</div>
+      <h2>The counterexample architecture is prior art; the stable/critical algebra may not be.</h2>
+      <p class="section-intro">
+        OpenAI's August 2026 manuscript gives a binary rank-four carry counterexample, while Shuoxing Zhou's
+        independent arXiv construction gives a different binary rank-three counterexample. A 1 August
+        manuscript disputes both, but its public abstract describes different groups and leaves its key
+        Bernoulli-action bridge unstated. This project does not claim the common-factor mechanisms as new.
+        Its plausible contributions are stable/critical cyclicity and orbit theorems, the minimal-rank
+        prime synthesis, and the two-geometry detector.
+      </p>
+      <div class="hero-actions">
+        <a class="button secondary" href="https://cdn.openai.com/pdf/ten-proofs-oai.pdf#page=95">OpenAI binary carry ↗</a>
+        <a class="button secondary" href="https://arxiv.org/abs/2608.02327">Zhou's independent proof ↗</a>
+        <a class="button secondary" href="https://philarchive.org/rec/NIEWTC">Adversarial manuscript ↗</a>
+      </div>
+    </section>
+
+    <section id="simplification" class="section result-section">
+      <div class="section-label">New proof simplification candidate</div>
+      <h2>The binary proof may not need its auxiliary torsion-free group.</h2>
+      <p class="section-intro">
+        The published construction lifts the action through a specially built torsion-free group so that
+        the abelian layer equals the torsion subgroup. Instead, take
+        <code>Q=SL₄(F₂[t])</code> directly. Higher-rank lattice theory gives
+        <code>Rad_am(Q)=1</code>, and therefore
+      </p>
+      <div class="formula compact">Rad<sub>am</sub>(A ⋊ Q) = A</div>
+      <div class="layers">
+        <article>
+          <div class="layer-number">01</div>
+          <h3>Characteristic layer</h3>
+          <p>The amenable radical recovers <code>D</code> or <code>Eₙ</code> intrinsically even though <code>Q</code> itself has order-four torsion.</p>
+        </article>
+        <article>
+          <div class="layer-number">02</div>
+          <h3>Direct group properties</h3>
+          <p>The published orbit extension gives ICC directly, while the same <code>1/7</code> pointed-space detector gives relative property (T) for every carry group.</p>
+        </article>
+        <article>
+          <div class="layer-number">03</div>
+          <h3>What disappears</h3>
+          <p>The integral lift, congruence kernel, torsion-freeness proof, strong-approximation surjection, and factor transfer for ICC/property (T) become unnecessary.</p>
+        </article>
+      </div>
+      <p class="fineprint">
+        Status: complete paper proof candidate, not reviewed. The positive-characteristic Margulis normal-subgroup-theorem interface is the main falsification target.
+      </p>
+    </section>
+
     <section id="result" class="section result-section">
-      <div class="section-label">Current mathematical lead</div>
+      <div class="section-label">New proof candidate · 4 August 2026</div>
       <div class="result-grid">
         <div>
-          <h2>A better coordinate for the ternary carry</h2>
+          <h2>One proof now covers binary rank three and every odd prime.</h2>
           <p>
-            The naive radix coordinate <code>a + 3b</code> fails as soon as a nontrivial carry appears.
-            The stronger candidate replaces the residue with its cubic Teichmüller lift:
+            Let <code>K<sub>p</sub></code> be the Frobenius kernel in the divided
+            <code>p</code>th power of <code>F<sub>p</sub>[t₁,…,t<sub>d</sub>]<sup>r</sup></code>.
+            When <code>r&gt;p</code>, an unused coordinate lowers every positive-degree basis tensor.
+            On the critical diagonal <code>r=p</code>, odd characteristic supplies the exact two-source identity
           </p>
-          <div class="formula">φ(a,b) = a³ + 3b &nbsp; (mod 9)</div>
+          <div class="formula">(uᵢⱼ(x)S − uᵢⱼ(−x)S)/2 = A(x,y,z) + A(xy,1,z)</div>
           <p>
-            Over representatives <code>a ∈ {0,1,2}</code>, the cubic values are <code>0,1,8</code> modulo 9.
-            This is exactly the lift needed for the length-two ternary Witt addition law.
+            The source contains exactly two mutable factors, so antisymmetrization cancels the
+            zero- and two-substitution terms. A total-degree induction proves that the kernel is
+            generated by <code>[e₁,…,e<sub>p</sub>]</code>, and inclusion-exclusion makes the whole
+            divided power cyclic from <code>e₁<sup>⊗p</sup></code>.
+          </p>
+          <p>
+            A companion theorem proves infinite elementary-transvection orbits for every nonzero
+            tensor in degree <code>m&lt;r</code>, and on the critical line <code>m=r</code> whenever the
+            first two tensor factors are symmetric. Exact certificates pass at
+            <code>(p,r)=(2,3),(2,4),(3,4),(5,5),(5,6)</code>, in addition to the deeper ternary checks.
           </p>
           <p class="fineprint">
-            Status: LEAP and Julia test the complete declared finite model. A finite exhaustive result is evidence for the scalar system,
-            not a replacement for the Lean theorem or the final property-(T) construction.
+            Status: complete paper proof candidates with replayed finite certificates. Only the
+            rank-three critical orbit theorem currently has Lean source; specialist review and general formalization remain required.
           </p>
         </div>
         <aside class="falsifier-card">
-          <div class="card-kicker">Smallest falsifier</div>
-          <h3>Why <code>a + 3b</code> is wrong</h3>
+          <div class="card-kicker">Semantic correction</div>
+          <h3>The untwisted map is only valid over <code>F₃</code></h3>
           <ol>
-            <li><code>(1,0) + (1,0) = (2,1)</code> under the ternary Witt carry.</li>
-            <li>The naive coordinate sends the sum to <code>2 + 3 = 5</code>.</li>
-            <li>But the two input coordinates add to <code>1 + 1 = 2</code> modulo 9.</li>
+            <li>Assume an <code>F</code>-linear map satisfies <code>d(v⊗³)=v</code>.</li>
+            <li>Linearity sends <code>(λv)⊗³=λ³v⊗³</code> to <code>λ³v</code>.</li>
+            <li>The retraction formula sends the same tensor to <code>λv</code>.</li>
           </ol>
-          <p>The cubic coordinate sends <code>(2,1)</code> to <code>2³ + 3 = 11 ≡ 2</code>.</p>
+          <p>Thus <code>λ³=λ</code> for every scalar. General characteristic-three fields require a Frobenius-twisted target.</p>
         </aside>
+      </div>
+    </section>
+
+    <section id="detector" class="section result-section">
+      <div class="section-label">New synthesis candidate · two detector geometries</div>
+      <h2>Primitive boxes and affine charts cover every prime.</h2>
+      <p class="section-intro">
+        Primitive-box averaging loses the nonprimitive density <code>p^(1−r)</code>.
+        Affine-chart averaging loses no vectors but spans every degree-<code>p</code>
+        detector only when <code>p&lt;r</code>. Their exact constants are
+      </p>
+      <div class="formula compact">c<sub>prim</sub> = ((p−1)/p² − p^(1−r))/(1 − p^(1−r)) &nbsp; · &nbsp; c<sub>chart</sub> = (r−p)(p−1)/(rp²)</div>
+      <div class="layers">
+        <article>
+          <div class="layer-number">01</div>
+          <h3>Primitive boxes</h3>
+          <p>Positive exactly when <code>(p−1)p^(r−3) &gt; 1</code>; this gives <code>c_prim(3,3)=1/8</code>.</p>
+        </article>
+        <article>
+          <div class="layer-number">02</div>
+          <h3>Affine charts</h3>
+          <p>A degree-<code>p</code> detector is nonzero on at least <code>r−p</code> charts when <code>p&lt;r</code>; <code>c_chart(2,3)=1/12</code> exactly matches Zhou's binary rank-three proof.</p>
+        </article>
+        <article>
+          <div class="layer-number">03</div>
+          <h3>Complete detector coverage</h3>
+          <p>Charts fill the lone binary rank-three gap; primitive boxes handle every odd prime at rank three and all remaining ranks.</p>
+        </article>
+      </div>
+      <p class="fineprint">
+        An exact block-restriction oracle verifies the sharp <code>max(r−p,0)</code> count in six boundary cases.
+        The quantitative detector proof is complete at paper level. The cyclicity and orbit obligations are now
+        closed at paper-proof level on <code>r<sub>p</sub>=max(p,3)</code>; functional-carry formalization and review remain.
+      </p>
+    </section>
+
+    <section id="prime" class="section result-section">
+      <div class="section-label">New synthesis candidate · every prime</div>
+      <h2>The algebra and detector phase boundaries meet exactly.</h2>
+      <p class="section-intro">
+        Set <code>r<sub>p</sub>=max(p,3)</code>. At <code>p=2</code>, rank three supplies a fresh coordinate
+        and the chart detector. At odd <code>p</code>, rank <code>p</code> supplies the critical finite difference,
+        symmetric-tail orbit growth, and a positive primitive detector. The length-two Witt carry is uniform.
+      </p>
+      <div class="formula compact">|FinOrb(Aₙ[p]/pAₙ)| = p^(r<sub>p</sub>n)</div>
+      <div class="layers">
+        <article>
+          <div class="layer-number">02</div>
+          <h3>Binary rank three</h3>
+          <p>Fresh-coordinate cyclicity and orbit growth combine with <code>c_chart=1/12</code>, predicting the intrinsic cardinal <code>2^(3n)</code>.</p>
+        </article>
+        <article>
+          <div class="layer-number">p</div>
+          <h3>Every odd prime</h3>
+          <p>Critical rank <code>p</code> gives <code>p^(pn)</code>; for example the primitive escape constant at <code>p=5</code> is <code>33/208</code>.</p>
+        </article>
+        <article>
+          <div class="layer-number">W</div>
+          <h3>Witt regression oracle</h3>
+          <p>Cocycle, Teichmüller, exponent-<code>p²</code>, and multiplication-by-<code>p</code> identities pass exhaustive checks at <code>p=2,3,5,7</code>.</p>
+        </article>
+      </div>
+      <p class="fineprint">
+        Candidate conclusion for each fixed prime: countably many finitely generated ICC property-(T) groups,
+        pairwise nonisomorphic and mutually commensurable, with common von Neumann and full/reduced group C*-algebras.
+        The architecture is binary prior art; the minimal-rank prime-uniform realization is unreviewed.
+      </p>
+    </section>
+
+    <section id="invariant" class="section result-section">
+      <div class="section-label">Prime-uniform finite-orbit specialization</div>
+      <h2>Recover the shift from finite conjugacy, not chosen coordinates.</h2>
+      <p class="section-intro">
+        The discrete dual extension has Bockstein <code>βₙ=tⁿd<sub>p</sub></code>. Its canonical
+        <code>p</code>-torsion subquotient fits into the exact sequence
+      </p>
+      <div class="formula compact">0 → V/tⁿV → Aₙ[p]/pAₙ → ker(d<sub>p</sub>) → 0</div>
+      <div class="layers">
+        <article>
+          <div class="layer-number">01</div>
+          <h3>Finite kernel</h3>
+          <p><code>V/tⁿV</code> has exactly <code>p^(r<sub>p</sub>n)</code> elements, so every orbit in this term is finite.</p>
+        </article>
+        <article>
+          <div class="layer-number">02</div>
+          <h3>Infinite quotient</h3>
+          <p>Every nonzero element of <code>ker(d<sub>p</sub>)</code> has infinite elementary-transvection orbit by the stable/critical theorem.</p>
+        </article>
+        <article>
+          <div class="layer-number">03</div>
+          <h3>Intrinsic recovery</h3>
+          <p>The finite-orbit subgroup is exactly <code>V/tⁿV</code>. Margulis's normal-subgroup theorem and property (T) identify <code>Aₙ</code> as the amenable radical, so its order is an abstract group invariant after the Bockstein construction is installed.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="factors" class="section result-section">
+      <div class="section-label">Prime-uniform specialization of the published carry mechanism</div>
+      <h2>The cocycle changes the group, but not the probability action.</h2>
+      <p class="section-intro">
+        Every compact carry group has the same carrier <code>L×Q</code>. Its product Haar
+        measure and coordinatewise <code>Γ</code>-action are independent of the shift, even
+        though the cocycle changes the compact group law.
+      </p>
+      <div class="formula compact">L(Aₙ ⋊ Γ) ≅ L∞(L × Q) ⋊ Γ ≅ L(Aₘ ⋊ Γ)</div>
+      <div class="layers">
+        <article>
+          <div class="layer-number">01</div>
+          <h3>Same topology</h3>
+          <p>Carry coordinates are continuous finite-coordinate polynomials, so every shift gives a compact abelian group on the same product space.</p>
+        </article>
+        <article>
+          <div class="layer-number">02</div>
+          <h3>Same Haar measure</h3>
+          <p>A triangular cocycle translation preserves product measure by two applications of translation invariance and Fubini.</p>
+        </article>
+        <article>
+          <div class="layer-number">03</div>
+          <h3>Same completions</h3>
+          <p>Pontryagin Fourier transform gives the same von Neumann crossed product and the same full and reduced group C*-crossed products.</p>
+        </article>
       </div>
     </section>
 
@@ -104,8 +289,8 @@
         </article>
         <article>
           <span class="step">03</span>
-          <h3>Julia</h3>
-          <p>Exhausts small finite models independently: all scalar carry inputs, associativity triples, candidate coordinates, orders, and minimum-support base cases.</p>
+          <h3>Julia / Python</h3>
+          <p>Exhausts small finite models independently: scalar carries, tensor-orbit closures, induction ledgers, primitive counts, and affine-chart restriction ranks.</p>
         </article>
         <article>
           <span class="step">04</span>
@@ -184,14 +369,14 @@
 
     <section id="open" class="section open-section">
       <div class="section-label">Open obligations</div>
-      <h2>What still separates this program from a new counterexample</h2>
+      <h2>What still separates this program from a reviewed theorem</h2>
       <div class="open-list">
-        <div><span>01</span><p>Restore the complete Lean dependency build without <code>sorry</code>, hidden axioms, or weakened theorem statements.</p></div>
-        <div><span>02</span><p>Finish the ternary spectral detector and transfer it into a complete property-(T) proof.</p></div>
-        <div><span>03</span><p>Prove finite generation and ICC for the final semidirect products.</p></div>
-        <div><span>04</span><p>Identify the intrinsic finite-orbit 3-torsion subquotient and prove its exact size is <code>3^(3n)</code>.</p></div>
-        <div><span>05</span><p>Build the Pontryagin-dual topology, Haar transport, crossed products, and spatial trace-preserving factor equivalences.</p></div>
-        <div><span>06</span><p>Obtain independent expert review before any “counterexample” headline is used.</p></div>
+        <div><span>01</span><p>Make the repaired full Lean dependency build green, then formalize the stable/critical cyclicity, orbit, and Bockstein proofs.</p></div>
+        <div><span>02</span><p>Formalize and independently audit the binary chart and odd-prime invariant-measure proofs of relative property (T).</p></div>
+        <div><span>03</span><p>Formalize the classical amenable-radical argument and the finite-orbit abstract group invariant.</p></div>
+        <div><span>04</span><p>Formalize the product topology, cocycle continuity, product Haar measure, Pontryagin duality, and common crossed products.</p></div>
+        <div><span>05</span><p>Package finite generation, ICC, pairwise nonisomorphism, and common operator-algebra completions into one prime-uniform audited theorem.</p></div>
+        <div><span>06</span><p>Search and review the stable/critical algebra and audit the current invalidity manuscript before any novelty or final-status headline is used.</p></div>
       </div>
     </section>
   </main>

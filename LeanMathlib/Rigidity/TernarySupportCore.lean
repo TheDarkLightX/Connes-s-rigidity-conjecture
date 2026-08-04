@@ -82,18 +82,7 @@ theorem ternaryPolySupportCard_three_slices {n : ℕ}
       ternaryPolySupportCard (ternaryPolySlice 2 p) := by
   classical
   rw [ternaryPolySupportCard_slices]
-  change (Finset.univ : Finset (ZMod 3)).sum
-      (fun a => ternaryPolySupportCard (ternaryPolySlice a p)) = _
-  have huniv : (Finset.univ : Finset (ZMod 3)) = {0, 1, 2} := by
-    native_decide
-  rw [huniv]
-  have h0 : (0 : ZMod 3) ∉ ({1, 2} : Finset (ZMod 3)) := by
-    native_decide
-  have h1 : (1 : ZMod 3) ∉ ({2} : Finset (ZMod 3)) := by
-    native_decide
-  rw [Finset.sum_insert h0, Finset.sum_insert h1]
-  simp only [Finset.sum_singleton]
-  ac_rfl
+  decide
 
 @[simp]
 theorem ternaryPolySupportCard_zero (n : ℕ) :

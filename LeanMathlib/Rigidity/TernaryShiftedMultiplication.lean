@@ -54,7 +54,7 @@ theorem ternaryShiftedFrobeniusDual_pureCube
 /-- Scalar identity behind multiplication by three in `W₂(𝔽₃)`. -/
 theorem ternaryCarry_three_identity (a : ZMod 3) :
     ternaryCarry a a + ternaryCarry (a + a) a = a := by
-  fin_cases a <;> native_decide
+  fin_cases a <;> decide
 
 /-- Three copies of a shifted carry-group element equal the shifted Frobenius dual of its base. -/
 theorem ternaryShiftedCarry_three_nsmul

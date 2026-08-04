@@ -215,7 +215,7 @@ theorem ternaryPoly_eq_zero_of_all_slices_zero {n : ℕ}
     simpa [ternaryPolySlice] using h0
   have hsum : p₁ + p₂ = 0 := by
     simpa [ternaryPolySlice, hp₀, add_assoc] using h1
-  have hsquare : (2 : ZMod 3) ^ 2 = 1 := by native_decide
+  have hsquare : (2 : ZMod 3) ^ 2 = 1 := by decide
   have h2' :
       p₀ + (2 : ZMod 3) • p₁ + (2 : ZMod 3) ^ 2 • p₂ = 0 := by
     simpa [ternaryPolySlice] using h2

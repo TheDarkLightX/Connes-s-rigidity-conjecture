@@ -55,7 +55,11 @@ noncomputable instance ternaryShiftedFrobeniusKernelFintype (n : ℕ) :
   Fintype.ofEquiv (TernaryTruncatedCoefficients n)
     (ternaryShiftedFrobeniusKernelEquiv n).symm.toEquiv
 
-/-- Exact intrinsic kernel cardinality at shift `n`. -/
+/-- Exact cardinality of the distinguished shifted-Frobenius kernel at shift `n`.
+
+This coordinate kernel becomes intrinsic only after identifying it with the
+finite-orbit part of a characteristic group-theoretic subquotient.
+-/
 theorem card_ternaryShiftedFrobeniusKernel (n : ℕ) :
     Fintype.card (LinearMap.ker (ternaryShiftedFrobeniusDual n)) =
       3 ^ (3 * n) := by

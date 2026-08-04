@@ -34,42 +34,42 @@ theorem ternaryPolySupportCard_lower_of_slice_bounds {n : ℕ}
   · by_cases h1 : ternaryPolySlice 1 p = 0
     · by_cases h2 : ternaryPolySlice 2 p = 0
       · exact (hp (ternaryPoly_eq_zero_of_all_slices_zero p h0 h1 h2)).elim
-      · have hc := hTwo 0 1 2 (by native_decide) (by native_decide)
-          (by native_decide) h0 h1 h2
+      · have hc := hTwo 0 1 2 (by decide) (by decide)
+          (by decide) h0 h1 h2
         have hmin : min (3 * A) (min (2 * B) C) ≤ C :=
           le_trans (Nat.min_le_right _ _) (Nat.min_le_right _ _)
         simp [h0, h1]
         omega
     · by_cases h2 : ternaryPolySlice 2 p = 0
-      · have hc := hTwo 0 2 1 (by native_decide) (by native_decide)
-          (by native_decide) h0 h2 h1
+      · have hc := hTwo 0 2 1 (by decide) (by decide)
+          (by decide) h0 h2 h1
         have hmin : min (3 * A) (min (2 * B) C) ≤ C :=
           le_trans (Nat.min_le_right _ _) (Nat.min_le_right _ _)
         simp [h0, h2]
         omega
-      · have h1b := hOne 0 1 (by native_decide) h0 h1
-        have h2b := hOne 0 2 (by native_decide) h0 h2
+      · have h1b := hOne 0 1 (by decide) h0 h1
+        have h2b := hOne 0 2 (by decide) h0 h2
         have hmin : min (3 * A) (min (2 * B) C) ≤ 2 * B :=
           le_trans (Nat.min_le_right _ _) (Nat.min_le_left _ _)
         simp [h0]
         omega
   · by_cases h1 : ternaryPolySlice 1 p = 0
     · by_cases h2 : ternaryPolySlice 2 p = 0
-      · have hc := hTwo 1 2 0 (by native_decide) (by native_decide)
-          (by native_decide) h1 h2 h0
+      · have hc := hTwo 1 2 0 (by decide) (by decide)
+          (by decide) h1 h2 h0
         have hmin : min (3 * A) (min (2 * B) C) ≤ C :=
           le_trans (Nat.min_le_right _ _) (Nat.min_le_right _ _)
         simp [h1, h2]
         omega
-      · have h0b := hOne 1 0 (by native_decide) h1 h0
-        have h2b := hOne 1 2 (by native_decide) h1 h2
+      · have h0b := hOne 1 0 (by decide) h1 h0
+        have h2b := hOne 1 2 (by decide) h1 h2
         have hmin : min (3 * A) (min (2 * B) C) ≤ 2 * B :=
           le_trans (Nat.min_le_right _ _) (Nat.min_le_left _ _)
         simp [h1]
         omega
     · by_cases h2 : ternaryPolySlice 2 p = 0
-      · have h0b := hOne 2 0 (by native_decide) h2 h0
-        have h1b := hOne 2 1 (by native_decide) h2 h1
+      · have h0b := hOne 2 0 (by decide) h2 h0
+        have h1b := hOne 2 1 (by decide) h2 h1
         have hmin : min (3 * A) (min (2 * B) C) ≤ 2 * B :=
           le_trans (Nat.min_le_right _ _) (Nat.min_le_left _ _)
         simp [h2]
@@ -109,7 +109,7 @@ theorem ternaryDegreeZero_supportCard :
       TernaryDegreeZero p → p ≠ 0 →
         ternaryPolySupportCard p = 3 ^ n
   | 0, p, _, hp => by
-      fin_cases p <;> native_decide
+      fin_cases p <;> decide
   | n + 1, p, hdeg, hp => by
       rcases p with ⟨p₀, p₁, p₂⟩
       rcases hdeg with ⟨hp₀deg, hp₁, hp₂⟩

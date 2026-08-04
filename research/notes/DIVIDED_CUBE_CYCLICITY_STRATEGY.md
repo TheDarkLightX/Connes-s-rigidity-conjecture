@@ -1,10 +1,13 @@
 # Divided-cube cyclicity: associated-graded proof strategy
 
-Status: **conjectural proof plan**. Nothing in this note is promoted as a theorem until the stated obligations are proved in Lean or independently reviewed.
+Status: **superseded proof plan**. The finite-difference argument in
+[`DIVIDED_CUBE_CYCLICITY_PROOF.md`](DIVIDED_CUBE_CYCLICITY_PROOF.md) now gives a
+complete proof candidate over `F₃`. This file is retained as the record of the
+earlier associated-graded route.
 
 ## 1. Setup
 
-Let `F` be a field of characteristic three, let `R = F[t]`, and let
+Let `F = F₃`, let `R = F[t]`, and let
 
 ```text
 V = R^3
@@ -37,6 +40,9 @@ K = ker d3.
 ```
 
 `d3` is equivariant for every `F`-linear automorphism of `V`.
+
+The untwisted formula is not valid over an arbitrary characteristic-three
+field. See [`FROBENIUS_TWIST_CORRECTION.md`](FROBENIUS_TWIST_CORRECTION.md).
 
 ## 2. A concrete basis for `B`
 

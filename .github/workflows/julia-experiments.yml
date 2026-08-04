@@ -1,0 +1,100 @@
+name: Julia finite mathematics oracles
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'experiments/ternary_witt_exhaustive.jl'
+      - 'experiments/divided_cube_truncations.jl'
+      - 'experiments/divided_cube_graded_orbit.py'
+      - 'experiments/divided_cube_multivariate_orbit.py'
+      - 'experiments/prime_rank_detector.jl'
+      - 'experiments/chart_detector_rank.py'
+      - 'experiments/odd_prime_divided_power_certificates.py'
+      - 'experiments/prime_witt_exhaustive.py'
+      - 'experiments/constant_kernel_psl3.jl'
+      - '.github/workflows/julia-experiments.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'experiments/ternary_witt_exhaustive.jl'
+      - 'experiments/divided_cube_truncations.jl'
+      - 'experiments/divided_cube_graded_orbit.py'
+      - 'experiments/divided_cube_multivariate_orbit.py'
+      - 'experiments/prime_rank_detector.jl'
+      - 'experiments/chart_detector_rank.py'
+      - 'experiments/odd_prime_divided_power_certificates.py'
+      - 'experiments/prime_witt_exhaustive.py'
+      - 'experiments/constant_kernel_psl3.jl'
+      - '.github/workflows/julia-experiments.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exhaustive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: '1.11'
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install graded-orbit oracle dependency
+        run: python -m pip install 'numpy>=2,<3'
+      - name: Install JSON serializer
+        run: julia -e 'using Pkg; Pkg.add(PackageSpec(name="JSON", version="1"))'
+      - name: Exhaust ternary Witt finite models
+        run: julia --project=@. experiments/ternary_witt_exhaustive.jl
+      - name: Analyze divided-cube truncations
+        run: julia --project=@. experiments/divided_cube_truncations.jl
+      - name: Analyze the total-degree divided-cube kernel through degree 12
+        run: python experiments/divided_cube_graded_orbit.py --degree 12
+      - name: Analyze the bivariate divided-cube kernel through degree 3
+        run: >-
+          python experiments/divided_cube_multivariate_orbit.py
+          --variables 2 --degree 3
+          --output experiments/divided_cube_bivariate_orbit_result.json
+      - name: Analyze the trivariate divided-cube kernel through degree 2
+        run: >-
+          python experiments/divided_cube_multivariate_orbit.py
+          --variables 3 --degree 2
+          --output experiments/divided_cube_trivariate_orbit_result.json
+      - name: Check the prime-rank detector phase diagram
+        run: julia --project=@. experiments/prime_rank_detector.jl
+      - name: Check the affine-chart restriction ranks
+        run: python experiments/chart_detector_rank.py
+      - name: Replay the rank-five divided fifth-power certificates
+        run: python experiments/odd_prime_divided_power_certificates.py --prime 5 --variables 1 --degree 2
+      - name: Replay the binary rank-three stable-range certificates
+        run: >-
+          python experiments/odd_prime_divided_power_certificates.py
+          --prime 2 --rank 3 --variables 1 --degree 6
+          --output experiments/binary_rank3_divided_square_result.json
+      - name: Exhaust prime Witt carry identities
+        run: python experiments/prime_witt_exhaustive.py --primes 2 3 5 7
+      - name: Verify the constant-kernel PSL3 certificate
+        run: julia --project=@. experiments/constant_kernel_psl3.jl
+      - name: Upload finite evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: connes-rigidity-julia-results
+          path: |
+            experiments/ternary_witt_exhaustive_result.json
+            experiments/divided_cube_truncations_result.json
+            experiments/divided_cube_graded_orbit_result.json
+            experiments/divided_cube_bivariate_orbit_result.json
+            experiments/divided_cube_trivariate_orbit_result.json
+            experiments/prime_rank_detector_result.json
+            experiments/chart_detector_rank_result.json
+            experiments/odd_prime_divided_power_result.json
+            experiments/binary_rank3_divided_square_result.json
+            experiments/prime_witt_exhaustive_result.json
+            experiments/constant_kernel_psl3_result.json
+          if-no-files-found: error
+          retention-days: 14

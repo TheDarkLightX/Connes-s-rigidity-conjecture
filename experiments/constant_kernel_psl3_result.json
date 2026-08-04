@@ -1,0 +1,80 @@
+{
+  "all_distinct_cyclic_span_dimension": 7,
+  "claim_boundary": "Exact finite-dimensional polynomial-matrix certificate; the general polynomial-current-algebra kernel still requires a proof.",
+  "constant_kernel_dimension": 7,
+  "field_characteristic": 3,
+  "generator_reports": [
+    {
+      "i": 1,
+      "intertwiner_identity": true,
+      "j": 2,
+      "source_action_degree": 2,
+      "target_action_degree": 2
+    },
+    {
+      "i": 1,
+      "intertwiner_identity": true,
+      "j": 3,
+      "source_action_degree": 2,
+      "target_action_degree": 2
+    },
+    {
+      "i": 2,
+      "intertwiner_identity": true,
+      "j": 1,
+      "source_action_degree": 2,
+      "target_action_degree": 2
+    },
+    {
+      "i": 2,
+      "intertwiner_identity": true,
+      "j": 3,
+      "source_action_degree": 2,
+      "target_action_degree": 2
+    },
+    {
+      "i": 3,
+      "intertwiner_identity": true,
+      "j": 1,
+      "source_action_degree": 2,
+      "target_action_degree": 2
+    },
+    {
+      "i": 3,
+      "intertwiner_identity": true,
+      "j": 2,
+      "source_action_degree": 2,
+      "target_action_degree": 2
+    }
+  ],
+  "intertwiner_columns": [
+    "[112] -> -E13",
+    "[113] -> E12",
+    "[122] -> E23",
+    "[123] -> -H",
+    "[133] -> -E32",
+    "[223] -> -E21",
+    "[233] -> E31"
+  ],
+  "intertwiner_rank": 7,
+  "maximum_parameter_degree_checked": 3,
+  "polynomial_identity_checked": true,
+  "source_basis": [
+    "[112]",
+    "[113]",
+    "[122]",
+    "[123]",
+    "[133]",
+    "[223]",
+    "[233]"
+  ],
+  "target_basis": [
+    "E12",
+    "E13",
+    "E21",
+    "E23",
+    "E31",
+    "E32",
+    "H"
+  ]
+}

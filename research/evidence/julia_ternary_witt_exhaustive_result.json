@@ -1,0 +1,25 @@
+{
+  "associativity_failure_count": 0,
+  "claim_boundary": "Exhaustive finite computation; not a substitute for the Lean family proof.",
+  "cocycle_failure_count": 0,
+  "degree_three_two_variable_minimizer_count": 72,
+  "degree_three_two_variable_minimum_support": 2,
+  "degree_three_two_variable_monomials": [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1]],
+  "degree_three_two_variable_polynomial_count": 6561,
+  "generator_has_order_nine": true,
+  "generator_orbit": [[0,0],[1,0],[2,1],[0,1],[1,1],[2,2],[0,2],[1,2],[2,0]],
+  "naive_coordinate_failure_count": 36,
+  "naive_first_counterexample": {
+    "phi_sum": 5,
+    "sum": [2,1],
+    "sum_phi": 2,
+    "x": [1,0],
+    "y": [1,0]
+  },
+  "pair_count": 81,
+  "state_count": 9,
+  "teichmueller_coordinate_failure_count": 0,
+  "teichmueller_formula": "phi(a,b) = (a^3 + 3b) mod 9",
+  "workflow_run": 30897480743,
+  "artifact_digest": "sha256:b89b26f1f917c6180f2aeade3a61c0ba3b410c33fbebce4254f91ece5e64fe25"
+}

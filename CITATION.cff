@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this formalization, cite the exact tagged repository release."
+title: "Connes's Rigidity Conjecture Formal Research Program"
+type: software
+authors:
+  - family-names: Edwards
+    given-names: Dana
+repository-code: "https://github.com/TheDarkLightX/Connes-s-rigidity-conjecture"
+license: MIT
+version: 0.1.0-dev
+date-released: 2026-08-04

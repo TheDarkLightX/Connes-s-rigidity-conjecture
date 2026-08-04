@@ -1,0 +1,37 @@
+name: TheoremSearch prior-art scan
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'experiments/theoremsearch_queries.py'
+      - '.github/workflows/theoremsearch.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'experiments/theoremsearch_queries.py'
+      - '.github/workflows/theoremsearch.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Query TheoremSearch API
+        run: python experiments/theoremsearch_queries.py
+      - name: Upload theorem-level retrieval results
+        uses: actions/upload-artifact@v4
+        with:
+          name: theoremsearch-prior-art-results
+          path: experiments/theoremsearch_results.json
+          if-no-files-found: error
+          retention-days: 14

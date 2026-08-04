@@ -70,7 +70,7 @@ theorem map_one_of_map_mul
   have h := hmul 1 1
   simp only [one_mul] at h
   have h' := congrArg (fun x => (f 1)⁻¹ * x) h
-  simpa [mul_assoc] using h'
+  simpa [mul_assoc] using h'.symm
 
 /-- Package multiplicative rounding as a group homomorphism. -/
 def roundingGroupHom
@@ -105,19 +105,21 @@ noncomputable def groupMulEquivOfMetricRounding
     (hgap : 3 * δ < separation) : G ≃* H := by
   have hgap2 : 2 * δ < separation := by
     have hδnonneg : 0 ≤ δ := by
-      have := dist_nonneg
       by_contra hneg
       have hδneg : δ < 0 := lt_of_not_ge hneg
-      specialize hround 1
-      have : dist (F 1) (basis (round 1)) < 0 := lt_of_le_of_lt hround hδneg
-      exact (not_lt_of_ge dist_nonneg) this
+      have hdistneg : dist (F 1) (basis (round 1)) < 0 :=
+        lt_of_le_of_lt (hround 1) hδneg
+      exact (not_lt_of_ge dist_nonneg) hdistneg
     linarith
-  have hmulRound := rounding_multiplicative F basis round δ separation
+  have hmulRound := rounding_multiplicative
+    (G := G) (H := H) (U := U) F basis round δ separation
     hmul hround hseparatedBasis hgap
   let hom := roundingGroupHom round hmulRound
-  have hleft := metric_rounding_leftInverse F basis round back δ separation
+  have hleft := metric_rounding_leftInverse
+    (G := G) (H := H) (U := U) F basis round back δ separation
     hround hback hseparatedF hgap2
-  have hright := metric_rounding_rightInverse F basis round back δ separation
+  have hright := metric_rounding_rightInverse
+    (G := G) (H := H) (U := U) F basis round back δ separation
     hround hback hseparatedBasis hgap2
   exact MulEquiv.ofBijective hom
     ⟨hleft.injective, hright.surjective⟩

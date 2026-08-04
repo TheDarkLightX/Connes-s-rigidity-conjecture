@@ -6,7 +6,7 @@ namespace LeanMathlib.Rigidity
 open Matrix
 
 /-- Explicit rank-three polynomial transvection on column vectors. -/
-def polynomialVectorTransvection
+noncomputable def polynomialVectorTransvection
     (F : Type*) [Field F]
     (target source : Fin 3) (n : ℕ) :
     PolynomialVector3 F →ₗ[F] PolynomialVector3 F where
@@ -33,7 +33,7 @@ theorem polynomialVectorTransvection_apply
   rfl
 
 /-- The actual elementary matrix in `SL₃(F[t])`. -/
-def polynomialSLTransvection
+noncomputable def polynomialSLTransvection
     (F : Type*) [Field F]
     (target source : Fin 3) (hts : target ≠ source) (n : ℕ) :
     Matrix.SpecialLinearGroup (Fin 3) (Polynomial F) :=
@@ -58,12 +58,8 @@ theorem transvection_mulVec_apply
     (Matrix.transvection target source ((Polynomial.X : Polynomial F) ^ n) *ᵥ v) i =
       polynomialVectorTransvection F target source n v i := by
   classical
-  by_cases hi : i = target
-  · subst i
-    simp [Matrix.transvection, Matrix.mulVec, dotProduct,
-      polynomialVectorTransvection, Matrix.single_apply]
-  · simp [Matrix.transvection, Matrix.mulVec, dotProduct,
-      polynomialVectorTransvection, Matrix.single_apply, hi]
+  simp [Matrix.transvection, Matrix.single_mulVec,
+    polynomialVectorTransvection]
 
 /-- Mathlib's actual `SL₃` representation agrees with the explicit transvection map. -/
 theorem polynomialSLTransvection_toLin_apply
@@ -82,7 +78,7 @@ theorem polynomialSLTransvection_toLinearMap
     (F : Type*) [Field F]
     (target source : Fin 3) (hts : target ≠ source) (n : ℕ) :
     (Matrix.SpecialLinearGroup.toLin'
-      (polynomialSLTransvection F target source hts n)).toLinearMap =
+      (polynomialSLTransvection F target source hts n)).toLinearMap.restrictScalars F =
       polynomialVectorTransvection F target source n := by
   ext v i
   exact polynomialSLTransvection_toLin_apply F target source hts n v i

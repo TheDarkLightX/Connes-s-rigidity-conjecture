@@ -31,7 +31,7 @@ theorem ternaryWeightOne_succ (n : ℕ) :
   | zero => norm_num [ternaryWeightOne, ternaryWeightZero]
   | succ n =>
       simp [ternaryWeightOne, ternaryWeightZero, pow_succ]
-      rfl
+      omega
 
 /-- Degree-two recurrence from zero, one, or two vanishing slices. -/
 theorem ternaryWeightTwo_succ (n : ℕ) :

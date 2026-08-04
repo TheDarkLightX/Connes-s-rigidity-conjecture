@@ -139,12 +139,12 @@ noncomputable def polynomialSLTensorCubeAction
     PolynomialVectorTensorCube F →ₗ[F] PolynomialVectorTensorCube F :=
   TensorProduct.map
     (Matrix.SpecialLinearGroup.toLin'
-      (polynomialSLTransvection F target source hts n)).toLinearMap <|
+      (polynomialSLTransvection F target source hts n)).toLinearMap.restrictScalars F <|
       TensorProduct.map
         (Matrix.SpecialLinearGroup.toLin'
-          (polynomialSLTransvection F target source hts n)).toLinearMap
+          (polynomialSLTransvection F target source hts n)).toLinearMap.restrictScalars F
         (Matrix.SpecialLinearGroup.toLin'
-          (polynomialSLTransvection F target source hts n)).toLinearMap
+          (polynomialSLTransvection F target source hts n)).toLinearMap.restrictScalars F
 
 /-- The actual `SL₃(F[t])` tensor action equals the explicit transvection action. -/
 theorem polynomialSLTensorCubeAction_eq

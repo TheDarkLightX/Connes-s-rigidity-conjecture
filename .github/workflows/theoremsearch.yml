@@ -4,9 +4,15 @@ on:
   push:
     branches:
       - agent/import-lean-rigidity-research-20260804
+    paths:
+      - 'experiments/theoremsearch_queries.py'
+      - '.github/workflows/theoremsearch.yml'
   pull_request:
     branches:
       - main
+    paths:
+      - 'experiments/theoremsearch_queries.py'
+      - '.github/workflows/theoremsearch.yml'
   workflow_dispatch:
 
 permissions:

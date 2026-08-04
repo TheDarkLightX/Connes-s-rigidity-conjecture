@@ -22,6 +22,7 @@ The first complete standalone `lake build` exposed errors in eleven imported mod
 - [Theorem status and promotion rules](docs/THEOREM_STATUS.md)
 - [Research roadmap](docs/RESEARCH_ROADMAP.md)
 - [Migration provenance](docs/PROVENANCE.md)
+- [Authorship and AI assistance](docs/AUTHORSHIP_AND_AI_ASSISTANCE.md)
 
 The failing full build is intentionally visible. No headline theorem depending on a failing module is promoted until its complete dependency chain builds and receives specification review.
 

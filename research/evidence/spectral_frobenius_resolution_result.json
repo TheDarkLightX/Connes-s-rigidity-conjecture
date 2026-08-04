@@ -1,0 +1,100 @@
+{
+  "artifact_digest": "sha256:48b84a91096456735ffa55c03fdcf237ee6bb9eea87b1358ac35fc2a78f60597",
+  "claim_boundary": "Exact partition and Hilbert-series certificate; this program does not prove the invariant-module decomposition or minimality of the mathematical resolution.",
+  "formula": {
+    "B_p_r": "sum_lambda m(r,lambda) * GaussianMultinomial(p;lambda)",
+    "K_p_r": "B_p_r - r * product_{j=1}^{p-1}(1-q^j)",
+    "projective_dimension_for_p_ge_3": "p-2"
+  },
+  "workflow_run": 30932636511,
+  "results": [
+    {
+      "prime": 2,
+      "rank": 3,
+      "divided_power_hilbert_numerator": [6, 3],
+      "frobenius_quotient_hilbert_numerator": [1, -1],
+      "kernel_hilbert_numerator": [3, 6],
+      "minimal_resolution_betti_polynomials": [[3, 6]],
+      "spectral_rank": 9,
+      "expected_spectral_rank": 9,
+      "projective_dimension": 0,
+      "predicted_depth": 2,
+      "top_syzygy_shift": 1
+    },
+    {
+      "prime": 3,
+      "rank": 3,
+      "divided_power_hilbert_numerator": [10, 8, 8, 1],
+      "frobenius_quotient_hilbert_numerator": [1, -1, -1, 1],
+      "kernel_hilbert_numerator": [7, 11, 11, -2],
+      "minimal_resolution_betti_polynomials": [
+        [7, 11, 11, 1],
+        [0, 0, 0, 3]
+      ],
+      "spectral_rank": 27,
+      "expected_spectral_rank": 27,
+      "projective_dimension": 1,
+      "predicted_depth": 2,
+      "top_syzygy_shift": 3
+    },
+    {
+      "prime": 5,
+      "rank": 5,
+      "divided_power_hilbert_numerator": [
+        126, 224, 399, 525, 600, 502, 400, 225, 99, 24, 1
+      ],
+      "frobenius_quotient_hilbert_numerator": [
+        1, -1, -1, 0, 0, 2, 0, 0, -1, -1, 1
+      ],
+      "kernel_hilbert_numerator": [
+        121, 229, 404, 525, 600, 492, 400, 225, 104, 29, -4
+      ],
+      "minimal_resolution_betti_polynomials": [
+        [121, 229, 404, 530, 605, 502, 400, 225, 99, 24, 1],
+        [0, 0, 0, 5, 5, 10, 5, 5],
+        [0, 0, 0, 0, 0, 0, 5, 5, 5, 5],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5]
+      ],
+      "spectral_rank": 3125,
+      "expected_spectral_rank": 3125,
+      "projective_dimension": 3,
+      "predicted_depth": 2,
+      "top_syzygy_shift": 10
+    },
+    {
+      "prime": 7,
+      "rank": 7,
+      "divided_power_hilbert_numerator": [
+        1716, 4752, 11220, 20874, 34692, 50520, 67620, 81636,
+        92022, 95206, 91678, 81192, 66688, 49980, 34302, 20874,
+        11222, 5096, 1764, 440, 48, 1
+      ],
+      "frobenius_quotient_hilbert_numerator": [
+        1, -1, -1, 0, 0, 1, 0, 2, 0, -1, -1, -1, -1, 0, 2,
+        0, 1, 0, 0, -1, -1, 1
+      ],
+      "kernel_hilbert_numerator": [
+        1709, 4759, 11227, 20874, 34692, 50513, 67620, 81622,
+        92022, 95213, 91685, 81199, 66695, 49980, 34288, 20874,
+        11215, 5096, 1764, 447, 55, -6
+      ],
+      "minimal_resolution_betti_polynomials": [
+        [
+          1709, 4759, 11227, 20881, 34699, 50527, 67627, 81636,
+          92022, 95206, 91678, 81192, 66688, 49980, 34302, 20874,
+          11222, 5096, 1764, 440, 48, 1
+        ],
+        [0, 0, 0, 7, 7, 14, 14, 21, 14, 14, 7, 7],
+        [0, 0, 0, 0, 0, 0, 7, 7, 14, 21, 21, 21, 21, 14, 7, 7],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 14, 14, 21, 14, 14, 7, 7],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7]
+      ],
+      "spectral_rank": 823543,
+      "expected_spectral_rank": 823543,
+      "projective_dimension": 5,
+      "predicted_depth": 2,
+      "top_syzygy_shift": 21
+    }
+  ]
+}

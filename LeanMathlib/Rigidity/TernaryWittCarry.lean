@@ -81,6 +81,7 @@ def cubeDiagonal {ι R : Type*} (T : ι → ι → ι → R) : ι → R :=
 theorem cubeDiagonal_pureCube_zmod3 {ι : Type*} (v : ι → ZMod 3) :
     cubeDiagonal (pureCube v) = v := by
   funext i
-  simp [cubeDiagonal, pureCube, ← pow_succ, zmod3_cube]
+  have h := zmod3_cube (v i)
+  simpa [cubeDiagonal, pureCube, pow_succ, mul_assoc] using h
 
 end LeanMathlib.Rigidity
